@@ -1,0 +1,48 @@
+name: Deploy Frontend to Hostinger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/frontend/**'
+      - 'shared/**'
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy via FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared package
+        run: npm run build --workspace=shared
+
+      - name: Set API URL for production
+        run: echo "NEXT_PUBLIC_API_URL=https://backend-api-production-078e.up.railway.app" >> packages/frontend/.env.production
+
+      - name: Build frontend (static export)
+        run: npm run build --workspace=packages/frontend
+
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          local-dir: packages/frontend/out/
+          server-dir: public_html/
+          dangerous-clean-slate: false
