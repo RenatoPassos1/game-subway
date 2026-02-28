@@ -5,7 +5,7 @@ import jwt from '@fastify/jwt';
 import websocket from '@fastify/websocket';
 import pino from 'pino';
 
-import { redis, closeRedis } from './redis/client';
+import { redis, redisSub, closeRedis } from './redis/client';
 import { loadScripts } from './redis/scripts';
 import { closePool } from './db/client';
 import { authRoutes } from './routes/auth.routes';
@@ -98,24 +98,32 @@ async function buildServer() {
   return fastify;
 }
 
+async function connectRedisAndLoadScripts(): Promise<void> {
+  logger.info('Connecting to Redis...');
+  await redis.connect();
+  await redisSub.connect();
+  logger.info('Redis connected, loading Lua scripts...');
+  await loadScripts();
+}
+
 async function start(): Promise<void> {
   let fastify: Awaited<ReturnType<typeof buildServer>> | null = null;
 
   try {
-    // Load Redis Lua scripts
-    logger.info('Loading Redis Lua scripts...');
-    await loadScripts();
-
-    // Build and start server
+    // Build and start server FIRST (so healthcheck port is open)
     fastify = await buildServer();
+    await fastify.listen({ port: PORT, host: HOST });
+    logger.info(`Server listening on http://${HOST}:${PORT}`);
+    logger.info(`Environment: ${NODE_ENV}`);
+
+    // Connect Redis in background (don't block startup)
+    connectRedisAndLoadScripts().catch((err) => {
+      logger.warn({ err }, 'Redis initial connection deferred');
+    });
 
     // Start auction timer manager
     startTimerManager();
-
-    await fastify.listen({ port: PORT, host: HOST });
-    logger.info(`Server listening on http://${HOST}:${PORT}`);
     logger.info(`WebSocket endpoint: ws://${HOST}:${PORT}/ws`);
-    logger.info(`Environment: ${NODE_ENV}`);
   } catch (err) {
     logger.error({ err }, 'Failed to start server');
     process.exit(1);

@@ -135,9 +135,27 @@ export async function loadScripts(): Promise<void> {
     creditReferralBonusSHA = await redis.script('LOAD', CREDIT_REFERRAL_BONUS_LUA) as string;
     logger.info('Redis Lua scripts loaded successfully');
   } catch (err) {
-    logger.error({ err }, 'Failed to load Redis Lua scripts');
-    throw err;
+    logger.warn({ err }, 'Failed to load Redis Lua scripts, will retry in background');
+    scheduleScriptRetry();
   }
+}
+
+function scheduleScriptRetry(attempt = 1): void {
+  const delay = Math.min(attempt * 3000, 30000);
+  setTimeout(async () => {
+    try {
+      processClickSHA = await redis.script('LOAD', PROCESS_CLICK_LUA) as string;
+      creditReferralBonusSHA = await redis.script('LOAD', CREDIT_REFERRAL_BONUS_LUA) as string;
+      logger.info('Redis Lua scripts loaded successfully (retry)');
+    } catch (err) {
+      logger.warn({ err, attempt }, 'Redis Lua scripts retry failed');
+      if (attempt < 10) {
+        scheduleScriptRetry(attempt + 1);
+      } else {
+        logger.error('Redis Lua scripts: all retries exhausted');
+      }
+    }
+  }, delay);
 }
 
 export interface ProcessClickResult {

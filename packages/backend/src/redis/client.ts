@@ -8,11 +8,11 @@ const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 export const redis = new Redis(REDIS_URL, {
   maxRetriesPerRequest: 3,
   retryStrategy(times: number) {
-    if (times > 10) {
+    if (times > 20) {
       logger.error('Redis: max reconnection attempts reached');
       return null; // stop retrying
     }
-    const delay = Math.min(times * 200, 5000);
+    const delay = Math.min(times * 500, 10000);
     logger.warn(`Redis: reconnecting in ${delay}ms (attempt ${times})`);
     return delay;
   },
@@ -20,7 +20,7 @@ export const redis = new Redis(REDIS_URL, {
     const targetErrors = ['READONLY', 'ECONNRESET', 'ECONNREFUSED'];
     return targetErrors.some((e) => err.message.includes(e));
   },
-  lazyConnect: false,
+  lazyConnect: true,
   enableReadyCheck: true,
 });
 
@@ -44,10 +44,10 @@ redis.on('close', () => {
 export const redisSub = new Redis(REDIS_URL, {
   maxRetriesPerRequest: 3,
   retryStrategy(times: number) {
-    if (times > 10) return null;
-    return Math.min(times * 200, 5000);
+    if (times > 20) return null;
+    return Math.min(times * 500, 10000);
   },
-  lazyConnect: false,
+  lazyConnect: true,
 });
 
 redisSub.on('error', (err: Error) => {
