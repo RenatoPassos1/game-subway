@@ -1,0 +1,26 @@
+{
+  "name": "click-win",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Click Win - Digital Auction Platform on BNB Chain",
+  "workspaces": [
+    "packages/*",
+    "shared"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=packages/frontend",
+    "dev:backend": "npm run dev --workspace=packages/backend",
+    "dev:watcher": "npm run dev --workspace=packages/watcher",
+    "dev:settlement": "npm run dev --workspace=packages/settlement",
+    "build": "npm run build --workspaces",
+    "build:frontend": "npm run build --workspace=packages/frontend",
+    "build:backend": "npm run build --workspace=packages/backend",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:migrate": "npm run migrate --workspace=packages/backend",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
