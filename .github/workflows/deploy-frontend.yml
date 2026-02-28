@@ -44,5 +44,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           local-dir: packages/frontend/out/
-          server-dir: public_html/
+          server-dir: ./
           dangerous-clean-slate: true
