@@ -45,4 +45,4 @@ jobs:
           port: 21
           local-dir: packages/frontend/out/
           server-dir: ./
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
