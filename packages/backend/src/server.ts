@@ -58,33 +58,15 @@ async function buildServer() {
     },
   });
 
-  // ============ Health Check ============
-  fastify.get('/health', async (request, reply) => {
-    const redisOk = redis.status === 'ready';
-    let pgOk = false;
-
-    try {
-      const { query } = await import('./db/client');
-      await query('SELECT 1');
-      pgOk = true;
-    } catch {
-      pgOk = false;
-    }
-
-    const status = redisOk && pgOk ? 'healthy' : 'degraded';
-
-    return {
-      status,
-      timestamp: new Date().toISOString(),
-      services: {
-        redis: redisOk ? 'connected' : 'disconnected',
-        postgres: pgOk ? 'connected' : 'disconnected',
-      },
-      connections: {
-        websocket: getConnectionCount(),
-      },
-    };
-  });
+  // ============ Health Check (instant – no blocking I/O) ============
+  fastify.get('/health', async () => ({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    services: {
+      redis: redis.status === 'ready' ? 'connected' : 'pending',
+    },
+    connections: { websocket: getConnectionCount() },
+  }));
 
   // ============ Register Routes ============
   await fastify.register(authRoutes);
@@ -116,13 +98,16 @@ async function start(): Promise<void> {
     logger.info(`Server listening on http://${HOST}:${PORT}`);
     logger.info(`Environment: ${NODE_ENV}`);
 
-    // Connect Redis in background (don't block startup)
-    connectRedisAndLoadScripts().catch((err) => {
-      logger.warn({ err }, 'Redis initial connection deferred');
-    });
+    // Connect Redis in background, then start timer manager
+    connectRedisAndLoadScripts()
+      .then(() => {
+        startTimerManager();
+        logger.info('Auction timer manager started');
+      })
+      .catch((err) => {
+        logger.warn({ err }, 'Redis initial connection deferred, timer manager not started');
+      });
 
-    // Start auction timer manager
-    startTimerManager();
     logger.info(`WebSocket endpoint: ws://${HOST}:${PORT}/ws`);
   } catch (err) {
     logger.error({ err }, 'Failed to start server');
