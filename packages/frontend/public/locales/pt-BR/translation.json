@@ -1,0 +1,525 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre",
+    "help": "Ajuda",
+    "partner": "Seja Parceiro"
+  },
+  "wallet": {
+    "connect": "Conectar Carteira",
+    "disconnect": "Desconectar"
+  },
+  "home": {
+    "hero": {
+      "badge": "Ao vivo na BNB Chain",
+      "titleLine1": "Clique. Venca.",
+      "titleLine2": "Seja Recompensado.",
+      "subtitle": "A primeira plataforma de leilao movida a blockchain onde cada clique conta. Compre cliques, participe de leiloes e ganhe premios com ate 99% de desconto."
+    },
+    "cta": {
+      "start": "Comece a Clicar",
+      "learn": "Saiba Mais"
+    },
+    "auction": {
+      "title": "Leilao Ao Vivo",
+      "subtitle": "Participe do leilao atual e concorra a premios incriveis"
+    },
+    "howItWorks": {
+      "title": "Como Funciona",
+      "subtitle": "Quatro passos simples para comecar a ganhar"
+    },
+    "steps": {
+      "connect": {
+        "title": "Conecte a Carteira",
+        "desc": "Conecte sua MetaMask ou qualquer carteira compativel com EVM para comecar."
+      },
+      "deposit": {
+        "title": "Deposite e Compre Cliques",
+        "desc": "Deposite BNB ou USDT e converta em cliques digitais."
+      },
+      "click": {
+        "title": "Clique nos Leiloes",
+        "desc": "Use seus cliques em leiloes ao vivo. Cada clique reinicia o cronometro."
+      },
+      "win": {
+        "title": "Ganhe Premios",
+        "desc": "A ultima pessoa a clicar quando o cronometro zerar ganha o premio!"
+      }
+    },
+    "stats": {
+      "users": "10.000+",
+      "usersLabel": "Usuarios Ativos",
+      "auctions": "500+",
+      "auctionsLabel": "Leiloes Concluidos",
+      "settled": "$2M+",
+      "settledLabel": "Premios Distribuidos",
+      "chain": "BNB",
+      "chainLabel": "Movido pela BNB Chain"
+    },
+    "finalCta": {
+      "title": "Pronto para Comecar a Ganhar?",
+      "subtitle": "Conecte sua carteira e participe do proximo leilao. Cada clique pode ser o vencedor.",
+      "btn": "Conectar Carteira e Comecar"
+    }
+  },
+  "auction": {
+    "status": "Status do Leilao",
+    "live": "AO VIVO",
+    "prize": "Premio Atual",
+    "discount": "Desconto Atual",
+    "timer": "Tempo Restante",
+    "clicks": "Total de Cliques",
+    "lastClick": "Ultimo Clique",
+    "clickBtn": "CLIQUE!",
+    "clickInfo": "Cada clique custa 1 credito e reinicia o cronometro. Seja o ultimo a clicar!"
+  },
+  "about": {
+    "hero": {
+      "title": "Sobre o Click Win",
+      "desc1": "Click Win e uma plataforma de leilao movida a blockchain construida na BNB Chain. Usuarios compram cliques digitais usando depositos em cripto e competem em leiloes cronometrados para ganhar premios com grandes descontos.",
+      "desc2": "Cada acao e transparente, cada resultado e verificavel e todo o sistema roda em contratos inteligentes sem mecanismos ocultos."
+    },
+    "mission": {
+      "title": "Nossa Missao",
+      "desc": "Construir a experiencia de leilao mais transparente e envolvente da Web3. Acreditamos que combinar tecnologia blockchain com leiloes gamificados cria uma plataforma justa, emocionante e recompensadora para todos."
+    },
+    "howItWorks": {
+      "title": "Como Funciona"
+    },
+    "steps": {
+      "s1": {
+        "title": "Conecte Sua Carteira",
+        "desc": "Use MetaMask ou qualquer carteira compativel com EVM. Sem email ou cadastro - sua carteira e sua identidade."
+      },
+      "s2": {
+        "title": "Deposite Fundos",
+        "desc": "Envie BNB ou USDT para seu endereco de deposito unico. Todos os depositos sao rastreados on-chain."
+      },
+      "s3": {
+        "title": "Compre Cliques",
+        "desc": "Converta seus fundos depositados em cliques digitais a $0,20 por clique. Cliques sao creditos nao reembolsaveis."
+      },
+      "s4": {
+        "title": "Participe de um Leilao",
+        "desc": "Entre em um leilao ao vivo e comece a clicar. Cada clique reinicia o cronometro."
+      },
+      "s5": {
+        "title": "Ganhe o Premio",
+        "desc": "Quando o cronometro chegar a zero, a ultima pessoa que clicou ganha o premio com um grande desconto."
+      },
+      "s6": {
+        "title": "Liquidacao On-Chain",
+        "desc": "Vencedores recebem seu premio via contrato inteligente. Cada resultado e registrado na BNB Chain para total transparencia."
+      }
+    },
+    "why": {
+      "title": "Por que Click Win?",
+      "w1": {
+        "title": "Identidade via Carteira",
+        "desc": "Sem emails, sem senhas. Sua carteira e sua conta. Conecte e comece a jogar em segundos."
+      },
+      "w2": {
+        "title": "Ultra Rapido",
+        "desc": "Construido na BNB Chain para taxas ultra baixas e confirmacoes rapidas de transacoes."
+      },
+      "w3": {
+        "title": "Total Transparencia",
+        "desc": "Cada clique, cada leilao, cada resultado e registrado on-chain e verificavel por qualquer pessoa."
+      },
+      "w4": {
+        "title": "Recompensas de Indicacao",
+        "desc": "Convide amigos e ganhe 20% da primeira compra de cliques deles. Seu codigo de indicacao e vinculado permanentemente a sua carteira."
+      },
+      "w5": {
+        "title": "Acesso Global",
+        "desc": "Disponivel mundialmente. Sem restricoes geograficas. Qualquer pessoa com uma carteira cripto pode participar."
+      },
+      "w6": {
+        "title": "Mecanica Justa",
+        "desc": "Sem bots, sem trapaça. Operacoes atomicas Redis e validacao server-side garantem que cada clique e legitimo."
+      },
+      "footer": "Click Win combina a emocao dos leiloes com a transparencia da tecnologia blockchain."
+    },
+    "tech": {
+      "title": "Nossa Tecnologia",
+      "t1": {
+        "title": "Frontend Next.js",
+        "desc": "Exportacao estatica, frontend ultra-rapido hospedado em CDN para acesso global com baixa latencia."
+      },
+      "t2": {
+        "title": "WebSocket em Tempo Real",
+        "desc": "Atualizacoes ao vivo de leiloes, sincronizacao de timer e eventos de clique entregues em milissegundos."
+      },
+      "t3": {
+        "title": "Operacoes Atomicas Redis",
+        "desc": "Scripts Lua garantem que a ordenacao de cliques e reinicializacoes do timer sejam atomicas, prevenindo condicoes de corrida."
+      },
+      "t4": {
+        "title": "Persistencia PostgreSQL",
+        "desc": "Trilha de auditoria completa de todos os leiloes, cliques, depositos e liquidacoes."
+      },
+      "t5": {
+        "title": "Autenticacao por Assinatura EVM",
+        "desc": "Autenticacao baseada em carteira usando assinaturas criptograficas. Sem senhas armazenadas."
+      },
+      "t6": {
+        "title": "Smart Contracts BNB Chain",
+        "desc": "Rastreamento de depositos e liquidacao de premios gerenciados por contratos inteligentes auditados."
+      }
+    },
+    "vision": {
+      "title": "Nossa Visao",
+      "desc1": "Imaginamos um futuro onde leiloes sao totalmente descentralizados, transparentes e acessiveis a todos. Click Win e o primeiro passo em direcao a essa visao.",
+      "desc2": "Nosso roadmap inclui suporte multi-chain, tokens de governanca, parametros de leilao controlados por DAO e integracoes com premios NFT."
+    }
+  },
+  "help": {
+    "hero": {
+      "title": "Ajuda e FAQ",
+      "subtitle": "Encontre respostas para as perguntas mais comuns sobre o Click Win"
+    },
+    "faq": {
+      "q1": {
+        "question": "O que e o Click Win?",
+        "answer": "Click Win e uma plataforma de leilao movida a blockchain onde usuarios compram cliques digitais e competem em leiloes cronometrados para ganhar premios com grandes descontos. Caracteristicas principais:",
+        "list": [
+          "Autenticacao via carteira (sem email necessario)",
+          "Leiloes na BNB Chain para transparencia",
+          "Premios com ate 99% de desconto",
+          "Experiencia em tempo real com WebSocket"
+        ]
+      },
+      "q2": {
+        "question": "Como comecar?",
+        "answer": "Comecar com o Click Win e facil. Siga estes passos:",
+        "list": [
+          "Instale MetaMask ou qualquer carteira compativel com EVM",
+          "Conecte sua carteira na pagina inicial do Click Win",
+          "Deposite BNB ou USDT no seu endereco de deposito unico",
+          "Compre cliques a $0,20 cada",
+          "Entre em um leilao ao vivo e comece a clicar!"
+        ]
+      },
+      "q3": {
+        "question": "O que sao cliques digitais?",
+        "answer": "Cliques digitais sao creditos nao reembolsaveis da plataforma usados para participar de leiloes. Cada clique custa $0,20 e e consumido quando voce clica durante um leilao ao vivo. Cliques nao sao criptomoedas, nao sao instrumentos financeiros e nao tem valor fora da plataforma Click Win."
+      },
+      "q4": {
+        "question": "Como funcionam os leiloes?",
+        "answer": "Cada leilao tem um cronometro e um premio. Quando voce clica, o cronometro reinicia e um pequeno valor e adicionado ao pool de desconto. A mecanica e:",
+        "list": [
+          "Cada clique reinicia o cronometro (geralmente 30 segundos)",
+          "Cada clique aumenta o desconto do premio",
+          "Quando o cronometro zera, o ultimo a clicar vence",
+          "O vencedor paga o preco com desconto pelo premio",
+          "Todos os resultados sao registrados na BNB Chain"
+        ]
+      },
+      "q5": {
+        "question": "O Click Win e uma plataforma de apostas?",
+        "answer": "Nao. Click Win e uma plataforma de entretenimento e leilao. Usuarios compram creditos digitais (cliques) para participar de uma mecanica competitiva de leilao. Nao ha margem da casa, nao ha geracao de numeros aleatorios e nao ha apostas. O resultado e determinado inteiramente pelas acoes dos usuarios (clicar) e timing."
+      },
+      "q6": {
+        "question": "Como funciona o programa de indicacao?",
+        "answer": "Todo usuario recebe um codigo de indicacao unico vinculado ao seu endereco de carteira. Quando alguem se cadastra pelo seu link e faz a primeira compra de cliques, voce recebe um bonus. Detalhes:",
+        "list": [
+          "20% de bonus da primeira compra de cliques do indicado",
+          "Bonus creditado como cliques da plataforma",
+          "Sem limite de indicacoes",
+          "Acompanhe suas indicacoes no painel de Parceiro"
+        ]
+      },
+      "q7": {
+        "question": "Qual blockchain o Click Win usa?",
+        "answer": "O Click Win roda na BNB Chain (anteriormente Binance Smart Chain), Chain ID 56. Escolhemos a BNB Chain pelas suas baixas taxas de transacao, tempos rapidos de bloco e amplo suporte de carteiras. Todos os depositos, liquidacoes de leilao e distribuicoes de premios sao tratados on-chain."
+      }
+    },
+    "support": {
+      "title": "Ainda Precisa de Ajuda?",
+      "desc": "Junte-se aos nossos canais da comunidade para suporte direto da equipe Click Win e outros usuarios.",
+      "btn": "Entrar no Telegram"
+    }
+  },
+  "partner": {
+    "hero": {
+      "title": "Seja um Parceiro",
+      "desc": "Junte-se ao ecossistema Click Win como parceiro. Seja voce uma marca, influenciador ou projeto Web3, ha uma oportunidade de parceria para voce."
+    },
+    "why": {
+      "title": "Por que Ser Nosso Parceiro?",
+      "w1": {
+        "title": "Base de Usuarios Crescente",
+        "desc": "Acesse nossa comunidade em rapida expansao de usuarios crypto-nativos e entusiastas de leiloes."
+      },
+      "w2": {
+        "title": "Transparencia On-Chain",
+        "desc": "Todas as metricas de parceria, rastreamento de indicacoes e pagamentos sao verificaveis na BNB Chain."
+      },
+      "w3": {
+        "title": "Alcance Global",
+        "desc": "Click Win opera mundialmente com uma plataforma multilíngue (Ingles, Portugues, Espanhol)."
+      },
+      "w4": {
+        "title": "Analises em Tempo Real",
+        "desc": "Acompanhe suas indicacoes, ganhos e performance de campanhas em tempo real pelo seu painel."
+      },
+      "w5": {
+        "title": "Nativo Web3",
+        "desc": "Construido para o ecossistema descentralizado. Onboarding via carteira significa zero friccao para usuarios cripto."
+      },
+      "w6": {
+        "title": "Compartilhamento de Receita",
+        "desc": "Ganhe 20% de cada primeira compra feita atraves dos seus links de indicacao. Pago em creditos da plataforma."
+      },
+      "footer": "Seja parceiro do Click Win para crescer sua marca no espaco Web3."
+    },
+    "opp": {
+      "title": "Oportunidades de Parceria",
+      "token": {
+        "title": "Parceiros de Token e Projetos",
+        "desc": "Liste seu token como premio de leilao. Ganhe exposicao para milhares de usuarios cripto ativos."
+      },
+      "brand": {
+        "title": "Patrocinadores de Marca",
+        "desc": "Patrocine leiloes com seus produtos ou servicos. Visibilidade premium em toda a plataforma."
+      },
+      "strategic": {
+        "title": "Integracoes Estrategicas",
+        "desc": "Integre o Click Win na sua plataforma, carteira ou DApp. Acesso a API disponivel para parceiros."
+      }
+    },
+    "steps": {
+      "title": "Como Comecar",
+      "s1": {
+        "title": "Conecte a Carteira",
+        "desc": "Conecte sua carteira para criar sua conta de parceiro."
+      },
+      "s2": {
+        "title": "Receba seu Codigo",
+        "desc": "Receba seu codigo de indicacao unico vinculado ao endereco da sua carteira."
+      },
+      "s3": {
+        "title": "Compartilhe e Promova",
+        "desc": "Compartilhe seu link de indicacao nos seus canais e comunidade."
+      },
+      "s4": {
+        "title": "Ganhe Recompensas",
+        "desc": "Ganhe 20% de cada primeira compra feita atraves do seu link."
+      },
+      "footer": "Recompensas de indicacao sao creditadas como cliques da plataforma e rastreadas on-chain."
+    },
+    "referral": {
+      "title": "Seu Painel de Indicacoes",
+      "subtitle": "Acompanhe suas indicacoes, ganhos e compartilhe seu link",
+      "linkLabel": "Seu Link de Indicacao",
+      "copy": "Copiar",
+      "copied": "Copiado!",
+      "totalReferred": "Total de Indicados",
+      "pendingRewards": "Recompensas Pendentes",
+      "clicksEarned": "Cliques Ganhos",
+      "shareTwitter": "Compartilhar no X",
+      "shareTelegram": "Compartilhar no Telegram",
+      "historyTitle": "Historico de Ganhos",
+      "noHistory": "Nenhum ganho de indicacao ainda. Compartilhe seu link para comecar a ganhar!"
+    },
+    "cta": {
+      "title": "Pronto para Ser Parceiro?",
+      "desc": "Entre em contato para discutir oportunidades personalizadas de parceria ou comece com o programa de indicacoes hoje.",
+      "btn": "Fale Conosco"
+    }
+  },
+  "terms": {
+    "title": "Termos de Uso",
+    "lastUpdated": "Ultima atualizacao: Fevereiro 2026",
+    "s1": {
+      "title": "Introducao",
+      "p1": "Ao acessar e usar a plataforma Click Win, voce concorda em estar vinculado a estes Termos de Uso. Click Win e uma plataforma de entretenimento e leilao movida a tecnologia blockchain na BNB Chain. Se voce nao concordar com estes termos, por favor nao use a plataforma."
+    },
+    "s2": {
+      "title": "Natureza da Plataforma",
+      "intro": "Click Win e uma plataforma digital de entretenimento e leilao. Os usuarios devem entender que:",
+      "l1": "Click Win NAO e uma plataforma de apostas, jogos de azar ou investimento financeiro.",
+      "l2": "Cliques digitais sao creditos da plataforma usados apenas para fins de entretenimento.",
+      "l3": "Os resultados dos leiloes sao determinados pelas acoes dos usuarios (timing e cliques), nao por geracao de numeros aleatorios.",
+      "l4": "A plataforma nao fornece consultoria financeira ou recomendacoes de investimento.",
+      "l5": "A participacao e voluntaria e para fins de entretenimento.",
+      "p1": "Os usuarios reconhecem que participar de leiloes envolve gastar creditos da plataforma sem garantia de vitoria."
+    },
+    "s3": {
+      "title": "Elegibilidade",
+      "intro": "Para usar o Click Win, voce deve:",
+      "l1": "Ter pelo menos 18 anos ou a idade legal em sua jurisdicao.",
+      "l2": "Possuir uma carteira EVM compativel (MetaMask ou similar).",
+      "l3": "Nao ser residente de qualquer jurisdicao onde a participacao seja proibida por lei local.",
+      "p1": "Ao usar o Click Win, voce declara que atende a todos os requisitos de elegibilidade."
+    },
+    "s4": {
+      "title": "Acesso via Carteira",
+      "intro": "Click Win usa autenticacao baseada em carteira:",
+      "l1": "Seu endereco de carteira EVM serve como sua identidade unica na plataforma.",
+      "l2": "Voce e o unico responsavel pela seguranca da sua carteira, chaves privadas e frase de recuperacao.",
+      "p1": "Click Win nunca pedira suas chaves privadas ou frase de recuperacao. Nao somos responsaveis por qualquer perda resultante de credenciais de carteira comprometidas."
+    },
+    "s5": {
+      "title": "Creditos Digitais (Cliques)",
+      "intro": "Cliques digitais sao creditos nao reembolsaveis da plataforma:",
+      "l1": "Cliques sao comprados usando BNB ou USDT a uma taxa fixa de $0,20 por clique.",
+      "l2": "Cliques NAO sao criptomoedas, tokens ou instrumentos financeiros.",
+      "l3": "Cliques nao tem valor monetario fora da plataforma Click Win.",
+      "l4": "Cliques nao podem ser transferidos, trocados ou resgatados por dinheiro.",
+      "l5": "Todas as compras de cliques sao finais e nao reembolsaveis.",
+      "p1": "A plataforma reserva-se o direito de modificar o preco dos cliques com aviso previo."
+    },
+    "s6": {
+      "title": "Mecanismo de Leilao",
+      "intro": "Os leiloes operam sob as seguintes regras:",
+      "l1": "Cada leilao tem um premio fixo e um cronometro regressivo.",
+      "l2": "Cada clique reinicia o cronometro e consome um credito.",
+      "l3": "O ultimo usuario a clicar quando o cronometro expira ganha o premio.",
+      "p1": "A plataforma usa operacoes atomicas Redis e validacao server-side para garantir fair play. Qualquer tentativa de manipular o mecanismo do leilao pode resultar em suspensao da conta."
+    },
+    "s7": {
+      "title": "Liquidacao de Premios",
+      "p1": "Premios sao liquidados on-chain via smart contracts na BNB Chain. O vencedor recebe seu premio apos o leilao ser finalizado e validado pelo sistema.",
+      "p2": "Os tempos de liquidacao podem variar dependendo das condicoes da rede blockchain. A plataforma nao e responsavel por atrasos causados por congestionamento da rede."
+    },
+    "s8": {
+      "title": "Aviso de Volatilidade",
+      "p1": "Os valores das criptomoedas sao inerentemente volateis. O valor dos depositos, premios e creditos da plataforma pode flutuar com base nas condicoes de mercado. Click Win nao e responsavel por quaisquer perdas resultantes de mudancas nos precos das criptomoedas."
+    },
+    "s9": {
+      "title": "Direitos da Plataforma",
+      "intro": "Click Win reserva-se o direito de:",
+      "l1": "Modificar, suspender ou descontinuar qualquer aspecto da plataforma a qualquer momento.",
+      "l2": "Atualizar estes Termos de Uso com aviso razoavel.",
+      "l3": "Suspender ou encerrar contas que violem estes termos ou se envolvam em atividade suspeita.",
+      "l4": "Ajustar parametros de leilao, precos de cliques e estruturas de recompensa.",
+      "l5": "Implementar procedimentos KYC/AML se exigido por regulamentacoes aplicaveis."
+    },
+    "s10": {
+      "title": "Limitacao de Responsabilidade",
+      "p1": "Click Win, seus operadores, desenvolvedores e afiliados nao serao responsaveis por quaisquer danos diretos, indiretos, incidentais ou consequenciais decorrentes do uso da plataforma. Isso inclui, mas nao se limita a: perda de fundos, comprometimento de carteira, falhas em smart contracts, congestionamento de rede ou acoes regulatorias."
+    },
+    "s11": {
+      "title": "Lei Aplicavel",
+      "p1": "Estes Termos de Uso sao regidos pelo direito internacional aplicavel e pelas leis da jurisdicao onde o Click Win esta registrado. Quaisquer disputas serao resolvidas por meio de arbitragem vinculante."
+    }
+  },
+  "privacy": {
+    "title": "Politica de Privacidade",
+    "lastUpdated": "Ultima atualizacao: Fevereiro 2026",
+    "s1": {
+      "title": "Dados que Coletamos",
+      "intro": "Click Win coleta o minimo de dados necessarios para operar a plataforma:",
+      "l1": "Endereco de carteira (endereco EVM publico usado para autenticacao e transacoes)",
+      "l2": "Historico de transacoes (depositos, compras de cliques, participacao em leiloes, ganhos)",
+      "l3": "Dados de indicacao (codigos de indicacao e enderecos de carteira vinculados)",
+      "l4": "Preferencia de idioma do navegador (para localizacao)",
+      "l5": "Endereco IP (apenas para seguranca e limitacao de taxa)",
+      "p1": "NAO coletamos enderecos de email, nomes, numeros de telefone ou qualquer informacao pessoal identificavel. Seu endereco de carteira e sua identidade."
+    },
+    "s2": {
+      "title": "Finalidade da Coleta de Dados",
+      "intro": "Usamos os dados coletados exclusivamente para:",
+      "l1": "Autenticacao na plataforma e verificacao de carteira",
+      "l2": "Processamento de transacoes e liquidacao de leiloes",
+      "l3": "Rastreamento de recompensas e bonus de indicacao",
+      "l4": "Seguranca da plataforma, prevencao de fraude e medidas anti-abuso",
+      "l5": "Melhoria do desempenho da plataforma e experiencia do usuario"
+    },
+    "s3": {
+      "title": "Transparencia Blockchain",
+      "p1": "Todas as transacoes no Click Win sao registradas na BNB Chain (uma blockchain publica). Isso significa que enderecos de carteira, valores de deposito, resultados de leiloes e liquidacoes de premios sao publicamente visiveis na blockchain. Isso e inerente a tecnologia blockchain e fornece total auditabilidade."
+    },
+    "s4": {
+      "title": "Cookies e Armazenamento Local",
+      "p1": "Click Win usa armazenamento local para salvar sua preferencia de idioma e estado de conexao da carteira. Nao usamos cookies de rastreamento ou analytics de terceiros. Nenhum rastreador de publicidade esta presente na plataforma."
+    },
+    "s5": {
+      "title": "Retencao de Dados",
+      "p1": "Registros de transacoes sao mantidos indefinidamente, pois fazem parte do registro publico da blockchain. Dados do lado da plataforma (informacoes de sessao, dados de limitacao de taxa) sao mantidos apenas pelo tempo necessario para operacao e seguranca da plataforma."
+    }
+  },
+  "risk": {
+    "title": "Divulgacao de Riscos",
+    "lastUpdated": "Ultima atualizacao: Fevereiro 2026",
+    "intro": "Por favor, leia esta divulgacao de riscos cuidadosamente antes de usar o Click Win. Participar de plataformas baseadas em blockchain envolve riscos inerentes.",
+    "r1": {
+      "title": "Riscos de Carteira e Seguranca",
+      "desc": "Voce e o unico responsavel pela seguranca da sua carteira, chaves privadas e frase de recuperacao. Se sua carteira for comprometida, os fundos podem ser irrecuperavelmente perdidos. Click Win nao pode recuperar ativos perdidos ou roubados."
+    },
+    "r2": {
+      "title": "Riscos de Smart Contracts",
+      "desc": "Embora nossos smart contracts sejam projetados e testados para seguranca, nenhum software e imune a bugs ou vulnerabilidades. Falhas em smart contracts podem resultar em perda de fundos."
+    },
+    "r3": {
+      "title": "Riscos de Rede Blockchain",
+      "desc": "Congestionamento da rede BNB Chain, interrupcoes ou forks podem atrasar transacoes, afetar o timing dos leiloes ou impactar a liquidacao de premios. A plataforma nao e responsavel por problemas no nivel da blockchain."
+    },
+    "r4": {
+      "title": "Volatilidade de Criptomoedas",
+      "desc": "O valor de BNB, USDT e outras criptomoedas pode flutuar significativamente. O valor dos seus depositos e premios pode mudar devido as condicoes de mercado."
+    },
+    "r5": {
+      "title": "Mudancas Regulatorias",
+      "desc": "Regulamentacoes de criptomoedas e blockchain variam por jurisdicao e estao evoluindo rapidamente. Mudancas na lei podem afetar sua capacidade de usar a plataforma ou a legalidade da participacao na sua regiao."
+    },
+    "disclaimer": "Ao usar o Click Win, voce reconhece esses riscos e aceita total responsabilidade pela sua participacao."
+  },
+  "credits": {
+    "title": "Politica de Creditos",
+    "lastUpdated": "Ultima atualizacao: Fevereiro 2026",
+    "intro": "Esta politica explica a natureza, uso e limitacoes dos creditos digitais (cliques) na plataforma Click Win.",
+    "c1": {
+      "title": "Creditos de Acesso a Plataforma",
+      "desc": "Cliques digitais sao creditos que concedem acesso a funcionalidades da plataforma, especificamente participacao em leiloes. Sao o mecanismo atraves do qual os usuarios interagem com o sistema de leiloes."
+    },
+    "c2": {
+      "title": "Nao Sao Moeda",
+      "desc": "Cliques NAO sao criptomoedas, moeda digital ou qualquer forma de dinheiro. Nao tem valor monetario fora da plataforma Click Win e nao podem ser convertidos de volta em criptomoeda ou moeda fiduciaria."
+    },
+    "c3": {
+      "title": "Nao Sao Instrumentos Financeiros",
+      "desc": "Cliques nao representam participacao acionaria, divida, contratos de investimento ou qualquer instrumento financeiro. Comprar cliques nao e um investimento e nao da direito ao detentor a qualquer retorno financeiro."
+    },
+    "c4": {
+      "title": "Nao Reembolsaveis",
+      "desc": "Todas as compras de cliques sao finais. Cliques nao podem ser reembolsados, revertidos ou trocados. Os usuarios devem comprar apenas os cliques que pretendem usar na plataforma."
+    },
+    "c5": {
+      "title": "Politica de Expiracao",
+      "desc": "Cliques nao expiram, a menos que explicitamente declarado em uma campanha promocional. A plataforma reserva-se o direito de introduzir politicas de expiracao com aviso previo."
+    },
+    "finalNote": "Cliques sao creditos de entretenimento, nao produtos financeiros. Use com responsabilidade."
+  },
+  "compliance": {
+    "title": "AML e Conformidade",
+    "lastUpdated": "Ultima atualizacao: Fevereiro 2026",
+    "intro": "Click Win esta comprometido em manter uma plataforma segura e em conformidade. Esta pagina descreve nossa abordagem para anti-lavagem de dinheiro (AML) e conformidade regulatoria.",
+    "doNot": {
+      "title": "O que NAO Suportamos",
+      "l1": "Click Win nao suporta transacoes em moeda fiduciaria. Todos os depositos sao apenas em criptomoeda (BNB ou USDT).",
+      "l2": "Click Win nao oferece servicos de carteira custodiada. Os usuarios mantem total controle de suas carteiras em todos os momentos.",
+      "l3": "Click Win nao facilita transferencias peer-to-peer de cliques ou creditos da plataforma entre usuarios."
+    },
+    "rights": {
+      "title": "A Plataforma Reserva-se o Direito De",
+      "l1": "Implementar verificacao KYC (Know Your Customer) se exigido por lei ou regulamentacao aplicavel.",
+      "l2": "Suspender ou encerrar contas que exibam atividade suspeita, potencial fraude ou indicadores de lavagem de dinheiro.",
+      "l3": "Cooperar com autoridades policiais e regulatorias quando legalmente exigido."
+    }
+  },
+  "footer": {
+    "description": "A primeira plataforma de leilao movida a blockchain onde cada clique conta. Construida na BNB Chain para transparencia e velocidade.",
+    "legal": "Legal",
+    "terms": "Termos de Uso",
+    "privacy": "Politica de Privacidade",
+    "risk": "Divulgacao de Riscos",
+    "credits": "Politica de Creditos",
+    "compliance": "AML e Conformidade",
+    "community": "Comunidade",
+    "disclaimer": "Click Win e uma plataforma de entretenimento. Cliques digitais nao sao instrumentos financeiros.",
+    "copyright": "\u00a9 {{year}} Click Win. Todos os direitos reservados.",
+    "builtOn": "Construido na BNB Chain"
+  }
+}

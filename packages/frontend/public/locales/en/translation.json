@@ -1,0 +1,525 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "help": "Help",
+    "partner": "Be a Partner"
+  },
+  "wallet": {
+    "connect": "Connect Wallet",
+    "disconnect": "Disconnect"
+  },
+  "home": {
+    "hero": {
+      "badge": "Live on BNB Chain",
+      "titleLine1": "Click. Win.",
+      "titleLine2": "Get Rewarded.",
+      "subtitle": "The first blockchain-powered auction platform where every click counts. Buy clicks, join auctions, and win prizes at up to 99% discount."
+    },
+    "cta": {
+      "start": "Start Clicking",
+      "learn": "Learn More"
+    },
+    "auction": {
+      "title": "Live Auction",
+      "subtitle": "Join the current auction and compete for amazing prizes"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Four simple steps to start winning"
+    },
+    "steps": {
+      "connect": {
+        "title": "Connect Wallet",
+        "desc": "Connect your MetaMask or any EVM-compatible wallet to get started."
+      },
+      "deposit": {
+        "title": "Deposit & Buy Clicks",
+        "desc": "Deposit BNB or USDT and convert them into digital clicks."
+      },
+      "click": {
+        "title": "Click in Auctions",
+        "desc": "Use your clicks in live auctions. Each click resets the countdown timer."
+      },
+      "win": {
+        "title": "Win Prizes",
+        "desc": "The last person to click when the timer runs out wins the prize!"
+      }
+    },
+    "stats": {
+      "users": "10,000+",
+      "usersLabel": "Active Users",
+      "auctions": "500+",
+      "auctionsLabel": "Auctions Completed",
+      "settled": "$2M+",
+      "settledLabel": "Prizes Settled",
+      "chain": "BNB",
+      "chainLabel": "Powered by BNB Chain"
+    },
+    "finalCta": {
+      "title": "Ready to Start Winning?",
+      "subtitle": "Connect your wallet and join the next auction. Every click could be the winning one.",
+      "btn": "Connect Wallet & Start"
+    }
+  },
+  "auction": {
+    "status": "Auction Status",
+    "live": "LIVE",
+    "prize": "Current Prize",
+    "discount": "Current Discount",
+    "timer": "Time Left",
+    "clicks": "Total Clicks",
+    "lastClick": "Last Click",
+    "clickBtn": "CLICK!",
+    "clickInfo": "Each click costs 1 credit and resets the timer. Be the last to click!"
+  },
+  "about": {
+    "hero": {
+      "title": "About Click Win",
+      "desc1": "Click Win is a blockchain-powered auction platform built on BNB Chain. Users purchase digital clicks using crypto deposits and compete in timed auctions to win high-value prizes at massive discounts.",
+      "desc2": "Every action is transparent, every result is verifiable, and the entire system runs on smart contracts with no hidden mechanics."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "desc": "To build the most transparent and engaging auction experience in Web3. We believe that combining blockchain technology with gamified auctions creates a fair, exciting, and rewarding platform for everyone."
+    },
+    "howItWorks": {
+      "title": "How It Works"
+    },
+    "steps": {
+      "s1": {
+        "title": "Connect Your Wallet",
+        "desc": "Use MetaMask or any EVM-compatible wallet. No email or registration needed - your wallet is your identity."
+      },
+      "s2": {
+        "title": "Deposit Funds",
+        "desc": "Send BNB or USDT to your unique deposit address. All deposits are tracked on-chain."
+      },
+      "s3": {
+        "title": "Buy Clicks",
+        "desc": "Convert your deposited funds into digital clicks at $0.20 per click. Clicks are non-refundable platform credits."
+      },
+      "s4": {
+        "title": "Join an Auction",
+        "desc": "Enter a live auction and start clicking. Each click resets the countdown timer."
+      },
+      "s5": {
+        "title": "Win the Prize",
+        "desc": "When the timer reaches zero, the last person who clicked wins the prize at a massive discount."
+      },
+      "s6": {
+        "title": "On-Chain Settlement",
+        "desc": "Winners receive their prize via smart contract. Every auction result is recorded on BNB Chain for full transparency."
+      }
+    },
+    "why": {
+      "title": "Why Click Win?",
+      "w1": {
+        "title": "Wallet-Based Identity",
+        "desc": "No emails, no passwords. Your wallet is your account. Connect and start playing in seconds."
+      },
+      "w2": {
+        "title": "Lightning Fast",
+        "desc": "Built on BNB Chain for ultra-low fees and fast transaction confirmations."
+      },
+      "w3": {
+        "title": "Full Transparency",
+        "desc": "Every click, every auction, every result is recorded on-chain and verifiable by anyone."
+      },
+      "w4": {
+        "title": "Referral Rewards",
+        "desc": "Invite friends and earn 20% of their first click purchase. Your referral code is forever linked to your wallet."
+      },
+      "w5": {
+        "title": "Global Access",
+        "desc": "Available worldwide. No geographic restrictions. Anyone with a crypto wallet can participate."
+      },
+      "w6": {
+        "title": "Fair Mechanics",
+        "desc": "No bots, no cheating. Atomic Redis operations and server-side validation ensure every click is legitimate."
+      },
+      "footer": "Click Win combines the thrill of auctions with the transparency of blockchain technology."
+    },
+    "tech": {
+      "title": "Our Technology",
+      "t1": {
+        "title": "Next.js Frontend",
+        "desc": "Statically exported, ultra-fast frontend hosted on CDN for global low-latency access."
+      },
+      "t2": {
+        "title": "Real-Time WebSocket",
+        "desc": "Live auction updates, timer synchronization, and click events delivered in milliseconds."
+      },
+      "t3": {
+        "title": "Redis Atomic Operations",
+        "desc": "Lua scripts ensure click ordering and timer resets are atomic, preventing race conditions."
+      },
+      "t4": {
+        "title": "PostgreSQL Persistence",
+        "desc": "Complete audit trail of all auctions, clicks, deposits, and settlements."
+      },
+      "t5": {
+        "title": "EVM Signature Auth",
+        "desc": "Wallet-based authentication using cryptographic signatures. No passwords stored."
+      },
+      "t6": {
+        "title": "BNB Chain Smart Contracts",
+        "desc": "Deposit tracking and prize settlement handled by audited smart contracts."
+      }
+    },
+    "vision": {
+      "title": "Our Vision",
+      "desc1": "We envision a future where auctions are fully decentralized, transparent, and accessible to everyone. Click Win is the first step toward that vision.",
+      "desc2": "Our roadmap includes multi-chain support, governance tokens, DAO-controlled auction parameters, and NFT prize integrations."
+    }
+  },
+  "help": {
+    "hero": {
+      "title": "Help & FAQ",
+      "subtitle": "Find answers to the most common questions about Click Win"
+    },
+    "faq": {
+      "q1": {
+        "question": "What is Click Win?",
+        "answer": "Click Win is a blockchain-powered auction platform where users buy digital clicks and compete in timed auctions to win prizes at deep discounts. Key features include:",
+        "list": [
+          "Wallet-based authentication (no email needed)",
+          "Auctions on BNB Chain for transparency",
+          "Prizes at up to 99% discount",
+          "Real-time WebSocket-powered experience"
+        ]
+      },
+      "q2": {
+        "question": "How do I get started?",
+        "answer": "Getting started with Click Win is easy. Follow these steps:",
+        "list": [
+          "Install MetaMask or any EVM-compatible wallet",
+          "Connect your wallet on the Click Win homepage",
+          "Deposit BNB or USDT to your unique deposit address",
+          "Buy clicks at $0.20 each",
+          "Join a live auction and start clicking!"
+        ]
+      },
+      "q3": {
+        "question": "What are digital clicks?",
+        "answer": "Digital clicks are non-refundable platform credits used to participate in auctions. Each click costs $0.20 and is consumed when you click during a live auction. Clicks are not cryptocurrency, not financial instruments, and have no value outside the Click Win platform."
+      },
+      "q4": {
+        "question": "How do auctions work?",
+        "answer": "Each auction has a countdown timer and a prize. When you click, the timer resets and a small amount is added to the discount pool. The mechanics are:",
+        "list": [
+          "Each click resets the timer (usually 30 seconds)",
+          "Each click increases the prize discount",
+          "When the timer reaches zero, the last clicker wins",
+          "The winner pays the discounted price for the prize",
+          "All results are recorded on BNB Chain"
+        ]
+      },
+      "q5": {
+        "question": "Is Click Win a gambling platform?",
+        "answer": "No. Click Win is an entertainment and auction platform. Users purchase digital credits (clicks) to participate in a competitive auction mechanic. There is no house edge, no random number generation, and no betting. The outcome is determined entirely by user actions (clicking) and timing."
+      },
+      "q6": {
+        "question": "How does the referral program work?",
+        "answer": "Every user gets a unique referral code linked to their wallet address. When someone signs up through your link and makes their first click purchase, you receive a bonus. Details:",
+        "list": [
+          "20% bonus of the referred user's first click purchase",
+          "Bonus credited as platform clicks",
+          "No limit on referrals",
+          "Track your referrals in the Partner dashboard"
+        ]
+      },
+      "q7": {
+        "question": "What blockchain does Click Win use?",
+        "answer": "Click Win runs on BNB Chain (formerly Binance Smart Chain), Chain ID 56. We chose BNB Chain for its low transaction fees, fast block times, and wide wallet support. All deposits, auction settlements, and prize distributions are handled on-chain."
+      }
+    },
+    "support": {
+      "title": "Still Need Help?",
+      "desc": "Join our community channels for direct support from the Click Win team and fellow users.",
+      "btn": "Join Our Telegram"
+    }
+  },
+  "partner": {
+    "hero": {
+      "title": "Be a Partner",
+      "desc": "Join the Click Win ecosystem as a partner. Whether you're a brand, influencer, or Web3 project, there's a partnership opportunity for you."
+    },
+    "why": {
+      "title": "Why Partner With Us?",
+      "w1": {
+        "title": "Growing User Base",
+        "desc": "Access our rapidly expanding community of crypto-native users and auction enthusiasts."
+      },
+      "w2": {
+        "title": "On-Chain Transparency",
+        "desc": "All partnership metrics, referral tracking, and payouts are verifiable on BNB Chain."
+      },
+      "w3": {
+        "title": "Global Reach",
+        "desc": "Click Win operates worldwide with a multilingual platform (English, Portuguese, Spanish)."
+      },
+      "w4": {
+        "title": "Real-Time Analytics",
+        "desc": "Track your referrals, earnings, and campaign performance in real-time through your dashboard."
+      },
+      "w5": {
+        "title": "Web3 Native",
+        "desc": "Built for the decentralized ecosystem. Wallet-based onboarding means zero friction for crypto users."
+      },
+      "w6": {
+        "title": "Revenue Sharing",
+        "desc": "Earn 20% of every first purchase made through your referral links. Paid in platform credits."
+      },
+      "footer": "Partner with Click Win to grow your brand in the Web3 space."
+    },
+    "opp": {
+      "title": "Partnership Opportunities",
+      "token": {
+        "title": "Token & Project Partners",
+        "desc": "List your token as an auction prize. Gain exposure to thousands of active crypto users."
+      },
+      "brand": {
+        "title": "Brand Sponsors",
+        "desc": "Sponsor auctions with your products or services. Premium visibility across the platform."
+      },
+      "strategic": {
+        "title": "Strategic Integrations",
+        "desc": "Integrate Click Win into your platform, wallet, or DApp. API access available for partners."
+      }
+    },
+    "steps": {
+      "title": "How to Get Started",
+      "s1": {
+        "title": "Connect Wallet",
+        "desc": "Connect your wallet to create your partner account."
+      },
+      "s2": {
+        "title": "Get Referral Code",
+        "desc": "Receive your unique referral code linked to your wallet address."
+      },
+      "s3": {
+        "title": "Share & Promote",
+        "desc": "Share your referral link across your channels and community."
+      },
+      "s4": {
+        "title": "Earn Rewards",
+        "desc": "Earn 20% of every first purchase made through your link."
+      },
+      "footer": "Referral rewards are credited as platform clicks and tracked on-chain."
+    },
+    "referral": {
+      "title": "Your Referral Dashboard",
+      "subtitle": "Track your referrals, earnings, and share your link",
+      "linkLabel": "Your Referral Link",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "totalReferred": "Total Referred",
+      "pendingRewards": "Pending Rewards",
+      "clicksEarned": "Clicks Earned",
+      "shareTwitter": "Share on X",
+      "shareTelegram": "Share on Telegram",
+      "historyTitle": "Earnings History",
+      "noHistory": "No referral earnings yet. Share your link to start earning!"
+    },
+    "cta": {
+      "title": "Ready to Partner?",
+      "desc": "Contact us to discuss custom partnership opportunities or get started with the referral program today.",
+      "btn": "Contact Us"
+    }
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "lastUpdated": "Last updated: February 2026",
+    "s1": {
+      "title": "Introduction",
+      "p1": "By accessing and using the Click Win platform, you agree to be bound by these Terms of Use. Click Win is an entertainment and auction platform powered by blockchain technology on BNB Chain. If you do not agree with these terms, please do not use the platform."
+    },
+    "s2": {
+      "title": "Nature of the Platform",
+      "intro": "Click Win is a digital auction entertainment platform. Users should understand that:",
+      "l1": "Click Win is NOT a gambling, betting, or financial investment platform.",
+      "l2": "Digital clicks are platform credits used for entertainment purposes only.",
+      "l3": "Auction outcomes are determined by user actions (timing and clicking), not by random number generation.",
+      "l4": "The platform does not provide financial advice or investment recommendations.",
+      "l5": "Participation is voluntary and for entertainment purposes.",
+      "p1": "Users acknowledge that participating in auctions involves spending platform credits with no guarantee of winning."
+    },
+    "s3": {
+      "title": "Eligibility",
+      "intro": "To use Click Win, you must:",
+      "l1": "Be at least 18 years old or the legal age in your jurisdiction.",
+      "l2": "Have a compatible EVM wallet (MetaMask or similar).",
+      "l3": "Not be a resident of any jurisdiction where participation is prohibited by local law.",
+      "p1": "By using Click Win, you represent that you meet all eligibility requirements."
+    },
+    "s4": {
+      "title": "Wallet-Based Access",
+      "intro": "Click Win uses wallet-based authentication:",
+      "l1": "Your EVM wallet address serves as your unique identity on the platform.",
+      "l2": "You are solely responsible for the security of your wallet, private keys, and seed phrase.",
+      "p1": "Click Win will never ask for your private keys or seed phrase. We are not responsible for any loss resulting from compromised wallet credentials."
+    },
+    "s5": {
+      "title": "Digital Credits (Clicks)",
+      "intro": "Digital clicks are non-refundable platform credits:",
+      "l1": "Clicks are purchased using BNB or USDT at a fixed rate of $0.20 per click.",
+      "l2": "Clicks are NOT cryptocurrency, tokens, or financial instruments.",
+      "l3": "Clicks have no monetary value outside the Click Win platform.",
+      "l4": "Clicks cannot be transferred, exchanged, or redeemed for cash.",
+      "l5": "All click purchases are final and non-refundable.",
+      "p1": "The platform reserves the right to modify click pricing with prior notice."
+    },
+    "s6": {
+      "title": "Auction Mechanism",
+      "intro": "Auctions operate under the following rules:",
+      "l1": "Each auction has a fixed prize and a countdown timer.",
+      "l2": "Each click resets the timer and consumes one credit.",
+      "l3": "The last user to click when the timer expires wins the prize.",
+      "p1": "The platform uses atomic Redis operations and server-side validation to ensure fair play. Any attempt to manipulate the auction mechanism may result in account suspension."
+    },
+    "s7": {
+      "title": "Prize Settlement",
+      "p1": "Prizes are settled on-chain via BNB Chain smart contracts. The winner receives their prize after the auction is finalized and validated by the system.",
+      "p2": "Settlement times may vary depending on blockchain network conditions. The platform is not responsible for delays caused by network congestion."
+    },
+    "s8": {
+      "title": "Volatility Disclaimer",
+      "p1": "Cryptocurrency values are inherently volatile. The value of deposits, prizes, and platform credits may fluctuate based on market conditions. Click Win is not responsible for any losses resulting from cryptocurrency price changes."
+    },
+    "s9": {
+      "title": "Platform Rights",
+      "intro": "Click Win reserves the right to:",
+      "l1": "Modify, suspend, or discontinue any aspect of the platform at any time.",
+      "l2": "Update these Terms of Use with reasonable notice.",
+      "l3": "Suspend or terminate accounts that violate these terms or engage in suspicious activity.",
+      "l4": "Adjust auction parameters, click pricing, and reward structures.",
+      "l5": "Implement KYC/AML procedures if required by applicable regulations."
+    },
+    "s10": {
+      "title": "Limitation of Liability",
+      "p1": "Click Win, its operators, developers, and affiliates shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of the platform. This includes but is not limited to: loss of funds, wallet compromise, smart contract failures, network congestion, or regulatory actions."
+    },
+    "s11": {
+      "title": "Governing Law",
+      "p1": "These Terms of Use are governed by applicable international law and the laws of the jurisdiction where Click Win is registered. Any disputes shall be resolved through binding arbitration."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: February 2026",
+    "s1": {
+      "title": "Data We Collect",
+      "intro": "Click Win collects minimal data necessary to operate the platform:",
+      "l1": "Wallet address (public EVM address used for authentication and transactions)",
+      "l2": "Transaction history (deposits, click purchases, auction participation, winnings)",
+      "l3": "Referral data (referral codes and linked wallet addresses)",
+      "l4": "Browser language preference (for localization)",
+      "l5": "IP address (for security and rate-limiting purposes only)",
+      "p1": "We do NOT collect email addresses, names, phone numbers, or any personally identifiable information. Your wallet address is your identity."
+    },
+    "s2": {
+      "title": "Purpose of Data Collection",
+      "intro": "We use collected data exclusively for:",
+      "l1": "Platform authentication and wallet verification",
+      "l2": "Processing transactions and settling auctions",
+      "l3": "Tracking referral rewards and bonuses",
+      "l4": "Platform security, fraud prevention, and anti-abuse measures",
+      "l5": "Improving platform performance and user experience"
+    },
+    "s3": {
+      "title": "Blockchain Transparency",
+      "p1": "All transactions on Click Win are recorded on BNB Chain (a public blockchain). This means that wallet addresses, deposit amounts, auction results, and prize settlements are publicly visible on the blockchain. This is inherent to blockchain technology and provides full auditability."
+    },
+    "s4": {
+      "title": "Cookies & Local Storage",
+      "p1": "Click Win uses local storage to save your language preference and wallet connection state. We do not use tracking cookies or third-party analytics. No advertising trackers are present on the platform."
+    },
+    "s5": {
+      "title": "Data Retention",
+      "p1": "Transaction records are retained indefinitely as they are part of the blockchain public record. Platform-side data (session info, rate-limiting data) is retained only as long as necessary for platform operation and security."
+    }
+  },
+  "risk": {
+    "title": "Risk Disclosure",
+    "lastUpdated": "Last updated: February 2026",
+    "intro": "Please read this risk disclosure carefully before using Click Win. Participating in blockchain-based platforms involves inherent risks.",
+    "r1": {
+      "title": "Wallet & Security Risks",
+      "desc": "You are solely responsible for the security of your wallet, private keys, and seed phrase. If your wallet is compromised, funds may be irretrievably lost. Click Win cannot recover lost or stolen assets."
+    },
+    "r2": {
+      "title": "Smart Contract Risks",
+      "desc": "While our smart contracts are designed and tested for security, no software is immune to bugs or vulnerabilities. Smart contract failures could result in loss of funds."
+    },
+    "r3": {
+      "title": "Blockchain Network Risks",
+      "desc": "BNB Chain network congestion, outages, or forks could delay transactions, affect auction timing, or impact prize settlement. The platform is not liable for blockchain-level issues."
+    },
+    "r4": {
+      "title": "Cryptocurrency Volatility",
+      "desc": "The value of BNB, USDT, and other cryptocurrencies can fluctuate significantly. The value of your deposits and prizes may change due to market conditions."
+    },
+    "r5": {
+      "title": "Regulatory Changes",
+      "desc": "Cryptocurrency and blockchain regulations vary by jurisdiction and are evolving rapidly. Changes in law may affect your ability to use the platform or the legality of participation in your region."
+    },
+    "disclaimer": "By using Click Win, you acknowledge these risks and accept full responsibility for your participation."
+  },
+  "credits": {
+    "title": "Credits Policy",
+    "lastUpdated": "Last updated: February 2026",
+    "intro": "This policy explains the nature, use, and limitations of digital credits (clicks) on the Click Win platform.",
+    "c1": {
+      "title": "Platform Access Credits",
+      "desc": "Digital clicks are credits that grant access to platform features, specifically auction participation. They are the mechanism through which users interact with the auction system."
+    },
+    "c2": {
+      "title": "Not Currency",
+      "desc": "Clicks are NOT cryptocurrency, digital currency, or any form of money. They have no monetary value outside of the Click Win platform and cannot be converted back to cryptocurrency or fiat."
+    },
+    "c3": {
+      "title": "Not Financial Instruments",
+      "desc": "Clicks do not represent equity, debt, investment contracts, or any financial instrument. Purchasing clicks is not an investment and does not entitle the holder to any financial return."
+    },
+    "c4": {
+      "title": "Non-Refundable",
+      "desc": "All click purchases are final. Clicks cannot be refunded, reversed, or exchanged. Users should only purchase clicks they intend to use on the platform."
+    },
+    "c5": {
+      "title": "Expiration Policy",
+      "desc": "Clicks do not expire unless explicitly stated in a promotional campaign. The platform reserves the right to introduce expiration policies with advance notice."
+    },
+    "finalNote": "Clicks are entertainment credits, not financial products. Use responsibly."
+  },
+  "compliance": {
+    "title": "AML & Compliance",
+    "lastUpdated": "Last updated: February 2026",
+    "intro": "Click Win is committed to maintaining a safe and compliant platform. This page outlines our approach to anti-money laundering (AML) and regulatory compliance.",
+    "doNot": {
+      "title": "What We Do NOT Support",
+      "l1": "Click Win does not support fiat currency transactions. All deposits are in cryptocurrency (BNB or USDT) only.",
+      "l2": "Click Win does not offer custodial wallet services. Users maintain full control of their wallets at all times.",
+      "l3": "Click Win does not facilitate peer-to-peer transfers of clicks or platform credits between users."
+    },
+    "rights": {
+      "title": "The Platform Reserves the Right To",
+      "l1": "Implement KYC (Know Your Customer) verification if required by applicable law or regulation.",
+      "l2": "Suspend or terminate accounts that exhibit suspicious activity, potential fraud, or money laundering indicators.",
+      "l3": "Cooperate with law enforcement and regulatory authorities when legally required to do so."
+    }
+  },
+  "footer": {
+    "description": "The first blockchain-powered auction platform where every click counts. Built on BNB Chain for transparency and speed.",
+    "legal": "Legal",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "risk": "Risk Disclosure",
+    "credits": "Credits Policy",
+    "compliance": "AML & Compliance",
+    "community": "Community",
+    "disclaimer": "Click Win is an entertainment platform. Digital clicks are not financial instruments.",
+    "copyright": "\u00a9 {{year}} Click Win. All rights reserved.",
+    "builtOn": "Built on BNB Chain"
+  }
+}

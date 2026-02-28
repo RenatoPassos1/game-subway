@@ -22,5 +22,9 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@swc/helpers": "^0.5.19",
+    "caniuse-lite": "^1.0.30001774"
   }
 }

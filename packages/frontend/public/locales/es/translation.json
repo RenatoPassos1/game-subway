@@ -1,0 +1,525 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "help": "Ayuda",
+    "partner": "Ser Socio"
+  },
+  "wallet": {
+    "connect": "Conectar Billetera",
+    "disconnect": "Desconectar"
+  },
+  "home": {
+    "hero": {
+      "badge": "En vivo en BNB Chain",
+      "titleLine1": "Haz Clic. Gana.",
+      "titleLine2": "Recibe Recompensas.",
+      "subtitle": "La primera plataforma de subastas impulsada por blockchain donde cada clic cuenta. Compra clics, participa en subastas y gana premios con hasta 99% de descuento."
+    },
+    "cta": {
+      "start": "Empieza a Hacer Clic",
+      "learn": "Saber Mas"
+    },
+    "auction": {
+      "title": "Subasta en Vivo",
+      "subtitle": "Participa en la subasta actual y compite por premios increibles"
+    },
+    "howItWorks": {
+      "title": "Como Funciona",
+      "subtitle": "Cuatro simples pasos para empezar a ganar"
+    },
+    "steps": {
+      "connect": {
+        "title": "Conecta tu Billetera",
+        "desc": "Conecta tu MetaMask o cualquier billetera compatible con EVM para comenzar."
+      },
+      "deposit": {
+        "title": "Deposita y Compra Clics",
+        "desc": "Deposita BNB o USDT y conviertelos en clics digitales."
+      },
+      "click": {
+        "title": "Haz Clic en Subastas",
+        "desc": "Usa tus clics en subastas en vivo. Cada clic reinicia el cronometro."
+      },
+      "win": {
+        "title": "Gana Premios",
+        "desc": "La ultima persona en hacer clic cuando el cronometro llega a cero gana el premio!"
+      }
+    },
+    "stats": {
+      "users": "10.000+",
+      "usersLabel": "Usuarios Activos",
+      "auctions": "500+",
+      "auctionsLabel": "Subastas Completadas",
+      "settled": "$2M+",
+      "settledLabel": "Premios Distribuidos",
+      "chain": "BNB",
+      "chainLabel": "Impulsado por BNB Chain"
+    },
+    "finalCta": {
+      "title": "Listo para Empezar a Ganar?",
+      "subtitle": "Conecta tu billetera y participa en la proxima subasta. Cada clic podria ser el ganador.",
+      "btn": "Conectar Billetera y Empezar"
+    }
+  },
+  "auction": {
+    "status": "Estado de la Subasta",
+    "live": "EN VIVO",
+    "prize": "Premio Actual",
+    "discount": "Descuento Actual",
+    "timer": "Tiempo Restante",
+    "clicks": "Total de Clics",
+    "lastClick": "Ultimo Clic",
+    "clickBtn": "CLIC!",
+    "clickInfo": "Cada clic cuesta 1 credito y reinicia el cronometro. Se el ultimo en hacer clic!"
+  },
+  "about": {
+    "hero": {
+      "title": "Acerca de Click Win",
+      "desc1": "Click Win es una plataforma de subastas impulsada por blockchain construida en BNB Chain. Los usuarios compran clics digitales usando depositos en cripto y compiten en subastas cronometradas para ganar premios con grandes descuentos.",
+      "desc2": "Cada accion es transparente, cada resultado es verificable y todo el sistema funciona con contratos inteligentes sin mecanismos ocultos."
+    },
+    "mission": {
+      "title": "Nuestra Mision",
+      "desc": "Construir la experiencia de subastas mas transparente y atractiva en Web3. Creemos que combinar tecnologia blockchain con subastas gamificadas crea una plataforma justa, emocionante y gratificante para todos."
+    },
+    "howItWorks": {
+      "title": "Como Funciona"
+    },
+    "steps": {
+      "s1": {
+        "title": "Conecta tu Billetera",
+        "desc": "Usa MetaMask o cualquier billetera compatible con EVM. Sin email ni registro necesario - tu billetera es tu identidad."
+      },
+      "s2": {
+        "title": "Deposita Fondos",
+        "desc": "Envia BNB o USDT a tu direccion de deposito unica. Todos los depositos se rastrean on-chain."
+      },
+      "s3": {
+        "title": "Compra Clics",
+        "desc": "Convierte tus fondos depositados en clics digitales a $0.20 por clic. Los clics son creditos no reembolsables."
+      },
+      "s4": {
+        "title": "Participa en una Subasta",
+        "desc": "Entra en una subasta en vivo y empieza a hacer clic. Cada clic reinicia el cronometro."
+      },
+      "s5": {
+        "title": "Gana el Premio",
+        "desc": "Cuando el cronometro llega a cero, la ultima persona que hizo clic gana el premio con un gran descuento."
+      },
+      "s6": {
+        "title": "Liquidacion On-Chain",
+        "desc": "Los ganadores reciben su premio a traves de contrato inteligente. Cada resultado se registra en BNB Chain para total transparencia."
+      }
+    },
+    "why": {
+      "title": "Por que Click Win?",
+      "w1": {
+        "title": "Identidad via Billetera",
+        "desc": "Sin emails, sin contrasenas. Tu billetera es tu cuenta. Conecta y empieza a jugar en segundos."
+      },
+      "w2": {
+        "title": "Ultra Rapido",
+        "desc": "Construido en BNB Chain para comisiones ultra bajas y confirmaciones rapidas de transacciones."
+      },
+      "w3": {
+        "title": "Total Transparencia",
+        "desc": "Cada clic, cada subasta, cada resultado se registra on-chain y es verificable por cualquiera."
+      },
+      "w4": {
+        "title": "Recompensas por Referido",
+        "desc": "Invita amigos y gana 20% de su primera compra de clics. Tu codigo de referido esta vinculado permanentemente a tu billetera."
+      },
+      "w5": {
+        "title": "Acceso Global",
+        "desc": "Disponible en todo el mundo. Sin restricciones geograficas. Cualquiera con una billetera cripto puede participar."
+      },
+      "w6": {
+        "title": "Mecanica Justa",
+        "desc": "Sin bots, sin trampas. Operaciones atomicas Redis y validacion del lado del servidor garantizan que cada clic sea legitimo."
+      },
+      "footer": "Click Win combina la emocion de las subastas con la transparencia de la tecnologia blockchain."
+    },
+    "tech": {
+      "title": "Nuestra Tecnologia",
+      "t1": {
+        "title": "Frontend Next.js",
+        "desc": "Exportacion estatica, frontend ultra-rapido alojado en CDN para acceso global con baja latencia."
+      },
+      "t2": {
+        "title": "WebSocket en Tiempo Real",
+        "desc": "Actualizaciones en vivo de subastas, sincronizacion de temporizador y eventos de clic entregados en milisegundos."
+      },
+      "t3": {
+        "title": "Operaciones Atomicas Redis",
+        "desc": "Scripts Lua garantizan que el ordenamiento de clics y reinicio del temporizador sean atomicos, previniendo condiciones de carrera."
+      },
+      "t4": {
+        "title": "Persistencia PostgreSQL",
+        "desc": "Registro completo de auditoria de todas las subastas, clics, depositos y liquidaciones."
+      },
+      "t5": {
+        "title": "Autenticacion por Firma EVM",
+        "desc": "Autenticacion basada en billetera usando firmas criptograficas. Sin contrasenas almacenadas."
+      },
+      "t6": {
+        "title": "Smart Contracts BNB Chain",
+        "desc": "Rastreo de depositos y liquidacion de premios gestionados por contratos inteligentes auditados."
+      }
+    },
+    "vision": {
+      "title": "Nuestra Vision",
+      "desc1": "Imaginamos un futuro donde las subastas sean completamente descentralizadas, transparentes y accesibles para todos. Click Win es el primer paso hacia esa vision.",
+      "desc2": "Nuestro roadmap incluye soporte multi-chain, tokens de gobernanza, parametros de subasta controlados por DAO e integraciones con premios NFT."
+    }
+  },
+  "help": {
+    "hero": {
+      "title": "Ayuda y FAQ",
+      "subtitle": "Encuentra respuestas a las preguntas mas comunes sobre Click Win"
+    },
+    "faq": {
+      "q1": {
+        "question": "Que es Click Win?",
+        "answer": "Click Win es una plataforma de subastas impulsada por blockchain donde los usuarios compran clics digitales y compiten en subastas cronometradas para ganar premios con grandes descuentos. Caracteristicas principales:",
+        "list": [
+          "Autenticacion via billetera (sin email necesario)",
+          "Subastas en BNB Chain para transparencia",
+          "Premios con hasta 99% de descuento",
+          "Experiencia en tiempo real con WebSocket"
+        ]
+      },
+      "q2": {
+        "question": "Como empezar?",
+        "answer": "Empezar con Click Win es facil. Sigue estos pasos:",
+        "list": [
+          "Instala MetaMask o cualquier billetera compatible con EVM",
+          "Conecta tu billetera en la pagina de inicio de Click Win",
+          "Deposita BNB o USDT en tu direccion de deposito unica",
+          "Compra clics a $0.20 cada uno",
+          "Entra en una subasta en vivo y empieza a hacer clic!"
+        ]
+      },
+      "q3": {
+        "question": "Que son los clics digitales?",
+        "answer": "Los clics digitales son creditos no reembolsables de la plataforma usados para participar en subastas. Cada clic cuesta $0.20 y se consume cuando haces clic durante una subasta en vivo. Los clics no son criptomonedas, no son instrumentos financieros y no tienen valor fuera de la plataforma Click Win."
+      },
+      "q4": {
+        "question": "Como funcionan las subastas?",
+        "answer": "Cada subasta tiene un cronometro y un premio. Cuando haces clic, el cronometro se reinicia y se agrega una pequena cantidad al fondo de descuento. La mecanica es:",
+        "list": [
+          "Cada clic reinicia el cronometro (generalmente 30 segundos)",
+          "Cada clic aumenta el descuento del premio",
+          "Cuando el cronometro llega a cero, el ultimo en hacer clic gana",
+          "El ganador paga el precio con descuento por el premio",
+          "Todos los resultados se registran en BNB Chain"
+        ]
+      },
+      "q5": {
+        "question": "Es Click Win una plataforma de apuestas?",
+        "answer": "No. Click Win es una plataforma de entretenimiento y subastas. Los usuarios compran creditos digitales (clics) para participar en una mecanica competitiva de subastas. No hay margen de la casa, no hay generacion de numeros aleatorios y no hay apuestas. El resultado esta determinado completamente por las acciones de los usuarios (hacer clic) y el tiempo."
+      },
+      "q6": {
+        "question": "Como funciona el programa de referidos?",
+        "answer": "Cada usuario recibe un codigo de referido unico vinculado a su direccion de billetera. Cuando alguien se registra a traves de tu enlace y hace su primera compra de clics, recibes un bono. Detalles:",
+        "list": [
+          "20% de bono de la primera compra de clics del referido",
+          "Bono acreditado como clics de la plataforma",
+          "Sin limite de referidos",
+          "Rastrea tus referidos en el panel de Socio"
+        ]
+      },
+      "q7": {
+        "question": "Que blockchain usa Click Win?",
+        "answer": "Click Win funciona en BNB Chain (anteriormente Binance Smart Chain), Chain ID 56. Elegimos BNB Chain por sus bajas comisiones de transaccion, tiempos rapidos de bloque y amplio soporte de billeteras. Todos los depositos, liquidaciones de subastas y distribuciones de premios se manejan on-chain."
+      }
+    },
+    "support": {
+      "title": "Aun Necesitas Ayuda?",
+      "desc": "Unete a nuestros canales comunitarios para soporte directo del equipo de Click Win y otros usuarios.",
+      "btn": "Unirse al Telegram"
+    }
+  },
+  "partner": {
+    "hero": {
+      "title": "Se un Socio",
+      "desc": "Unete al ecosistema Click Win como socio. Ya seas una marca, influencer o proyecto Web3, hay una oportunidad de asociacion para ti."
+    },
+    "why": {
+      "title": "Por que Asociarte con Nosotros?",
+      "w1": {
+        "title": "Base de Usuarios Creciente",
+        "desc": "Accede a nuestra comunidad en rapida expansion de usuarios crypto-nativos y entusiastas de subastas."
+      },
+      "w2": {
+        "title": "Transparencia On-Chain",
+        "desc": "Todas las metricas de asociacion, rastreo de referidos y pagos son verificables en BNB Chain."
+      },
+      "w3": {
+        "title": "Alcance Global",
+        "desc": "Click Win opera en todo el mundo con una plataforma multilingue (Ingles, Portugues, Espanol)."
+      },
+      "w4": {
+        "title": "Analiticas en Tiempo Real",
+        "desc": "Rastrea tus referidos, ganancias y rendimiento de campanas en tiempo real a traves de tu panel."
+      },
+      "w5": {
+        "title": "Nativo Web3",
+        "desc": "Construido para el ecosistema descentralizado. Incorporacion via billetera significa cero friccion para usuarios cripto."
+      },
+      "w6": {
+        "title": "Reparto de Ingresos",
+        "desc": "Gana 20% de cada primera compra realizada a traves de tus enlaces de referido. Pagado en creditos de la plataforma."
+      },
+      "footer": "Asociate con Click Win para hacer crecer tu marca en el espacio Web3."
+    },
+    "opp": {
+      "title": "Oportunidades de Asociacion",
+      "token": {
+        "title": "Socios de Token y Proyectos",
+        "desc": "Lista tu token como premio de subasta. Gana exposicion ante miles de usuarios cripto activos."
+      },
+      "brand": {
+        "title": "Patrocinadores de Marca",
+        "desc": "Patrocina subastas con tus productos o servicios. Visibilidad premium en toda la plataforma."
+      },
+      "strategic": {
+        "title": "Integraciones Estrategicas",
+        "desc": "Integra Click Win en tu plataforma, billetera o DApp. Acceso a API disponible para socios."
+      }
+    },
+    "steps": {
+      "title": "Como Empezar",
+      "s1": {
+        "title": "Conecta tu Billetera",
+        "desc": "Conecta tu billetera para crear tu cuenta de socio."
+      },
+      "s2": {
+        "title": "Recibe tu Codigo",
+        "desc": "Recibe tu codigo de referido unico vinculado a la direccion de tu billetera."
+      },
+      "s3": {
+        "title": "Comparte y Promociona",
+        "desc": "Comparte tu enlace de referido en tus canales y comunidad."
+      },
+      "s4": {
+        "title": "Gana Recompensas",
+        "desc": "Gana 20% de cada primera compra realizada a traves de tu enlace."
+      },
+      "footer": "Las recompensas por referido se acreditan como clics de la plataforma y se rastrean on-chain."
+    },
+    "referral": {
+      "title": "Tu Panel de Referidos",
+      "subtitle": "Rastrea tus referidos, ganancias y comparte tu enlace",
+      "linkLabel": "Tu Enlace de Referido",
+      "copy": "Copiar",
+      "copied": "Copiado!",
+      "totalReferred": "Total Referidos",
+      "pendingRewards": "Recompensas Pendientes",
+      "clicksEarned": "Clics Ganados",
+      "shareTwitter": "Compartir en X",
+      "shareTelegram": "Compartir en Telegram",
+      "historyTitle": "Historial de Ganancias",
+      "noHistory": "Aun no hay ganancias por referidos. Comparte tu enlace para empezar a ganar!"
+    },
+    "cta": {
+      "title": "Listo para Ser Socio?",
+      "desc": "Contactanos para discutir oportunidades de asociacion personalizadas o comienza con el programa de referidos hoy.",
+      "btn": "Contactanos"
+    }
+  },
+  "terms": {
+    "title": "Terminos de Uso",
+    "lastUpdated": "Ultima actualizacion: Febrero 2026",
+    "s1": {
+      "title": "Introduccion",
+      "p1": "Al acceder y usar la plataforma Click Win, aceptas estar sujeto a estos Terminos de Uso. Click Win es una plataforma de entretenimiento y subastas impulsada por tecnologia blockchain en BNB Chain. Si no estas de acuerdo con estos terminos, por favor no uses la plataforma."
+    },
+    "s2": {
+      "title": "Naturaleza de la Plataforma",
+      "intro": "Click Win es una plataforma digital de entretenimiento y subastas. Los usuarios deben entender que:",
+      "l1": "Click Win NO es una plataforma de apuestas, juegos de azar o inversion financiera.",
+      "l2": "Los clics digitales son creditos de la plataforma usados solo para fines de entretenimiento.",
+      "l3": "Los resultados de las subastas son determinados por las acciones de los usuarios (tiempo y clics), no por generacion de numeros aleatorios.",
+      "l4": "La plataforma no proporciona asesoramiento financiero ni recomendaciones de inversion.",
+      "l5": "La participacion es voluntaria y para fines de entretenimiento.",
+      "p1": "Los usuarios reconocen que participar en subastas implica gastar creditos de la plataforma sin garantia de ganar."
+    },
+    "s3": {
+      "title": "Elegibilidad",
+      "intro": "Para usar Click Win, debes:",
+      "l1": "Tener al menos 18 anos o la edad legal en tu jurisdiccion.",
+      "l2": "Tener una billetera EVM compatible (MetaMask o similar).",
+      "l3": "No ser residente de ninguna jurisdiccion donde la participacion este prohibida por la ley local.",
+      "p1": "Al usar Click Win, declaras que cumples con todos los requisitos de elegibilidad."
+    },
+    "s4": {
+      "title": "Acceso via Billetera",
+      "intro": "Click Win usa autenticacion basada en billetera:",
+      "l1": "Tu direccion de billetera EVM sirve como tu identidad unica en la plataforma.",
+      "l2": "Eres el unico responsable de la seguridad de tu billetera, claves privadas y frase de recuperacion.",
+      "p1": "Click Win nunca te pedira tus claves privadas o frase de recuperacion. No somos responsables de ninguna perdida resultante de credenciales de billetera comprometidas."
+    },
+    "s5": {
+      "title": "Creditos Digitales (Clics)",
+      "intro": "Los clics digitales son creditos no reembolsables de la plataforma:",
+      "l1": "Los clics se compran usando BNB o USDT a una tasa fija de $0.20 por clic.",
+      "l2": "Los clics NO son criptomonedas, tokens o instrumentos financieros.",
+      "l3": "Los clics no tienen valor monetario fuera de la plataforma Click Win.",
+      "l4": "Los clics no pueden ser transferidos, intercambiados o canjeados por dinero.",
+      "l5": "Todas las compras de clics son finales y no reembolsables.",
+      "p1": "La plataforma se reserva el derecho de modificar el precio de los clics con aviso previo."
+    },
+    "s6": {
+      "title": "Mecanismo de Subasta",
+      "intro": "Las subastas operan bajo las siguientes reglas:",
+      "l1": "Cada subasta tiene un premio fijo y un cronometro regresivo.",
+      "l2": "Cada clic reinicia el cronometro y consume un credito.",
+      "l3": "El ultimo usuario en hacer clic cuando el cronometro expira gana el premio.",
+      "p1": "La plataforma usa operaciones atomicas Redis y validacion del lado del servidor para garantizar el juego limpio. Cualquier intento de manipular el mecanismo de subasta puede resultar en suspension de la cuenta."
+    },
+    "s7": {
+      "title": "Liquidacion de Premios",
+      "p1": "Los premios se liquidan on-chain a traves de smart contracts en BNB Chain. El ganador recibe su premio despues de que la subasta sea finalizada y validada por el sistema.",
+      "p2": "Los tiempos de liquidacion pueden variar dependiendo de las condiciones de la red blockchain. La plataforma no es responsable de retrasos causados por congestion de la red."
+    },
+    "s8": {
+      "title": "Aviso de Volatilidad",
+      "p1": "Los valores de las criptomonedas son inherentemente volatiles. El valor de los depositos, premios y creditos de la plataforma puede fluctuar segun las condiciones del mercado. Click Win no es responsable de ninguna perdida resultante de cambios en los precios de las criptomonedas."
+    },
+    "s9": {
+      "title": "Derechos de la Plataforma",
+      "intro": "Click Win se reserva el derecho de:",
+      "l1": "Modificar, suspender o descontinuar cualquier aspecto de la plataforma en cualquier momento.",
+      "l2": "Actualizar estos Terminos de Uso con aviso razonable.",
+      "l3": "Suspender o terminar cuentas que violen estos terminos o se involucren en actividad sospechosa.",
+      "l4": "Ajustar parametros de subasta, precios de clics y estructuras de recompensa.",
+      "l5": "Implementar procedimientos KYC/AML si lo requieren las regulaciones aplicables."
+    },
+    "s10": {
+      "title": "Limitacion de Responsabilidad",
+      "p1": "Click Win, sus operadores, desarrolladores y afiliados no seran responsables de ningun dano directo, indirecto, incidental o consecuente derivado del uso de la plataforma. Esto incluye pero no se limita a: perdida de fondos, compromiso de billetera, fallas en smart contracts, congestion de red o acciones regulatorias."
+    },
+    "s11": {
+      "title": "Ley Aplicable",
+      "p1": "Estos Terminos de Uso se rigen por el derecho internacional aplicable y las leyes de la jurisdiccion donde Click Win esta registrado. Cualquier disputa se resolvera mediante arbitraje vinculante."
+    }
+  },
+  "privacy": {
+    "title": "Politica de Privacidad",
+    "lastUpdated": "Ultima actualizacion: Febrero 2026",
+    "s1": {
+      "title": "Datos que Recopilamos",
+      "intro": "Click Win recopila el minimo de datos necesarios para operar la plataforma:",
+      "l1": "Direccion de billetera (direccion EVM publica usada para autenticacion y transacciones)",
+      "l2": "Historial de transacciones (depositos, compras de clics, participacion en subastas, ganancias)",
+      "l3": "Datos de referidos (codigos de referido y direcciones de billetera vinculadas)",
+      "l4": "Preferencia de idioma del navegador (para localizacion)",
+      "l5": "Direccion IP (solo para seguridad y limitacion de tasa)",
+      "p1": "NO recopilamos direcciones de email, nombres, numeros de telefono o cualquier informacion personal identificable. Tu direccion de billetera es tu identidad."
+    },
+    "s2": {
+      "title": "Proposito de la Recopilacion de Datos",
+      "intro": "Usamos los datos recopilados exclusivamente para:",
+      "l1": "Autenticacion en la plataforma y verificacion de billetera",
+      "l2": "Procesamiento de transacciones y liquidacion de subastas",
+      "l3": "Rastreo de recompensas y bonos de referidos",
+      "l4": "Seguridad de la plataforma, prevencion de fraude y medidas anti-abuso",
+      "l5": "Mejora del rendimiento de la plataforma y experiencia del usuario"
+    },
+    "s3": {
+      "title": "Transparencia Blockchain",
+      "p1": "Todas las transacciones en Click Win se registran en BNB Chain (una blockchain publica). Esto significa que las direcciones de billetera, montos de deposito, resultados de subastas y liquidaciones de premios son publicamente visibles en la blockchain. Esto es inherente a la tecnologia blockchain y proporciona total auditabilidad."
+    },
+    "s4": {
+      "title": "Cookies y Almacenamiento Local",
+      "p1": "Click Win usa almacenamiento local para guardar tu preferencia de idioma y estado de conexion de billetera. No usamos cookies de rastreo ni analiticas de terceros. No hay rastreadores publicitarios presentes en la plataforma."
+    },
+    "s5": {
+      "title": "Retencion de Datos",
+      "p1": "Los registros de transacciones se mantienen indefinidamente ya que son parte del registro publico de la blockchain. Los datos del lado de la plataforma (informacion de sesion, datos de limitacion de tasa) se mantienen solo el tiempo necesario para la operacion y seguridad de la plataforma."
+    }
+  },
+  "risk": {
+    "title": "Divulgacion de Riesgos",
+    "lastUpdated": "Ultima actualizacion: Febrero 2026",
+    "intro": "Por favor, lee esta divulgacion de riesgos cuidadosamente antes de usar Click Win. Participar en plataformas basadas en blockchain conlleva riesgos inherentes.",
+    "r1": {
+      "title": "Riesgos de Billetera y Seguridad",
+      "desc": "Eres el unico responsable de la seguridad de tu billetera, claves privadas y frase de recuperacion. Si tu billetera es comprometida, los fondos pueden perderse irrecuperablemente. Click Win no puede recuperar activos perdidos o robados."
+    },
+    "r2": {
+      "title": "Riesgos de Smart Contracts",
+      "desc": "Aunque nuestros smart contracts estan disenados y probados para seguridad, ningun software es inmune a bugs o vulnerabilidades. Las fallas en smart contracts podrian resultar en perdida de fondos."
+    },
+    "r3": {
+      "title": "Riesgos de Red Blockchain",
+      "desc": "La congestion de la red BNB Chain, interrupciones o forks podrian retrasar transacciones, afectar el tiempo de las subastas o impactar la liquidacion de premios. La plataforma no es responsable de problemas a nivel de blockchain."
+    },
+    "r4": {
+      "title": "Volatilidad de Criptomonedas",
+      "desc": "El valor de BNB, USDT y otras criptomonedas puede fluctuar significativamente. El valor de tus depositos y premios puede cambiar debido a las condiciones del mercado."
+    },
+    "r5": {
+      "title": "Cambios Regulatorios",
+      "desc": "Las regulaciones de criptomonedas y blockchain varian segun la jurisdiccion y estan evolucionando rapidamente. Los cambios en la ley pueden afectar tu capacidad de usar la plataforma o la legalidad de la participacion en tu region."
+    },
+    "disclaimer": "Al usar Click Win, reconoces estos riesgos y aceptas la total responsabilidad por tu participacion."
+  },
+  "credits": {
+    "title": "Politica de Creditos",
+    "lastUpdated": "Ultima actualizacion: Febrero 2026",
+    "intro": "Esta politica explica la naturaleza, uso y limitaciones de los creditos digitales (clics) en la plataforma Click Win.",
+    "c1": {
+      "title": "Creditos de Acceso a la Plataforma",
+      "desc": "Los clics digitales son creditos que otorgan acceso a funcionalidades de la plataforma, especificamente participacion en subastas. Son el mecanismo a traves del cual los usuarios interactuan con el sistema de subastas."
+    },
+    "c2": {
+      "title": "No Son Moneda",
+      "desc": "Los clics NO son criptomonedas, moneda digital o cualquier forma de dinero. No tienen valor monetario fuera de la plataforma Click Win y no pueden convertirse de vuelta en criptomoneda o moneda fiduciaria."
+    },
+    "c3": {
+      "title": "No Son Instrumentos Financieros",
+      "desc": "Los clics no representan participacion accionaria, deuda, contratos de inversion o cualquier instrumento financiero. Comprar clics no es una inversion y no da derecho al titular a ningun retorno financiero."
+    },
+    "c4": {
+      "title": "No Reembolsables",
+      "desc": "Todas las compras de clics son finales. Los clics no pueden ser reembolsados, revertidos o intercambiados. Los usuarios solo deben comprar los clics que pretendan usar en la plataforma."
+    },
+    "c5": {
+      "title": "Politica de Expiracion",
+      "desc": "Los clics no expiran a menos que se indique explicitamente en una campana promocional. La plataforma se reserva el derecho de introducir politicas de expiracion con aviso previo."
+    },
+    "finalNote": "Los clics son creditos de entretenimiento, no productos financieros. Usa responsablemente."
+  },
+  "compliance": {
+    "title": "AML y Cumplimiento",
+    "lastUpdated": "Ultima actualizacion: Febrero 2026",
+    "intro": "Click Win esta comprometido a mantener una plataforma segura y en cumplimiento. Esta pagina describe nuestro enfoque de anti-lavado de dinero (AML) y cumplimiento regulatorio.",
+    "doNot": {
+      "title": "Lo que NO Soportamos",
+      "l1": "Click Win no soporta transacciones en moneda fiduciaria. Todos los depositos son solo en criptomoneda (BNB o USDT).",
+      "l2": "Click Win no ofrece servicios de billetera custodiada. Los usuarios mantienen total control de sus billeteras en todo momento.",
+      "l3": "Click Win no facilita transferencias peer-to-peer de clics o creditos de la plataforma entre usuarios."
+    },
+    "rights": {
+      "title": "La Plataforma se Reserva el Derecho De",
+      "l1": "Implementar verificacion KYC (Know Your Customer) si lo requiere la ley o regulacion aplicable.",
+      "l2": "Suspender o terminar cuentas que exhiban actividad sospechosa, potencial fraude o indicadores de lavado de dinero.",
+      "l3": "Cooperar con las autoridades policiales y regulatorias cuando sea legalmente requerido."
+    }
+  },
+  "footer": {
+    "description": "La primera plataforma de subastas impulsada por blockchain donde cada clic cuenta. Construida en BNB Chain para transparencia y velocidad.",
+    "legal": "Legal",
+    "terms": "Terminos de Uso",
+    "privacy": "Politica de Privacidad",
+    "risk": "Divulgacion de Riesgos",
+    "credits": "Politica de Creditos",
+    "compliance": "AML y Cumplimiento",
+    "community": "Comunidad",
+    "disclaimer": "Click Win es una plataforma de entretenimiento. Los clics digitales no son instrumentos financieros.",
+    "copyright": "\u00a9 {{year}} Click Win. Todos los derechos reservados.",
+    "builtOn": "Construido en BNB Chain"
+  }
+}
