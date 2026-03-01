@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import WalletButton from './WalletButton';
 import LanguageSelector from './LanguageSelector';
+import NotificationButton from './NotificationButton';
 
 const NAV_LINKS = [
   { href: '/', labelKey: 'nav.home' },
@@ -92,6 +93,9 @@ export default function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
+            {/* Notification Bell */}
+            <NotificationButton />
+
             {/* Language Selector */}
             <LanguageSelector />
 

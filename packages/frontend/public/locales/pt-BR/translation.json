@@ -19,23 +19,23 @@
     },
     "carousel": {
       "slide1": {
-        "title": "Clique. Venca. Seja Recompensado.",
-        "desc": "O primeiro leilao blockchain onde cada clique conta. Junte-se a milhares de jogadores competindo por premios."
+        "title": "Clique. Vença. Seja Recompensado.",
+        "desc": "O primeiro leilão blockchain onde cada clique conta. Junte-se a milhares de jogadores competindo por prêmios."
       },
       "slide2": {
-        "title": "Ate 99% de Desconto",
-        "desc": "Ganhe premios de alto valor por uma fracao do custo. Cada clique custa apenas $0,02 USDT na BNB Chain."
+        "title": "Até 99% de Desconto",
+        "desc": "Ganhe prêmios de alto valor por uma fração do custo. Cada clique custa apenas $0,02 USDT na BNB Chain."
       },
       "slide3": {
         "title": "Na BNB Chain",
-        "desc": "Totalmente transparente e seguro. Todos os leiloes sao registrados on-chain com contratos inteligentes verificaveis."
+        "desc": "Totalmente transparente e seguro. Todos os leilões são registrados on-chain com contratos inteligentes verificáveis."
       }
     },
     "sideCard": {
       "liveLabel": "AO VIVO",
-      "liveTitle": "Leiloes Ativos",
-      "liveDesc": "Leiloes em tempo real 24/7. Conecte sua carteira e comece a competir por premios agora mesmo.",
-      "quickLabel": "INICIO RAPIDO",
+      "liveTitle": "Leilões Ativos",
+      "liveDesc": "Leilões em tempo real 24/7. Conecte sua carteira e comece a competir por prêmios agora mesmo.",
+      "quickLabel": "INÍCIO RÁPIDO",
       "quickTitle": "Pronto em 30s",
       "quickDesc": "Conecte sua carteira, deposite USDT e comece a clicar. Simples assim."
     },
@@ -689,6 +689,7 @@
     "winner": "Vencedor",
     "discount": "Desconto",
     "clicks": "Cliques",
+    "txHash": "TX",
     "date": "Data",
     "error": "Falha ao carregar leilões",
     "retry": "Tentar Novamente",
@@ -696,5 +697,21 @@
     "prev": "Anterior",
     "next": "Próximo",
     "pageOf": "Página {{page}} de {{pages}}"
+  },
+  "notifications": {
+    "title": "Alertas de Leilão",
+    "subtitle": "Receba notificações quando leilões começarem",
+    "loginRequired": "Conecte sua carteira para ativar alertas.",
+    "push": "Notificações Push",
+    "pushActive": "Ativo",
+    "pushInactive": "Alertas no navegador",
+    "on": "ON",
+    "enable": "Ativar",
+    "retry": "Tentar novamente",
+    "telegramDesc": "Receba alertas via Telegram",
+    "link": "Vincular",
+    "telegramOpened": "Telegram aberto! Clique no botão Iniciar no bot.",
+    "openAgain": "Abrir novamente",
+    "alertsBtn": "Alertas"
   }
 }

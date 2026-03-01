@@ -252,7 +252,7 @@ export default function HomePage() {
           <div className="mt-4 text-center">
             <button
               onClick={() => setShowPastAuctions(true)}
-              className="inline-flex items-center gap-2 text-sm font-mono text-text-muted hover:text-primary transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-mono font-semibold text-text-muted hover:text-[#14F195] border border-white/10 hover:border-[#14F195]/40 rounded-xl bg-surface/50 hover:bg-[#14F195]/5 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-[0_0_15px_rgba(20,241,149,0.1)]"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />

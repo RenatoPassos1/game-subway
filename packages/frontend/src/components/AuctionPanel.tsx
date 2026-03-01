@@ -1,14 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuction } from '../hooks/useAuction';
+import { useWalletContext } from '../contexts/WalletContext';
+import { updateAuctionPaymentTx } from '../utils/api';
 import Timer from './Timer';
 import ClickButton from './ClickButton';
+
+// ---------- Constants ----------
+const FOUNDER_WALLET = '0x2b77C4cD1a1955E51DF2D8eBE50187566c71Cc48';
+const PLATFORM_FEE_PCT = 0.20; // 20% platform fee
 
 // ---------- Helpers ----------
 function truncateWallet(address: string): string {
   if (!address) return '';
-  return `${address.slice(0, 4)}...${address.slice(-4)}`;
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
 // ---------- Solana Logo SVG ----------
@@ -45,10 +51,16 @@ export default function AuctionPanel() {
     minRevenueTarget,
     hasMetRevenue,
     isActive,
+    isEnded,
     isClosing,
   } = useAuction();
+  const { walletAddress } = useWalletContext();
+  const [sendingPayment, setSendingPayment] = useState(false);
+  const [paymentTxHash, setPaymentTxHash] = useState<string | null>(null);
 
   const showDemo = !auction;
+  const isFounder = walletAddress?.toLowerCase() === FOUNDER_WALLET.toLowerCase();
+  const auctionEnded = !showDemo && isEnded;
 
   const prizeValue = auction?.prizeValue ?? 1;
   const prizeToken = auction?.prizeToken ?? 'SOL';
@@ -197,6 +209,109 @@ export default function AuctionPanel() {
             </span>
           </div>
         )}
+
+        {/* ===== Winner (when auction ended) ===== */}
+        {auctionEnded && auction?.lastClick?.walletAddress && (
+          <div className="px-2 py-2 rounded-lg border border-[#14F195]/20" style={{ background: 'rgba(20, 241, 149, 0.05)' }}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-[#14F195]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M18.75 4.236c.982.143 1.954.317 2.916.52A6.003 6.003 0 0016.27 9.728M18.75 4.236V4.5c0 2.108-.966 3.99-2.48 5.228m0 0a6.023 6.023 0 01-2.77.853m0 0l.009.262A7.454 7.454 0 019.497 14.25" />
+                </svg>
+                <span className="text-[10px] text-[#14F195] font-mono font-bold uppercase tracking-wider">Winner</span>
+              </div>
+              <span className="font-mono text-xs text-[#14F195] font-bold">
+                {truncateWallet(auction.lastClick.walletAddress)}
+              </span>
+            </div>
+
+            {/* Send Payment button - only visible to FOUNDER */}
+            {isFounder && !paymentTxHash && !auction.paymentTxHash && (
+              <button
+                onClick={async () => {
+                  if (!auction?.lastClick?.walletAddress || !auction?.id) return;
+                  setSendingPayment(true);
+                  try {
+                    const w = window as any;
+                    if (!w.ethereum) {
+                      alert('MetaMask not found!');
+                      return;
+                    }
+                    const netPrize = auction.prizeValue * (1 - PLATFORM_FEE_PCT);
+                    // Convert to wei (18 decimals for BNB)
+                    const amountWei = '0x' + BigInt(Math.floor(netPrize * 1e18)).toString(16);
+                    const txHash = await w.ethereum.request({
+                      method: 'eth_sendTransaction',
+                      params: [{
+                        from: walletAddress,
+                        to: auction.lastClick.walletAddress,
+                        value: amountWei,
+                      }],
+                    });
+                    if (txHash) {
+                      setPaymentTxHash(txHash);
+                      // Save tx hash in backend
+                      await updateAuctionPaymentTx(auction.id, txHash).catch(() => {});
+                    }
+                  } catch (err: any) {
+                    if (err?.code !== 4001) { // user didn't reject
+                      console.error('Payment error:', err);
+                      alert('Payment failed: ' + (err?.message || 'Unknown error'));
+                    }
+                  } finally {
+                    setSendingPayment(false);
+                  }
+                }}
+                disabled={sendingPayment}
+                className="mt-2 w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-[#14F195]/20 hover:bg-[#14F195]/30 border border-[#14F195]/30 text-[#14F195] text-xs font-mono font-bold transition-all disabled:opacity-50"
+              >
+                {sendingPayment ? (
+                  <div className="w-4 h-4 border-2 border-[#14F195]/30 border-t-[#14F195] rounded-full animate-spin" />
+                ) : (
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                  </svg>
+                )}
+                Send Payment ({(auction.prizeValue * (1 - PLATFORM_FEE_PCT)).toFixed(4)} {auction.prizeToken})
+              </button>
+            )}
+
+            {/* Payment TX Hash link */}
+            {(paymentTxHash || auction.paymentTxHash) && (
+              <a
+                href={`https://bscscan.com/tx/${paymentTxHash || auction.paymentTxHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono text-[#14F195]/70 hover:text-[#14F195] transition-colors"
+              >
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+                TX: {truncateWallet(paymentTxHash || auction.paymentTxHash || '')}
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* ===== Sponsor Card ===== */}
+        {auction?.sponsorImageUrl && (
+          <div className="px-2 py-1.5 rounded-md border border-white/5" style={{ background: 'rgba(26, 26, 46, 0.3)' }}>
+            <p className="text-[8px] text-text-dim font-mono uppercase tracking-wider mb-1 text-center">Sponsored by</p>
+            <a
+              href={auction.sponsorLink || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:opacity-80 transition-opacity"
+            >
+              <img
+                src={auction.sponsorImageUrl}
+                alt="Sponsor"
+                className="h-8 mx-auto object-contain rounded"
+                style={{ maxWidth: '140px' }}
+              />
+            </a>
+          </div>
+        )}
       </div>
 
       {/* ===== BOTTOM: Click Button (left) + Timer (right) ===== */}
@@ -204,6 +319,16 @@ export default function AuctionPanel() {
         <div className="flex items-center justify-center gap-5">
           <ClickButton />
           <Timer />
+        </div>
+      </div>
+
+      {/* ===== Audited Badge (top-left corner) ===== */}
+      <div className="absolute top-3 left-3 z-20">
+        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#14F195]/30 bg-[#14F195]/10 backdrop-blur-sm">
+          <svg className="w-3 h-3 text-[#14F195]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+          </svg>
+          <span className="text-[9px] font-mono font-bold text-[#14F195] tracking-wide">Audited</span>
         </div>
       </div>
     </div>

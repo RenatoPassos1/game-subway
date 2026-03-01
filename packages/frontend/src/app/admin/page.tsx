@@ -527,6 +527,8 @@ function AuctionsTab() {
   const [imageUrl, setImageUrl] = useState('');
   const [scheduledStart, setScheduledStart] = useState('');
   const [isMain, setIsMain] = useState(false);
+  const [sponsorImageUrl, setSponsorImageUrl] = useState('');
+  const [sponsorLink, setSponsorLink] = useState('');
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
   const [createSuccess, setCreateSuccess] = useState(false);
@@ -566,6 +568,8 @@ function AuctionsTab() {
         imageUrl: imageUrl || undefined,
         scheduledStart: scheduledStart || undefined,
         isMain,
+        sponsorImageUrl: sponsorImageUrl || undefined,
+        sponsorLink: sponsorLink || undefined,
       });
       setCreateSuccess(true);
       setPrizeValue('');
@@ -573,6 +577,8 @@ function AuctionsTab() {
       setImageUrl('');
       setScheduledStart('');
       setIsMain(false);
+      setSponsorImageUrl('');
+      setSponsorLink('');
       fetchAuctions();
     } catch (e: any) {
       setCreateError(e.message ?? 'Failed to create auction');
@@ -653,6 +659,33 @@ function AuctionsTab() {
               className="w-full bg-background border border-white/10 rounded-lg px-3 py-2 text-sm text-text font-mono focus:outline-none focus:border-primary/50"
             />
           </div>
+          {/* Sponsor fields */}
+          <div className="border-t border-white/10 pt-4 mt-2">
+            <p className="text-xs text-text-dim font-mono mb-3 uppercase tracking-wider">Sponsor (optional)</p>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-text-muted font-mono mb-1">Sponsor Logo URL</label>
+                <input
+                  type="text"
+                  value={sponsorImageUrl}
+                  onChange={(e) => setSponsorImageUrl(e.target.value)}
+                  placeholder="https://sponsor-logo.png"
+                  className="w-full bg-background border border-white/10 rounded-lg px-3 py-2 text-sm text-text font-mono focus:outline-none focus:border-primary/50"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-text-muted font-mono mb-1">Sponsor Link</label>
+                <input
+                  type="text"
+                  value={sponsorLink}
+                  onChange={(e) => setSponsorLink(e.target.value)}
+                  placeholder="https://sponsor-website.com"
+                  className="w-full bg-background border border-white/10 rounded-lg px-3 py-2 text-sm text-text font-mono focus:outline-none focus:border-primary/50"
+                />
+              </div>
+            </div>
+          </div>
+
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"

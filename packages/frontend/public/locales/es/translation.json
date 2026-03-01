@@ -20,11 +20,11 @@
     "carousel": {
       "slide1": {
         "title": "Haz Clic. Gana. Recibe Recompensas.",
-        "desc": "La primera subasta blockchain donde cada clic cuenta. Unete a miles de jugadores compitiendo por premios."
+        "desc": "La primera subasta blockchain donde cada clic cuenta. Únete a miles de jugadores compitiendo por premios."
       },
       "slide2": {
         "title": "Hasta 99% de Descuento",
-        "desc": "Gana premios de alto valor a una fraccion del costo. Cada clic cuesta solo $0,02 USDT en BNB Chain."
+        "desc": "Gana premios de alto valor a una fracción del costo. Cada clic cuesta solo $0,02 USDT en BNB Chain."
       },
       "slide3": {
         "title": "En BNB Chain",
@@ -35,9 +35,9 @@
       "liveLabel": "EN VIVO",
       "liveTitle": "Subastas Activas",
       "liveDesc": "Subastas en tiempo real 24/7. Conecta tu billetera y empieza a competir por premios ahora mismo.",
-      "quickLabel": "INICIO RAPIDO",
+      "quickLabel": "INICIO RÁPIDO",
       "quickTitle": "Listo en 30s",
-      "quickDesc": "Conecta tu billetera, deposita USDT y empieza a hacer clic. Asi de simple."
+      "quickDesc": "Conecta tu billetera, deposita USDT y empieza a hacer clic. Así de simple."
     },
     "cta": {
       "start": "Empieza a Hacer Clic",
@@ -66,7 +66,7 @@
       },
       "win": {
         "title": "Gana Premios",
-        "desc": "La última persona en hacer clic cuando el cronómetro llega a cero gana el premio!"
+        "desc": "La última persona en hacer clic cuando el cronómetro llega a cero, ¡gana el premio!"
       }
     },
     "stats": {
@@ -143,7 +143,7 @@
       },
       "w2": {
         "title": "Ultra Rápido",
-        "desc": "Construido en BNB Chain para comisiones ultra bajas y confirmaciones rápidas de transacciónes."
+        "desc": "Construido en BNB Chain para comisiones ultra bajas y confirmaciones rápidas de transacciones."
       },
       "w3": {
         "title": "Total Transparencia",
@@ -220,7 +220,7 @@
           "Conecta tu billetera en la página de inicio de Click Win",
           "Deposita BNB o USDT en tu dirección de depósito única",
           "Compra clics a $0.20 cada uno",
-          "Entra en una subasta en vivo y empieza a hacer clic!"
+          "Entra en una subasta en vivo ¡y empieza a hacer clic!"
         ]
       },
       "q3": {
@@ -260,7 +260,7 @@
     "support": {
       "title": "¿Aún Necesitas Ayuda?",
       "desc": "Únete a nuestros canales comunitarios para soporte directo del equipo de Click Win y otros usuarios.",
-      "btn": "Únirse al Telegram"
+      "btn": "Unirse al Telegram"
     }
   },
   "partner": {
@@ -343,11 +343,11 @@
       "shareTwitter": "Compartir en X",
       "shareTelegram": "Compartir en Telegram",
       "historyTitle": "Historial de Ganancias",
-      "noHistory": "Aún no hay ganancias por referidos. Comparte tu enlace para empezar a ganar!"
+      "noHistory": "Aún no hay ganancias por referidos. ¡Comparte tu enlace para empezar a ganar!"
     },
     "cta": {
       "title": "¿Listo para Ser Socio?",
-      "desc": "Contáctaños para discutir oportunidades de asociación personalizadas o comienza con el programa de referidos hoy.",
+      "desc": "Contáctanos para discutir oportunidades de asociación personalizadas o comienza con el programa de referidos hoy.",
       "btn": "Contáctanos"
     }
   },
@@ -434,8 +434,8 @@
     "s1": {
       "title": "Datos que Recopilamos",
       "intro": "Click Win recopila el mínimo de datos necesarios para operar la plataforma:",
-      "l1": "Dirección de billetera (dirección EVM pública usada para autenticación y transacciónes)",
-      "l2": "Historial de transacciónes (depósitos, compras de clics, participación en subastas, ganancias)",
+      "l1": "Dirección de billetera (dirección EVM pública usada para autenticación y transacciones)",
+      "l2": "Historial de transacciones (depósitos, compras de clics, participación en subastas, ganancias)",
       "l3": "Datos de referidos (códigos de referido y direcciones de billetera vinculadas)",
       "l4": "Preferencia de idioma del navegador (para localización)",
       "l5": "Dirección IP (solo para seguridad y limitación de tasa)",
@@ -445,14 +445,14 @@
       "title": "Propósito de la Recopilación de Datos",
       "intro": "Usamos los datos recopilados exclusivamente para:",
       "l1": "Autenticación en la plataforma y verificación de billetera",
-      "l2": "Procesamiento de transacciónes y liquidación de subastas",
+      "l2": "Procesamiento de transacciones y liquidación de subastas",
       "l3": "Rastreo de recompensas y bonos de referidos",
       "l4": "Seguridad de la plataforma, prevención de fraude y medidas anti-abuso",
       "l5": "Mejora del rendimiento de la plataforma y experiencia del usuario"
     },
     "s3": {
       "title": "Transparencia Blockchain",
-      "p1": "Todas las transacciónes en Click Win se registran en BNB Chain (una blockchain pública). Esto significa que las direcciones de billetera, montos de depósito, resultados de subastas y liquidaciones de premios son públicamente visibles en la blockchain. Esto es inherente a la tecnología blockchain y proporciona total auditabilidad."
+      "p1": "Todas las transacciones en Click Win se registran en BNB Chain (una blockchain pública). Esto significa que las direcciones de billetera, montos de depósito, resultados de subastas y liquidaciones de premios son públicamente visibles en la blockchain. Esto es inherente a la tecnología blockchain y proporciona total auditabilidad."
     },
     "s4": {
       "title": "Cookies y Almacenamiento Local",
@@ -460,7 +460,7 @@
     },
     "s5": {
       "title": "Retención de Datos",
-      "p1": "Los registros de transacciónes se mantienen indefinidamente ya que son parte del registro público de la blockchain. Los datos del lado de la plataforma (información de sesión, datos de limitación de tasa) se mantienen solo el tiempo necesario para la operación y seguridad de la plataforma."
+      "p1": "Los registros de transacciones se mantienen indefinidamente ya que son parte del registro público de la blockchain. Los datos del lado de la plataforma (información de sesión, datos de limitación de tasa) se mantienen solo el tiempo necesario para la operación y seguridad de la plataforma."
     }
   },
   "risk": {
@@ -477,7 +477,7 @@
     },
     "r3": {
       "title": "Riesgos de Red Blockchain",
-      "desc": "La congestión de la red BNB Chain, interrupciones o forks podrían retrasar transacciónes, afectar el tiempo de las subastas o impactar la liquidación de premios. La plataforma no es responsable de problemas a nivel de blockchain."
+      "desc": "La congestión de la red BNB Chain, interrupciones o forks podrían retrasar transacciones, afectar el tiempo de las subastas o impactar la liquidación de premios. La plataforma no es responsable de problemas a nivel de blockchain."
     },
     "r4": {
       "title": "Volatilidad de Criptomonedas",
@@ -492,7 +492,7 @@
   "credits": {
     "title": "Política de Créditos",
     "lastUpdated": "Última actualización: Febrero 2026",
-    "intro": "Esta política explica la naturaleza, uso y limitaciónes de los créditos digitales (clics) en la plataforma Click Win.",
+    "intro": "Esta política explica la naturaleza, uso y limitaciones de los créditos digitales (clics) en la plataforma Click Win.",
     "c1": {
       "title": "Créditos de Acceso a la Plataforma",
       "desc": "Los clics digitales son créditos que otorgan acceso a funcionalidades de la plataforma, específicamente participación en subastas. Son el mecanismo a través del cual los usuarios interactúan con el sistema de subastas."
@@ -521,7 +521,7 @@
     "intro": "Click Win está comprometido a mantener una plataforma segura y en cumplimiento. Esta página describe nuestro enfoque de anti-lavado de dinero (AML) y cumplimiento regulatorio.",
     "doNot": {
       "title": "Lo que NO Soportamos",
-      "l1": "Click Win no soporta transacciónes en moneda fiduciaria. Todos los depósitos son solo en criptomoneda (BNB o USDT).",
+      "l1": "Click Win no soporta transacciones en moneda fiduciaria. Todos los depósitos son solo en criptomoneda (BNB o USDT).",
       "l2": "Click Win no ofrece servicios de billetera custodiada. Los usuarios mantienen total control de sus billeteras en todo momento.",
       "l3": "Click Win no facilita transferencias peer-to-peer de clics o créditos de la plataforma entre usuarios."
     },
@@ -675,7 +675,7 @@
     "tokenInfo": "Información del Token",
     "tokenName": "Token",
     "copy": "Copiar",
-    "copied": "Copiado!",
+    "copied": "¡Copiado!",
     "listedOn": "Listado en",
     "visit": "Visitar"
   },
@@ -689,6 +689,7 @@
     "winner": "Ganador",
     "discount": "Descuento",
     "clicks": "Clics",
+    "txHash": "TX",
     "date": "Fecha",
     "error": "Error al cargar subastas",
     "retry": "Reintentar",
@@ -696,5 +697,21 @@
     "prev": "Anterior",
     "next": "Siguiente",
     "pageOf": "Página {{page}} de {{pages}}"
+  },
+  "notifications": {
+    "title": "Alertas de Subasta",
+    "subtitle": "Recibe notificaciones cuando inicien subastas",
+    "loginRequired": "Conecta tu billetera para activar alertas.",
+    "push": "Notificaciones Push",
+    "pushActive": "Activo",
+    "pushInactive": "Alertas del navegador",
+    "on": "ON",
+    "enable": "Activar",
+    "retry": "Reintentar",
+    "telegramDesc": "Recibe alertas vía Telegram",
+    "link": "Vincular",
+    "telegramOpened": "¡Telegram abierto! Haz clic en el botón Iniciar en el bot.",
+    "openAgain": "Abrir de nuevo",
+    "alertsBtn": "Alertas"
   }
 }

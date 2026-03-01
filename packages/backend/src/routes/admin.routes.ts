@@ -24,6 +24,8 @@ import {
   CLEAR_MAIN_AUCTION,
   SET_MAIN_AUCTION_BY_ID,
   INSERT_AUDIT_LOG,
+  UPDATE_AUCTION_PAYMENT_TX,
+  GET_AUCTION_BY_ID,
 } from '../db/queries';
 
 const logger = pino({ name: 'admin-routes' });
@@ -307,6 +309,8 @@ export async function adminRoutes(fastify: FastifyInstance): Promise<void> {
       scheduledStart?: string;
       isMain?: boolean;
       displayOrder?: number;
+      sponsorImageUrl?: string;
+      sponsorLink?: string;
     };
   }>('/admin/auction/create', async (request, reply) => {
     const {
@@ -321,6 +325,8 @@ export async function adminRoutes(fastify: FastifyInstance): Promise<void> {
       scheduledStart = null,
       isMain = false,
       displayOrder = 0,
+      sponsorImageUrl = null,
+      sponsorLink = null,
     } = request.body;
 
     if (!prizeValue || prizeValue <= 0) {
@@ -340,6 +346,8 @@ export async function adminRoutes(fastify: FastifyInstance): Promise<void> {
       scheduledStart,
       isMain,
       displayOrder,
+      sponsorImageUrl,
+      sponsorLink,
     ]);
 
     logger.info({ auctionId: result.rows[0].id }, 'Enhanced auction created');
@@ -390,6 +398,40 @@ export async function adminRoutes(fastify: FastifyInstance): Promise<void> {
 
     const result = await query(LIST_ALL_AD_ORDERS, [limit, offset]);
     return { data: result.rows, page, limit };
+  });
+
+  // ============================================================
+  // POST /admin/auction/:id/payment-tx - save payment tx hash
+  // ============================================================
+  fastify.post<{
+    Params: { id: string };
+    Body: { txHash: string };
+  }>('/admin/auction/:id/payment-tx', async (request, reply) => {
+    const { id } = request.params;
+    const { txHash } = request.body;
+
+    if (!txHash || typeof txHash !== 'string') {
+      return reply.status(400).send({ error: 'INVALID_BODY', message: 'txHash string required.' });
+    }
+
+    // Verify auction exists
+    const auctionRes = await query(GET_AUCTION_BY_ID, [id]);
+    if (auctionRes.rows.length === 0) {
+      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Auction not found.' });
+    }
+
+    const result = await query(UPDATE_AUCTION_PAYMENT_TX, [id, txHash]);
+
+    logger.info({ auctionId: id, txHash }, 'Auction payment tx hash saved');
+
+    await query(INSERT_AUDIT_LOG, [
+      'AUCTION_PAYMENT_TX',
+      'admin',
+      JSON.stringify({ auctionId: id, txHash }),
+      request.ip,
+    ]);
+
+    return { auction: result.rows[0] };
   });
 
   // ============================================================

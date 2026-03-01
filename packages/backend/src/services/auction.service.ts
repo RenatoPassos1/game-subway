@@ -87,6 +87,8 @@ async function getAuctionStateFromRedis(auctionId: string): Promise<AuctionState
     lastClick,
     discountPerClick: parseFloat(data.discountPerClick || '0.0001'),
     maxDiscountPct: parseFloat(data.maxDiscountPct || '0.5'),
+    sponsorImageUrl: data.sponsorImageUrl || null,
+    sponsorLink: data.sponsorLink || null,
   };
 }
 
@@ -105,6 +107,8 @@ function auctionToState(auction: Auction): AuctionState {
     lastClick: null,
     discountPerClick: auction.discount_per_click,
     maxDiscountPct: auction.max_discount_pct,
+    sponsorImageUrl: auction.sponsor_image_url || null,
+    sponsorLink: auction.sponsor_link || null,
   };
 }
 
@@ -185,6 +189,8 @@ export async function processClick(
     },
     discountPerClick,
     maxDiscountPct,
+    sponsorImageUrl: auctionData.sponsorImageUrl || null,
+    sponsorLink: auctionData.sponsorLink || null,
   };
 
   return { success: true, auctionState };
@@ -250,7 +256,7 @@ export async function createAuction(params: CreateAuctionParams): Promise<Auctio
 async function initializeAuctionRedis(auction: Auction): Promise<void> {
   const stateKey = REDIS_KEYS.auctionState(auction.id);
 
-  await redis.hmset(stateKey, {
+  const redisState: Record<string, string> = {
     status: auction.status,
     prizeValue: auction.prize_value.toString(),
     prizeToken: auction.prize_token,
@@ -262,7 +268,12 @@ async function initializeAuctionRedis(auction: Auction): Promise<void> {
     clickCount: '0',
     accumulatedDiscount: '0',
     revenue: '0',
-  });
+  };
+
+  if (auction.sponsor_image_url) redisState.sponsorImageUrl = auction.sponsor_image_url;
+  if (auction.sponsor_link) redisState.sponsorLink = auction.sponsor_link;
+
+  await redis.hmset(stateKey, redisState);
 
   // Set initial timer if auction is active
   if (auction.status === 'ACTIVE') {

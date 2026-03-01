@@ -279,6 +279,8 @@ export async function createAdminAuction(data: {
   imageUrl?: string;
   scheduledStart?: string;
   isMain?: boolean;
+  sponsorImageUrl?: string;
+  sponsorLink?: string;
 }): Promise<{ auction: Auction }> {
   return request('/admin/auction/create', {
     method: 'POST',
@@ -288,6 +290,13 @@ export async function createAdminAuction(data: {
 
 export async function promoteAuction(id: string): Promise<{ auction: Auction }> {
   return request(`/admin/auction/${id}/promote`, { method: 'POST' });
+}
+
+export async function updateAuctionPaymentTx(id: string, txHash: string): Promise<{ auction: Auction }> {
+  return request(`/admin/auction/${id}/payment-tx`, {
+    method: 'POST',
+    body: JSON.stringify({ txHash }),
+  });
 }
 
 // ========== Advertiser Endpoints ==========
@@ -412,6 +421,27 @@ export async function submitPaymentHash(data: {
 
 export async function getPaymentOrderStatus(orderId: string): Promise<{ order: any }> {
   return request(`/crypto/ad/verify/${orderId}`);
+}
+
+// ========== Notification Endpoints ==========
+
+export async function getVapidPublicKey(): Promise<{ publicKey: string }> {
+  return request('/push/vapid-public-key');
+}
+
+export async function subscribePush(subscription: PushSubscriptionJSON): Promise<{ subscription: any }> {
+  return request('/push/subscribe', {
+    method: 'POST',
+    body: JSON.stringify({ subscription }),
+  });
+}
+
+export async function unsubscribePush(): Promise<{ success: boolean }> {
+  return request('/push/unsubscribe', { method: 'POST', body: JSON.stringify({}) });
+}
+
+export async function getTelegramLinkToken(): Promise<{ startUrl: string; expiresIn: number }> {
+  return request('/telegram/link-token', { method: 'POST', body: JSON.stringify({}) });
 }
 
 // ========== Export ==========

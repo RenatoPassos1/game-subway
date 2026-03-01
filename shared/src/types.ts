@@ -36,6 +36,14 @@ export interface Auction {
   started_at: string | null;
   ended_at: string | null;
   created_at: string;
+  image_url?: string | null;
+  scheduled_start?: string | null;
+  is_main?: boolean;
+  display_order?: number;
+  sponsor_image_url?: string | null;
+  sponsor_link?: string | null;
+  payment_tx_hash?: string | null;
+  winner_wallet?: string | null;
 }
 
 export interface AuctionState {
@@ -52,6 +60,13 @@ export interface AuctionState {
   lastClick: LastClick | null;
   discountPerClick: number;
   maxDiscountPct: number;
+  sponsorImageUrl?: string | null;
+  sponsorLink?: string | null;
+  winnerWallet?: string | null;
+  winnerId?: string | null;
+  finalDiscount?: number | null;
+  netPrize?: number | null;
+  paymentTxHash?: string | null;
 }
 
 export interface LastClick {

@@ -689,6 +689,7 @@
     "winner": "Winner",
     "discount": "Discount",
     "clicks": "Clicks",
+    "txHash": "TX",
     "date": "Date",
     "error": "Failed to load auctions",
     "retry": "Retry",
@@ -696,5 +697,21 @@
     "prev": "Previous",
     "next": "Next",
     "pageOf": "Page {{page}} of {{pages}}"
+  },
+  "notifications": {
+    "title": "Auction Alerts",
+    "subtitle": "Get notified when auctions start",
+    "loginRequired": "Connect your wallet to enable alerts.",
+    "push": "Push Notifications",
+    "pushActive": "Active",
+    "pushInactive": "Browser alerts",
+    "on": "ON",
+    "enable": "Enable",
+    "retry": "Retry",
+    "telegramDesc": "Get alerts via Telegram",
+    "link": "Link",
+    "telegramOpened": "Telegram opened! Click the Start button in the bot.",
+    "openAgain": "Open again",
+    "alertsBtn": "Alerts"
   }
 }

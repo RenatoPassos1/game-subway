@@ -544,9 +544,10 @@ export const CREATE_AUCTION_ENHANCED = `
   INSERT INTO auctions (
     prize_value, prize_token, prize_description, status,
     min_revenue_multiplier, max_discount_pct, discount_per_click,
-    timer_duration, image_url, scheduled_start, is_main, display_order
+    timer_duration, image_url, scheduled_start, is_main, display_order,
+    sponsor_image_url, sponsor_link
   )
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
   RETURNING *
 `;
 
@@ -558,10 +559,18 @@ export const GET_UPCOMING_AUCTIONS = `
 `;
 
 export const GET_PAST_AUCTIONS = `
-  SELECT * FROM auctions
-  WHERE status IN ('ENDED', 'SETTLED')
-  ORDER BY ended_at DESC
+  SELECT a.*, u.wallet_address AS winner_wallet
+  FROM auctions a
+  LEFT JOIN users u ON u.id = a.winner_id
+  WHERE a.status IN ('ENDED', 'SETTLED')
+  ORDER BY a.ended_at DESC
   LIMIT $1 OFFSET $2
+`;
+
+export const UPDATE_AUCTION_PAYMENT_TX = `
+  UPDATE auctions SET payment_tx_hash = $2
+  WHERE id = $1
+  RETURNING *
 `;
 
 export const SET_MAIN_AUCTION = `
