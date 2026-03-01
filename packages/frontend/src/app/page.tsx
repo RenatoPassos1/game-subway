@@ -36,17 +36,35 @@ export default function HomePage() {
         </div>
         <div className="scanline-overlay" />
 
-        <div className="relative z-10 section-container">
-          {/* Badge */}
-          <div className="text-center mb-8">
-            <div className="tech-badge inline-flex">
+        <div className="relative z-10 section-container text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="tech-badge mb-8">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               <span>{t('home.hero.badge')}</span>
             </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight font-heading">
+              <span className="text-text">{t('home.hero.titleLine1')}</span>
+              <br />
+              <span className="gradient-text">{t('home.hero.titleLine2')}</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-10">
+              {t('home.hero.subtitle')}
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button className="btn-accent text-lg px-8 py-4 w-full sm:w-auto">
+                {t('home.cta.start')}
+              </button>
+              <Link href="/about" className="btn-secondary text-lg px-8 py-4 w-full sm:w-auto text-center">
+                {t('home.cta.learn')}
+              </Link>
+            </div>
           </div>
 
-          {/* Main grid: Carousel (left) + Side Cards (right) */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {/* Carousel + Side Cards below hero text */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mt-16">
             {/* Carousel - takes 2 of 3 columns */}
             <div className="lg:col-span-2">
               <HeroCarousel />
@@ -85,16 +103,6 @@ export default function HomePage() {
                 </button>
               </div>
             </div>
-          </div>
-
-          {/* CTAs below carousel */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-            <button className="btn-accent text-lg px-8 py-4 w-full sm:w-auto">
-              {t('home.cta.start')}
-            </button>
-            <Link href="/about" className="btn-secondary text-lg px-8 py-4 w-full sm:w-auto text-center">
-              {t('home.cta.learn')}
-            </Link>
           </div>
         </div>
       </section>
