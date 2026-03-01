@@ -439,6 +439,24 @@
 
   .sidebar .divider { height: 1px; background: var(--border); margin: 16px 20px; }
 
+  .sidebar a.sidebar-audit-btn {
+    color: #14F195;
+    border: 1px solid rgba(20, 241, 149, 0.5);
+    border-radius: 8px;
+    margin: 4px 14px;
+    padding: 10px 16px;
+    border-left-width: 1px;
+    transition: all 0.3s;
+  }
+  .sidebar a.sidebar-audit-btn:hover {
+    background: rgba(20, 241, 149, 0.08);
+    border-color: #14F195;
+    box-shadow: 0 0 16px rgba(20, 241, 149, 0.25);
+  }
+  .sidebar a.sidebar-audit-btn .num {
+    color: #14F195;
+  }
+
   .main { margin-left: 260px; margin-top: 112px; min-height: calc(100vh - 112px); }
 
   .hero {
@@ -703,7 +721,7 @@
   <a href="#limitations"><span class="num">16</span> Limita&#231;&#245;es &amp; Riscos</a>
   <a href="#verify-payout"><span class="num">17</span> Como Verificar um Pagamento</a>
   <div class="divider"></div>
-  <a href="#audit-report"><span class="num">&#9733;</span> Relat&#243;rio de Auditoria</a>
+  <a href="#audit-report" class="sidebar-audit-btn"><span class="num">&#9733;</span> Relat&#243;rio de Auditoria</a>
 </nav>
 
 <!-- MAIN -->

@@ -559,6 +559,24 @@
     margin: 16px 20px;
   }
 
+  .sidebar a.sidebar-audit-btn {
+    color: #14F195;
+    border: 1px solid rgba(20, 241, 149, 0.5);
+    border-radius: 8px;
+    margin: 4px 14px;
+    padding: 10px 16px;
+    border-left-width: 1px;
+    transition: all 0.3s;
+  }
+  .sidebar a.sidebar-audit-btn:hover {
+    background: rgba(20, 241, 149, 0.08);
+    border-color: #14F195;
+    box-shadow: 0 0 16px rgba(20, 241, 149, 0.25);
+  }
+  .sidebar a.sidebar-audit-btn .num {
+    color: #14F195;
+  }
+
   /* ── MAIN CONTENT ── */
   .main {
     margin-left: 260px;
@@ -1225,7 +1243,7 @@
   <a href="#limitations"><span class="num">16</span> Limitations &amp; Risk</a>
   <a href="#verify-payout"><span class="num">17</span> How to Verify a Payout</a>
   <div class="divider"></div>
-  <a href="#audit-report"><span class="num">★</span> Audit Report</a>
+  <a href="#audit-report" class="sidebar-audit-btn"><span class="num">&#9733;</span> Audit Report</a>
 </nav>
 
 <!-- MAIN -->
