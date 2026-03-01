@@ -35,8 +35,8 @@ export async function userRoutes(fastify: FastifyInstance): Promise<void> {
     const { userId } = request.user as AuthUser;
     const balance = await getClickBalance(userId);
     return {
-      availableClicks: balance.availableClicks,
-      totalPurchased: balance.totalPurchased,
+      available_clicks: balance.availableClicks,
+      total_purchased: balance.totalPurchased,
     };
   });
 
