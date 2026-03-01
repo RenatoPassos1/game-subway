@@ -24,6 +24,10 @@ export default function WalletButton() {
   const [copied, setCopied] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Flag: user clicked "Connect Wallet" and we should auto-login after connection
+  const pendingAutoLogin = useRef(false);
+  const autoLoginInProgress = useRef(false);
+
   const isAdmin = useMemo(
     () => walletAddress?.toLowerCase() === FOUNDER_WALLET.toLowerCase(),
     [walletAddress],
@@ -44,11 +48,37 @@ export default function WalletButton() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Auto-login after wallet connects (one-click flow)
+  useEffect(() => {
+    if (
+      pendingAutoLogin.current &&
+      isConnected &&
+      isCorrectChain &&
+      !isAuthenticated &&
+      !autoLoginInProgress.current
+    ) {
+      pendingAutoLogin.current = false;
+      autoLoginInProgress.current = true;
+      const storedRef = localStorage.getItem('clickwin_referral_code') ?? undefined;
+      login(storedRef)
+        .catch((err) => {
+          setError(
+            err instanceof Error ? err.message : 'Authentication failed'
+          );
+        })
+        .finally(() => {
+          autoLoginInProgress.current = false;
+        });
+    }
+  }, [isConnected, isCorrectChain, isAuthenticated, login]);
+
   const handleConnect = useCallback(async () => {
     setError(null);
+    pendingAutoLogin.current = true;
     try {
       await connectWallet();
     } catch (err) {
+      pendingAutoLogin.current = false;
       setError(
         err instanceof Error
           ? err.message
