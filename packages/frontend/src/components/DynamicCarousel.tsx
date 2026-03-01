@@ -7,6 +7,13 @@ import AdDetailModal from './AdDetailModal';
 
 const INTERVAL_MS = 5000;
 
+/* ---- Fixed slot 1: Satoshi's House (always present) ---- */
+const FIXED_SLIDE = {
+  image: '/banner-satoshis-house.svg',
+  link: 'https://satoshishouse.com',
+  alt: "Satoshi's House",
+};
+
 /* ---- Default static slides (fallback when no carousel ads exist) ---- */
 interface StaticSlide {
   titleKey: string;
@@ -92,8 +99,9 @@ export default function DynamicCarousel() {
     return () => { cancelled = true; };
   }, []);
 
-  // Auto-rotate
-  const slideCount = ads.length > 0 ? ads.length : 3;
+  // Total slides = 1 fixed + dynamic ads (or 2 default fallbacks)
+  const dynamicCount = ads.length > 0 ? ads.length : 2; // 2 default slides when no ads
+  const slideCount = 1 + dynamicCount; // slot 0 = fixed, rest = dynamic/default
   const next = useCallback(() => setActive((p) => (p + 1) % slideCount), [slideCount]);
 
   useEffect(() => {
@@ -101,13 +109,14 @@ export default function DynamicCarousel() {
     return () => clearInterval(id);
   }, [next]);
 
-  // Record impression when slide changes (only for ad slides)
+  // Record impression when slide changes (only for dynamic ad slides, index > 0)
   useEffect(() => {
-    if (ads.length > 0 && ads[active]) {
-      const cid = ads[active].campaign_id;
-      if (!impressionRef.current.has(cid)) {
-        impressionRef.current.add(cid);
-        recordAdImpression(cid).catch(() => {});
+    if (ads.length > 0 && active > 0) {
+      const adIndex = active - 1; // offset by 1 because slot 0 is fixed
+      const ad = ads[adIndex];
+      if (ad && !impressionRef.current.has(ad.campaign_id)) {
+        impressionRef.current.add(ad.campaign_id);
+        recordAdImpression(ad.campaign_id).catch(() => {});
       }
     }
   }, [active, ads]);
@@ -122,72 +131,91 @@ export default function DynamicCarousel() {
   return (
     <>
       <div className="relative w-full overflow-hidden rounded-2xl" style={{ minHeight: 320 }}>
-        {/* Ad-based slides */}
+        {/* Slot 0: Fixed Satoshi's House banner (always present) */}
+        <a
+          href={FIXED_SLIDE.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`absolute inset-0 transition-all duration-700 ease-in-out cursor-pointer ${
+            0 === active
+              ? 'opacity-100 translate-x-0'
+              : 'opacity-0 -translate-x-full'
+          }`}
+        >
+          <img
+            src={FIXED_SLIDE.image}
+            alt={FIXED_SLIDE.alt}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none" />
+        </a>
+
+        {/* Dynamic ad slides (slots 1+) */}
         {useAds &&
-          ads.map((ad, i) => (
-            <div
-              key={ad.campaign_id}
-              className={`absolute inset-0 transition-all duration-700 ease-in-out cursor-pointer ${
-                i === active
-                  ? 'opacity-100 translate-x-0'
-                  : i < active
-                    ? 'opacity-0 -translate-x-full'
-                    : 'opacity-0 translate-x-full'
-              }`}
-              onClick={() => handleSlideClick(ad)}
-            >
-              {/* Image background */}
-              <img
-                src={ad.image_url}
-                alt={ad.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-              />
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          ads.map((ad, i) => {
+            const slideIndex = i + 1; // offset by 1 for fixed slot
+            return (
+              <div
+                key={ad.campaign_id}
+                className={`absolute inset-0 transition-all duration-700 ease-in-out cursor-pointer ${
+                  slideIndex === active
+                    ? 'opacity-100 translate-x-0'
+                    : slideIndex < active
+                      ? 'opacity-0 -translate-x-full'
+                      : 'opacity-0 translate-x-full'
+                }`}
+                onClick={() => handleSlideClick(ad)}
+              >
+                <img
+                  src={ad.image_url}
+                  alt={ad.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <span className="absolute top-4 right-4 z-10 text-[10px] font-mono bg-primary/80 text-white px-2 py-1 rounded backdrop-blur-sm">
+                  {t('ads.sponsored', 'Sponsored')}
+                </span>
+                <div className="absolute bottom-6 left-6 right-6 z-10">
+                  <p className="text-[10px] font-mono text-white/60 uppercase tracking-wider mb-1">
+                    {ad.advertiser_name}
+                  </p>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white font-heading leading-tight">
+                    {ad.title}
+                  </h2>
+                  <p className="text-white/70 text-sm mt-1 max-w-md line-clamp-2">
+                    {ad.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
 
-              {/* Sponsored badge */}
-              <span className="absolute top-4 right-4 z-10 text-[10px] font-mono bg-primary/80 text-white px-2 py-1 rounded backdrop-blur-sm">
-                {t('ads.sponsored', 'Sponsored')}
-              </span>
-
-              {/* Title */}
-              <div className="absolute bottom-6 left-6 right-6 z-10">
-                <p className="text-[10px] font-mono text-white/60 uppercase tracking-wider mb-1">
-                  {ad.advertiser_name}
-                </p>
-                <h2 className="text-2xl md:text-3xl font-bold text-white font-heading leading-tight">
-                  {ad.title}
+        {/* Default static slides as fallback (slots 1-2 when no ads) */}
+        {!useAds && !loading &&
+          defaults.slice(0, 2).map((slide, i) => {
+            const slideIndex = i + 1; // offset by 1 for fixed slot
+            return (
+              <div
+                key={i}
+                className={`absolute inset-0 flex flex-col justify-center px-8 md:px-12 transition-all duration-700 ease-in-out bg-gradient-to-br ${slide.gradient} ${
+                  slideIndex === active
+                    ? 'opacity-100 translate-x-0'
+                    : slideIndex < active
+                      ? 'opacity-0 -translate-x-full'
+                      : 'opacity-0 translate-x-full'
+                }`}
+              >
+                <div className="mb-6">{slide.icon}</div>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text mb-3 font-heading leading-tight">
+                  {t(slide.titleKey)}
                 </h2>
-                <p className="text-white/70 text-sm mt-1 max-w-md line-clamp-2">
-                  {ad.description}
+                <p className="text-text-muted text-sm md:text-base max-w-md leading-relaxed">
+                  {t(slide.descKey)}
                 </p>
               </div>
-            </div>
-          ))}
-
-        {/* Default static slides (fallback) */}
-        {!useAds && !loading &&
-          defaults.map((slide, i) => (
-            <div
-              key={i}
-              className={`absolute inset-0 flex flex-col justify-center px-8 md:px-12 transition-all duration-700 ease-in-out bg-gradient-to-br ${slide.gradient} ${
-                i === active
-                  ? 'opacity-100 translate-x-0'
-                  : i < active
-                    ? 'opacity-0 -translate-x-full'
-                    : 'opacity-0 translate-x-full'
-              }`}
-            >
-              <div className="mb-6">{slide.icon}</div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text mb-3 font-heading leading-tight">
-                {t(slide.titleKey)}
-              </h2>
-              <p className="text-text-muted text-sm md:text-base max-w-md leading-relaxed">
-                {t(slide.descKey)}
-              </p>
-            </div>
-          ))}
+            );
+          })}
 
         {/* Loading state */}
         {loading && (

@@ -13,7 +13,7 @@ export const CLICK_RATE_LIMIT_MS = 500; // 1 click per 500ms
 
 // Deposits
 export const MIN_CONFIRMATIONS = 15;
-export const PRICE_PER_CLICK = 0.02; // USDT per click
+export const PRICE_PER_CLICK = 0.05; // USDT per click
 export const MIN_DEPOSIT_AMOUNT = 1; // 1 USDT minimum
 
 // BNB Chain

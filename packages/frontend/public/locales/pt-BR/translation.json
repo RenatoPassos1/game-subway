@@ -24,7 +24,7 @@
       },
       "slide2": {
         "title": "Até 99% de Desconto",
-        "desc": "Ganhe prêmios de alto valor por uma fração do custo. Cada clique custa apenas $0,02 USDT na BNB Chain."
+        "desc": "Ganhe prêmios de alto valor por uma fração do custo. Cada clique custa apenas $0,05 USDT na BNB Chain."
       },
       "slide3": {
         "title": "Na BNB Chain",
@@ -565,7 +565,7 @@
     "about": {
       "label": "// SECTION 01",
       "title": "O que é o Click Win",
-      "desc": "Click Win é uma plataforma de leilão digital de última geração movida pela BNB Chain. Cada clique custa $0,02 USDT e reinicia um cronômetro regressivo de 30 segundos. A última pessoa a clicar antes do tempo esgotar ganha o prêmio com um desconto progressivo de até 50%.",
+      "desc": "Click Win é uma plataforma de leilão digital de última geração movida pela BNB Chain. Cada clique custa $0,05 USDT e reinicia um cronômetro regressivo de 30 segundos. A última pessoa a clicar antes do tempo esgotar ganha o prêmio com um desconto progressivo de até 50%.",
       "mission": "Nossa missão é democratizar os leilões através da transparência blockchain, tornando a chance de cada participante igual e cada transação verificável on-chain."
     },
     "howItWorks": {
@@ -573,7 +573,7 @@
       "title": "Como Funciona",
       "steps": {
         "s1": { "title": "Conectar Carteira", "desc": "Conecte sua carteira BNB Chain (MetaMask, Trust Wallet, etc.) para autenticação segura." },
-        "s2": { "title": "Depositar USDT", "desc": "Deposite USDT (BEP-20) na sua conta Click Win. Depósito mínimo: 1 USDT. Cada clique custa $0,02." },
+        "s2": { "title": "Depositar USDT", "desc": "Deposite USDT (BEP-20) na sua conta Click Win. Depósito mínimo: 1 USDT. Cada clique custa $0,05." },
         "s3": { "title": "Entrar no Leilão", "desc": "Navegue pelos leilões ativos e escolha um para participar. Cada leilão tem um prêmio e um cronômetro." },
         "s4": { "title": "Clique para Dar Lance", "desc": "Cada clique reinicia o cronômetro de 30 segundos e registra você como o líder atual. Clique estrategicamente!" },
         "s5": { "title": "Ganhe o Prêmio", "desc": "Se você for o último a clicar quando o cronômetro chegar a zero, você ganha o prêmio com até 50% de desconto." },
@@ -596,7 +596,7 @@
       "label": "// SECTION 04",
       "title": "Economia da Plataforma",
       "clickPrice": "Preço do Clique",
-      "clickPriceValue": "$0,02 USDT",
+      "clickPriceValue": "$0,05 USDT",
       "maxDiscount": "Desconto Máximo",
       "maxDiscountValue": "50%",
       "timerDuration": "Duração do Timer",
@@ -613,7 +613,7 @@
       "items": {
         "q1": { "q": "O Click Win é seguro?", "a": "Sim. Todas as transações são processadas na BNB Chain com total transparência. Seus fundos são protegidos em carteiras HD com endereços únicos." },
         "q2": { "q": "Qual carteira eu preciso?", "a": "Qualquer carteira compatível com BNB Chain — MetaMask, Trust Wallet, Binance Chain Wallet ou WalletConnect." },
-        "q3": { "q": "Quanto custa cada clique?", "a": "Cada clique custa $0,02 USDT (BEP-20). O depósito mínimo é 1 USDT." },
+        "q3": { "q": "Quanto custa cada clique?", "a": "Cada clique custa $0,05 USDT (BEP-20). O depósito mínimo é 1 USDT." },
         "q4": { "q": "Como eu ganho?", "a": "Seja a última pessoa a clicar antes que o cronômetro de 30 segundos chegue a zero. Você ganha o prêmio com até 50% de desconto." },
         "q5": { "q": "Posso sacar meu saldo?", "a": "Sim, você pode sacar USDT não utilizado da sua conta a qualquer momento através do painel." },
         "q6": { "q": "Como funciona o programa de indicação?", "a": "Compartilhe seu código de indicação com amigos. Você ganha 20% da primeira compra de cliques deles como bônus." },

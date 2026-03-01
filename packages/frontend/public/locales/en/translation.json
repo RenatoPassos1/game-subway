@@ -24,7 +24,7 @@
       },
       "slide2": {
         "title": "Up to 99% Discount",
-        "desc": "Win high-value prizes at a fraction of the cost. Each click is just $0.02 USDT on BNB Chain."
+        "desc": "Win high-value prizes at a fraction of the cost. Each click is just $0.05 USDT on BNB Chain."
       },
       "slide3": {
         "title": "Powered by BNB Chain",
@@ -565,7 +565,7 @@
     "about": {
       "label": "// SECTION 01",
       "title": "What is Click Win",
-      "desc": "Click Win is a next-generation digital auction platform powered by BNB Chain. Every click costs $0.02 USDT and resets a 30-second countdown timer. The last person to click before the timer runs out wins the prize at a progressive discount of up to 50%.",
+      "desc": "Click Win is a next-generation digital auction platform powered by BNB Chain. Every click costs $0.05 USDT and resets a 30-second countdown timer. The last person to click before the timer runs out wins the prize at a progressive discount of up to 50%.",
       "mission": "Our mission is to democratize auctions through blockchain transparency, making every participant's chance equal and every transaction verifiable on-chain."
     },
     "howItWorks": {
@@ -573,7 +573,7 @@
       "title": "How It Works",
       "steps": {
         "s1": { "title": "Connect Wallet", "desc": "Connect your BNB Chain wallet (MetaMask, Trust Wallet, etc.) to authenticate securely." },
-        "s2": { "title": "Deposit USDT", "desc": "Deposit USDT (BEP-20) to your Click Win account. Minimum deposit: 1 USDT. Each click costs $0.02." },
+        "s2": { "title": "Deposit USDT", "desc": "Deposit USDT (BEP-20) to your Click Win account. Minimum deposit: 1 USDT. Each click costs $0.05." },
         "s3": { "title": "Join Auction", "desc": "Browse active auctions and choose one to participate in. Each auction has a prize and a countdown timer." },
         "s4": { "title": "Click to Bid", "desc": "Each click resets the 30-second timer and registers you as the current leader. Click strategically!" },
         "s5": { "title": "Win the Prize", "desc": "If you're the last clicker when the timer reaches zero, you win the prize with up to 50% discount." },
@@ -596,7 +596,7 @@
       "label": "// SECTION 04",
       "title": "Platform Economics",
       "clickPrice": "Click Price",
-      "clickPriceValue": "$0.02 USDT",
+      "clickPriceValue": "$0.05 USDT",
       "maxDiscount": "Max Discount",
       "maxDiscountValue": "50%",
       "timerDuration": "Timer Duration",
@@ -613,7 +613,7 @@
       "items": {
         "q1": { "q": "Is Click Win safe?", "a": "Yes. All transactions are processed on BNB Chain with full transparency. Your funds are secured in HD wallets with unique addresses." },
         "q2": { "q": "What wallet do I need?", "a": "Any BNB Chain compatible wallet — MetaMask, Trust Wallet, Binance Chain Wallet, or WalletConnect." },
-        "q3": { "q": "How much does each click cost?", "a": "Each click costs $0.02 USDT (BEP-20). Minimum deposit is 1 USDT." },
+        "q3": { "q": "How much does each click cost?", "a": "Each click costs $0.05 USDT (BEP-20). Minimum deposit is 1 USDT." },
         "q4": { "q": "How do I win?", "a": "Be the last person to click before the 30-second timer reaches zero. You win the prize with up to 50% discount." },
         "q5": { "q": "Can I withdraw my balance?", "a": "Yes, you can withdraw unused USDT from your account at any time through the dashboard." },
         "q6": { "q": "How does the referral program work?", "a": "Share your referral code with friends. You earn 20% of their first click purchase as a bonus." },
