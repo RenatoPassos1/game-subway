@@ -41,6 +41,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-syne)', 'Syne', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-space-mono)', 'Space Mono', 'monospace'],
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%)',
@@ -52,12 +54,17 @@ const config: Config = {
         'glow-primary': '0 0 20px rgba(108, 92, 231, 0.3)',
         'glow-secondary': '0 0 20px rgba(0, 210, 255, 0.3)',
         'glow-accent': '0 0 20px rgba(255, 215, 0, 0.3)',
+        'glow-lg': '0 0 40px rgba(108, 92, 231, 0.4), 0 0 80px rgba(0, 210, 255, 0.15)',
       },
       animation: {
         'pulse-slow': 'pulse 3s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        'scanline': 'scanline 8s linear infinite',
+        'border-flow': 'borderFlow 3s linear infinite',
+        'flicker': 'flicker 4s ease-in-out infinite',
+        'data-stream': 'dataStream 20s linear infinite',
       },
       keyframes: {
         float: {
@@ -71,6 +78,24 @@ const config: Config = {
         glow: {
           '0%': { boxShadow: '0 0 5px rgba(108, 92, 231, 0.2)' },
           '100%': { boxShadow: '0 0 20px rgba(108, 92, 231, 0.6)' },
+        },
+        scanline: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        borderFlow: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.85' },
+          '75%': { opacity: '0.95' },
+        },
+        dataStream: {
+          '0%': { backgroundPosition: '0% 0%' },
+          '100%': { backgroundPosition: '0% 100%' },
         },
       },
     },

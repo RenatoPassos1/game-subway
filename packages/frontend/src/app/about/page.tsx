@@ -36,11 +36,13 @@ export default function AboutPage() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 grid-pattern">
           <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #6C5CE7 0%, transparent 70%)' }} />
         </div>
+        <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <span className="mono-label">// ABOUT</span>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
             <span className="gradient-text">{t('about.hero.title')}</span>
           </h1>
           <p className="text-text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -52,43 +54,52 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* Mission */}
       <section className="section-container">
-        <div className="glass-card p-8 md:p-12 text-center">
-          <h2 className="section-title mb-6">{t('about.mission.title')}</h2>
+        <div className="tech-card p-8 md:p-12 text-center">
+          <span className="mono-label">// MISSION</span>
+          <h2 className="font-heading section-title mb-6">{t('about.mission.title')}</h2>
           <p className="text-text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             {t('about.mission.desc')}
           </p>
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* How It Works */}
       <section className="section-container">
         <div className="text-center mb-12">
-          <h2 className="section-title">{t('about.howItWorks.title')}</h2>
+          <span className="mono-label">// HOW_IT_WORKS</span>
+          <h2 className="font-heading section-title">{t('about.howItWorks.title')}</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {HOW_IT_WORKS_STEPS.map((step) => (
             <div key={step.number} className="step-card">
-              <div className="step-number">{step.number}</div>
+              <div className="step-number font-mono">{step.number}</div>
               <div className="text-3xl mb-3">{step.icon}</div>
-              <h3 className="text-lg font-semibold text-text mb-2">{t(step.titleKey)}</h3>
+              <h3 className="font-heading text-lg font-semibold text-text mb-2">{t(step.titleKey)}</h3>
               <p className="text-sm text-text-muted">{t(step.descKey)}</p>
             </div>
           ))}
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* Why Click Win */}
       <section className="section-container">
         <div className="text-center mb-12">
-          <h2 className="section-title">{t('about.why.title')}</h2>
+          <span className="mono-label">// WHY_CLICK_WIN</span>
+          <h2 className="font-heading section-title">{t('about.why.title')}</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {WHY_ITEMS.map((item, idx) => (
             <div key={idx} className="feature-card">
               <div className="feature-icon">{item.icon}</div>
-              <h3 className="text-lg font-semibold text-text mb-2">{t(item.titleKey)}</h3>
+              <h3 className="font-heading text-lg font-semibold text-text mb-2">{t(item.titleKey)}</h3>
               <p className="text-sm text-text-muted">{t(item.descKey)}</p>
             </div>
           ))}
@@ -98,28 +109,35 @@ export default function AboutPage() {
         </p>
       </section>
 
+      <div className="section-divider" />
+
       {/* Our Technology */}
       <section className="section-container">
         <div className="text-center mb-12">
-          <h2 className="section-title">{t('about.tech.title')}</h2>
+          <span className="mono-label">// TECH_STACK</span>
+          <h2 className="font-heading section-title">{t('about.tech.title')}</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {TECH_ITEMS.map((item, idx) => (
             <div key={idx} className="feature-card">
               <div className="feature-icon">{item.icon}</div>
-              <h3 className="text-lg font-semibold text-text mb-2">{t(item.titleKey)}</h3>
+              <h3 className="font-heading text-lg font-semibold text-text mb-2">{t(item.titleKey)}</h3>
               <p className="text-sm text-text-muted">{t(item.descKey)}</p>
             </div>
           ))}
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* Vision */}
       <section className="section-container">
-        <div className="glass-card p-8 md:p-12 text-center relative overflow-hidden">
+        <div className="tech-card p-8 md:p-12 text-center relative overflow-hidden">
           <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(ellipse at center, #00D2FF 0%, transparent 70%)' }} />
+          <div className="scanline-overlay" />
           <div className="relative z-10">
-            <h2 className="section-title mb-6">{t('about.vision.title')}</h2>
+            <span className="mono-label">// VISION</span>
+            <h2 className="font-heading section-title mb-6">{t('about.vision.title')}</h2>
             <p className="text-text-muted text-lg max-w-3xl mx-auto leading-relaxed">
               {t('about.vision.desc1')}
             </p>

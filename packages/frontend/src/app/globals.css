@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* ==========================================
-   Click Win - Global Styles
-   Dark Web3 Theme with Glassmorphism
+   Click Win - Futuristic Tech Theme
+   Dark Web3 with Scanlines & Animated Borders
    ========================================== */
 
 @layer base {
@@ -18,12 +18,16 @@
     @apply bg-background text-text font-sans;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-syne), 'Syne', system-ui, sans-serif;
+  }
+
   ::selection {
     @apply bg-primary/40 text-white;
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -31,16 +35,16 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-surface-lighter rounded-full;
+    @apply bg-primary/40 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary/50;
+    @apply bg-primary/60;
   }
 }
 
 @layer components {
-  /* Glassmorphism Card */
+  /* ---- Glassmorphism Card ---- */
   .glass-card {
     @apply relative overflow-hidden rounded-2xl border border-white/10;
     background: rgba(26, 26, 46, 0.6);
@@ -58,9 +62,56 @@
     box-shadow: 0 8px 32px rgba(108, 92, 231, 0.15);
   }
 
-  /* Gradient Buttons */
+  /* ---- Tech Card (borda topo animada) ---- */
+  .tech-card {
+    @apply relative overflow-hidden rounded-xl border border-white/5 p-6 transition-all duration-300;
+    background: rgba(26, 26, 46, 0.5);
+    backdrop-filter: blur(12px);
+  }
+
+  .tech-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-[2px];
+    background: linear-gradient(90deg, transparent, #6C5CE7, #00D2FF, transparent);
+    background-size: 200% 100%;
+    animation: borderFlow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tech-card:hover::before {
+    opacity: 1;
+  }
+
+  .tech-card:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.7);
+    box-shadow: 0 4px 24px rgba(108, 92, 231, 0.12);
+  }
+
+  /* ---- Scanline Overlay ---- */
+  .scanline-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(108, 92, 231, 0.03) 2px,
+      rgba(108, 92, 231, 0.03) 4px
+    );
+    z-index: 1;
+  }
+
+  /* ---- Mono Label (tags tech) ---- */
+  .mono-label {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-primary/80;
+  }
+
+  /* ---- Gradient Buttons ---- */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white rounded-xl transition-all duration-300;
+    @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white rounded-xl transition-all duration-300 font-heading;
     background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
   }
 
@@ -74,7 +125,7 @@
   }
 
   .btn-secondary {
-    @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl transition-all duration-300 border border-primary/40 text-primary;
+    @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl transition-all duration-300 border border-primary/40 text-primary font-heading;
     background: rgba(108, 92, 231, 0.1);
   }
 
@@ -85,7 +136,7 @@
   }
 
   .btn-accent {
-    @apply relative inline-flex items-center justify-center px-6 py-3 font-bold text-background rounded-xl transition-all duration-300;
+    @apply relative inline-flex items-center justify-center px-6 py-3 font-bold text-background rounded-xl transition-all duration-300 font-heading;
     background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
   }
 
@@ -94,14 +145,14 @@
     box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
   }
 
-  /* Section Container */
+  /* ---- Section Container ---- */
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
   }
 
-  /* Section Title */
+  /* ---- Section Title ---- */
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-4;
+    @apply text-3xl md:text-4xl font-bold mb-4 font-heading;
     background: linear-gradient(135deg, #E0E0FF 0%, #6C5CE7 50%, #00D2FF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -112,7 +163,7 @@
     @apply text-text-muted text-lg md:text-xl max-w-2xl;
   }
 
-  /* Gradient Text */
+  /* ---- Gradient Text ---- */
   .gradient-text {
     background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
     -webkit-background-clip: text;
@@ -127,19 +178,19 @@
     background-clip: text;
   }
 
-  /* Divider */
+  /* ---- Divider ---- */
   .section-divider {
     @apply w-full h-px;
     background: linear-gradient(90deg, transparent 0%, rgba(108, 92, 231, 0.3) 50%, transparent 100%);
   }
 
-  /* Legal Page Styles */
+  /* ---- Legal Page Styles ---- */
   .legal-content h2 {
-    @apply text-2xl font-bold text-text mt-10 mb-4;
+    @apply text-2xl font-bold text-text mt-10 mb-4 font-heading;
   }
 
   .legal-content h3 {
-    @apply text-xl font-semibold text-text mt-6 mb-3;
+    @apply text-xl font-semibold text-text mt-6 mb-3 font-heading;
   }
 
   .legal-content p {
@@ -154,7 +205,7 @@
     @apply leading-relaxed;
   }
 
-  /* FAQ Accordion */
+  /* ---- FAQ Accordion ---- */
   .faq-item {
     @apply glass-card border-white/5 overflow-hidden transition-all duration-300;
   }
@@ -164,44 +215,74 @@
   }
 
   .faq-question {
-    @apply flex items-center justify-between w-full p-5 text-left text-text font-medium cursor-pointer hover:text-primary transition-colors;
+    @apply flex items-center justify-between w-full p-5 text-left text-text font-medium cursor-pointer hover:text-primary transition-colors font-heading;
   }
 
   .faq-answer {
     @apply px-5 pb-5 text-text-muted leading-relaxed;
   }
 
-  /* Stat Card */
+  /* ---- Stat Card ---- */
   .stat-card {
-    @apply glass-card p-6 text-center;
+    @apply tech-card text-center;
   }
 
   .stat-value {
-    @apply text-3xl md:text-4xl font-bold gradient-text;
+    @apply text-3xl md:text-4xl font-bold gradient-text font-heading;
   }
 
   .stat-label {
-    @apply text-text-muted text-sm mt-2;
+    @apply text-text-muted text-sm mt-2 font-mono uppercase tracking-wider;
   }
 
-  /* Step Card */
+  /* ---- Step Card ---- */
   .step-card {
-    @apply glass-card-hover p-6 flex flex-col items-center text-center;
+    @apply tech-card flex flex-col items-center text-center;
   }
 
   .step-number {
-    @apply w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold mb-4;
+    @apply w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold mb-4 font-mono;
     background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
   }
 
-  /* Feature Card */
+  /* ---- Feature Card ---- */
   .feature-card {
-    @apply glass-card-hover p-6;
+    @apply tech-card;
   }
 
   .feature-icon {
     @apply w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4;
     background: rgba(108, 92, 231, 0.15);
+  }
+
+  /* ---- KPI Card (tipo dashboard) ---- */
+  .kpi-card {
+    @apply relative overflow-hidden rounded-xl border border-white/5 p-5;
+    background: rgba(26, 26, 46, 0.5);
+  }
+
+  .kpi-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-[3px] h-full;
+    background: linear-gradient(180deg, #6C5CE7, #00D2FF);
+    animation: borderFlow 3s linear infinite;
+    background-size: 100% 200%;
+  }
+
+  /* ---- Badge / Chip ---- */
+  .tech-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.25);
+    color: #8B7CF0;
+  }
+
+  /* ---- Grid Pattern Background ---- */
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(108, 92, 231, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108, 92, 231, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 }
 

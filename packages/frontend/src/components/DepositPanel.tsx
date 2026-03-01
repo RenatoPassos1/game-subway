@@ -54,9 +54,9 @@ function QRPlaceholder({ value }: { value: string }) {
             className={`w-[4px] h-[4px] rounded-[1px] ${
               // Pseudo-random pattern based on address chars
               value.charCodeAt(i % value.length) % 3 === 0
-                ? 'bg-[#6C5CE7]'
+                ? 'bg-primary'
                 : value.charCodeAt(i % value.length) % 3 === 1
-                ? 'bg-[#00D2FF]'
+                ? 'bg-secondary'
                 : 'bg-white/10'
             }`}
           />
@@ -118,23 +118,23 @@ export default function DepositPanel() {
 
   if (!isAuthenticated) {
     return (
-      <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-8 text-center">
-        <p className="text-[#E0E0FF]/50">Connect your wallet and sign in to deposit.</p>
+      <div className="tech-card p-8 text-center">
+        <p className="text-text-muted">Connect your wallet and sign in to deposit.</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden">
-      <div className="h-1 bg-gradient-to-r from-[#FFD700] via-[#6C5CE7] to-[#FFD700]" />
+    <div className="tech-card overflow-hidden p-0">
+      <div className="h-1 bg-gradient-to-r from-accent via-primary to-accent" />
 
       <div className="p-6 space-y-6">
-        <h2 className="text-xl font-bold text-[#E0E0FF]">Deposit & Buy Clicks</h2>
+        <h2 className="text-xl font-bold text-text font-heading">Deposit & Buy Clicks</h2>
 
         {/* Current Balance */}
-        <div className="bg-white/5 rounded-xl p-4 flex items-center justify-between">
-          <span className="text-sm text-[#E0E0FF]/60">Your Click Balance</span>
-          <span className="text-2xl font-bold text-[#FFD700] tabular-nums">
+        <div className="kpi-card flex items-center justify-between">
+          <span className="mono-label">Your Click Balance</span>
+          <span className="text-2xl font-bold text-accent tabular-nums font-mono">
             {user?.clickBalance ?? 0}
           </span>
         </div>
@@ -159,7 +159,7 @@ export default function DepositPanel() {
 
         {/* Token Selector */}
         <div>
-          <label className="text-xs text-[#E0E0FF]/50 uppercase tracking-wider mb-2 block">
+          <label className="mono-label mb-2 block">
             Select Token
           </label>
           <div className="flex gap-2">
@@ -167,10 +167,10 @@ export default function DepositPanel() {
               <button
                 key={token}
                 onClick={() => setSelectedToken(token)}
-                className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
+                className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all font-mono ${
                   selectedToken === token
-                    ? 'bg-gradient-to-r from-[#6C5CE7] to-[#00D2FF] text-white'
-                    : 'bg-white/5 text-[#E0E0FF]/60 hover:bg-white/10'
+                    ? 'bg-gradient-primary text-white'
+                    : 'bg-white/5 text-text-muted hover:bg-white/10'
                 }`}
               >
                 {token}
@@ -182,7 +182,7 @@ export default function DepositPanel() {
         {/* Deposit Address + QR */}
         {isLoading ? (
           <div className="flex justify-center py-8">
-            <div className="w-8 h-8 border-2 border-[#6C5CE7] border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : error ? (
           <div className="bg-red-500/10 rounded-lg p-3 text-sm text-red-300">
@@ -199,14 +199,14 @@ export default function DepositPanel() {
                 type="text"
                 readOnly
                 value={depositAddr.address}
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm font-mono text-[#00D2FF] truncate focus:outline-none"
+                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm font-mono text-secondary truncate focus:outline-none"
               />
               <button
                 onClick={handleCopy}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                   copied
                     ? 'bg-green-500/20 text-green-300'
-                    : 'bg-white/10 text-[#E0E0FF] hover:bg-white/20'
+                    : 'bg-white/10 text-text hover:bg-white/20'
                 }`}
               >
                 {copied ? 'Copied!' : 'Copy'}
@@ -217,7 +217,7 @@ export default function DepositPanel() {
 
         {/* Click Calculator */}
         <div>
-          <label className="text-xs text-[#E0E0FF]/50 uppercase tracking-wider mb-2 block">
+          <label className="mono-label mb-2 block">
             Click Calculator
           </label>
           <div className="flex items-center gap-3">
@@ -228,32 +228,32 @@ export default function DepositPanel() {
                 step="1"
                 value={usdtAmount}
                 onChange={(e) => setUsdtAmount(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 pr-14 text-[#E0E0FF] focus:outline-none focus:border-[#6C5CE7]/50"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 pr-14 text-text font-mono focus:outline-none focus:border-primary/50"
                 placeholder="Amount"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#E0E0FF]/40">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-text-dim font-mono">
                 USDT
               </span>
             </div>
-            <span className="text-[#E0E0FF]/30">=</span>
+            <span className="text-text-dim">=</span>
             <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 min-w-[100px] text-center">
-              <span className="text-lg font-bold text-[#FFD700] tabular-nums">
+              <span className="text-lg font-bold text-accent tabular-nums font-mono">
                 {clicksForAmount}
               </span>
-              <span className="text-xs text-[#E0E0FF]/40 ml-1">clicks</span>
+              <span className="text-xs text-text-dim ml-1 font-mono">clicks</span>
             </div>
           </div>
-          <p className="text-xs text-[#E0E0FF]/30 mt-1">
+          <p className="text-xs text-text-dim mt-1 font-mono">
             1 click = ${PRICE_PER_CLICK.toFixed(2)} USDT &middot; Min deposit: ${MIN_DEPOSIT_AMOUNT} USDT
           </p>
         </div>
 
         {/* Recent Deposits placeholder */}
         <div>
-          <h3 className="text-sm font-semibold text-[#E0E0FF]/70 mb-2">
+          <h3 className="text-sm font-semibold text-text-muted mb-2 font-heading">
             Recent Deposits
           </h3>
-          <div className="bg-white/5 rounded-lg p-4 text-center text-sm text-[#E0E0FF]/30">
+          <div className="bg-white/5 rounded-lg p-4 text-center text-sm text-text-dim">
             Your deposit history will appear here once you make your first deposit.
           </div>
         </div>

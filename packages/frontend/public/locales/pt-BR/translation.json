@@ -3,7 +3,8 @@
     "home": "Início",
     "about": "Sobre",
     "help": "Ajuda",
-    "partner": "Seja Parceiro"
+    "partner": "Seja Parceiro",
+    "whitepaper": "Whitepaper"
   },
   "wallet": {
     "connect": "Conectar Carteira",
@@ -521,5 +522,102 @@
     "disclaimer": "Click Win é uma plataforma de entretenimento. Cliques digitais não são instrumentos financeiros.",
     "copyright": "\u00a9 {{year}} Click Win. Todos os direitos reservados.",
     "builtOn": "Construído na BNB Chain"
+  },
+  "whitepaper": {
+    "badge": "// DOCUMENTO TÉCNICO",
+    "hero": {
+      "title": "Whitepaper Click Win",
+      "subtitle": "Tudo que você precisa saber sobre a plataforma de leilão digital Click Win — tecnologia, economia e visão."
+    },
+    "toc": {
+      "title": "Índice",
+      "s1": "O que é o Click Win",
+      "s2": "Como Funciona",
+      "s3": "Tecnologia",
+      "s4": "Economia",
+      "s5": "FAQ",
+      "s6": "Parcerias",
+      "s7": "Roadmap"
+    },
+    "about": {
+      "label": "// SECTION 01",
+      "title": "O que é o Click Win",
+      "desc": "Click Win é uma plataforma de leilão digital de última geração movida pela BNB Chain. Cada clique custa $0,02 USDT e reinicia um cronômetro regressivo de 30 segundos. A última pessoa a clicar antes do tempo esgotar ganha o prêmio com um desconto progressivo de até 50%.",
+      "mission": "Nossa missão é democratizar os leilões através da transparência blockchain, tornando a chance de cada participante igual e cada transação verificável on-chain."
+    },
+    "howItWorks": {
+      "label": "// SECTION 02",
+      "title": "Como Funciona",
+      "steps": {
+        "s1": { "title": "Conectar Carteira", "desc": "Conecte sua carteira BNB Chain (MetaMask, Trust Wallet, etc.) para autenticação segura." },
+        "s2": { "title": "Depositar USDT", "desc": "Deposite USDT (BEP-20) na sua conta Click Win. Depósito mínimo: 1 USDT. Cada clique custa $0,02." },
+        "s3": { "title": "Entrar no Leilão", "desc": "Navegue pelos leilões ativos e escolha um para participar. Cada leilão tem um prêmio e um cronômetro." },
+        "s4": { "title": "Clique para Dar Lance", "desc": "Cada clique reinicia o cronômetro de 30 segundos e registra você como o líder atual. Clique estrategicamente!" },
+        "s5": { "title": "Ganhe o Prêmio", "desc": "Se você for o último a clicar quando o cronômetro chegar a zero, você ganha o prêmio com até 50% de desconto." },
+        "s6": { "title": "Verificação On-Chain", "desc": "Todos os resultados são registrados na BNB Chain para total transparência e auditabilidade." }
+      }
+    },
+    "tech": {
+      "label": "// SECTION 03",
+      "title": "Stack Tecnológico",
+      "items": {
+        "t1": { "title": "Frontend Next.js", "desc": "Aplicação React com renderização server-side e atualizações em tempo real via WebSocket." },
+        "t2": { "title": "Backend Node.js", "desc": "Servidor Express com cache Redis para tempos de resposta abaixo de milissegundos." },
+        "t3": { "title": "BNB Chain", "desc": "Contratos inteligentes na BNB Chain para registros de leilão transparentes e imutáveis." },
+        "t4": { "title": "PostgreSQL", "desc": "Banco de dados relacional para contas de usuários, histórico de leilões e analytics." },
+        "t5": { "title": "WebSocket", "desc": "Comunicação bidirecional em tempo real para atualizações ao vivo do estado dos leilões." },
+        "t6": { "title": "HD Wallets", "desc": "Carteiras determinísticas hierárquicas para endereços de depósito únicos e seguros por usuário." }
+      }
+    },
+    "economics": {
+      "label": "// SECTION 04",
+      "title": "Economia da Plataforma",
+      "clickPrice": "Preço do Clique",
+      "clickPriceValue": "$0,02 USDT",
+      "maxDiscount": "Desconto Máximo",
+      "maxDiscountValue": "50%",
+      "timerDuration": "Duração do Timer",
+      "timerDurationValue": "30 segundos",
+      "referralBonus": "Bônus de Indicação",
+      "referralBonusValue": "20% da primeira compra",
+      "revenueModel": "A receita é gerada a partir das taxas de clique. A plataforma garante que a receita total de cliques exceda o valor do prêmio em pelo menos 20% (multiplicador de receita de 1,2x), garantindo sustentabilidade.",
+      "minDeposit": "Depósito Mínimo",
+      "minDepositValue": "1 USDT"
+    },
+    "faq": {
+      "label": "// SECTION 05",
+      "title": "Perguntas Frequentes",
+      "items": {
+        "q1": { "q": "O Click Win é seguro?", "a": "Sim. Todas as transações são processadas na BNB Chain com total transparência. Seus fundos são protegidos em carteiras HD com endereços únicos." },
+        "q2": { "q": "Qual carteira eu preciso?", "a": "Qualquer carteira compatível com BNB Chain — MetaMask, Trust Wallet, Binance Chain Wallet ou WalletConnect." },
+        "q3": { "q": "Quanto custa cada clique?", "a": "Cada clique custa $0,02 USDT (BEP-20). O depósito mínimo é 1 USDT." },
+        "q4": { "q": "Como eu ganho?", "a": "Seja a última pessoa a clicar antes que o cronômetro de 30 segundos chegue a zero. Você ganha o prêmio com até 50% de desconto." },
+        "q5": { "q": "Posso sacar meu saldo?", "a": "Sim, você pode sacar USDT não utilizado da sua conta a qualquer momento através do painel." },
+        "q6": { "q": "Como funciona o programa de indicação?", "a": "Compartilhe seu código de indicação com amigos. Você ganha 20% da primeira compra de cliques deles como bônus." },
+        "q7": { "q": "O que acontece se várias pessoas clicarem ao mesmo tempo?", "a": "Nosso servidor processa os cliques na ordem de recebimento. O clique que chegar primeiro é registrado como o novo líder." }
+      }
+    },
+    "partner": {
+      "label": "// SECTION 06",
+      "title": "Programa de Parcerias",
+      "desc": "Seja parceiro do Click Win para expandir o ecossistema de leilões digitais. Oferecemos múltiplos níveis de parceria para influenciadores, comunidades e empresas.",
+      "opportunities": {
+        "o1": { "title": "Programa de Afiliados", "desc": "Ganhe comissões indicando usuários para a plataforma. 20% de bônus na primeira compra deles." },
+        "o2": { "title": "Parceria Comunitária", "desc": "Realize leilões para sua comunidade. Marca personalizada, suporte dedicado e compartilhamento de receita." },
+        "o3": { "title": "Integração Empresarial", "desc": "Soluções white-label e acesso à API para empresas que desejam adicionar mecânicas de leilão." }
+      },
+      "contact": "Interessado em ser parceiro? Entre em contato pelo partners@clickwin.fun"
+    },
+    "roadmap": {
+      "label": "// SECTION 07",
+      "title": "Roadmap e Visão",
+      "phases": {
+        "p1": { "title": "Fase 1 — Fundação", "desc": "Lançamento da plataforma, mecânicas principais de leilão, integração BNB Chain, sistema de carteiras." },
+        "p2": { "title": "Fase 2 — Crescimento", "desc": "Programa de indicação, suporte multi-idioma, otimização mobile, construção de comunidade." },
+        "p3": { "title": "Fase 3 — Expansão", "desc": "Novos tipos de leilão, prêmios NFT, governança DAO, suporte cross-chain." },
+        "p4": { "title": "Fase 4 — Ecossistema", "desc": "Marketplace de APIs, soluções white-label, parcerias estratégicas, expansão global." }
+      },
+      "vision": "Nossa visão é nos tornarmos a principal plataforma de leilões descentralizada, tornando a compra competitiva acessível, transparente e divertida para todos no mundo inteiro."
+    }
   }
 }

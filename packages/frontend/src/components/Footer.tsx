@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import Logo from './Logo';
 
 const LEGAL_LINKS = [
   { href: '/terms', labelKey: 'footer.terms' },
@@ -46,16 +47,17 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10" style={{ background: 'linear-gradient(180deg, #0F0F23 0%, #0A0A1A 100%)' }}>
+    <footer className="relative" style={{ background: 'linear-gradient(180deg, #0F0F23 0%, #0A0A1A 100%)' }}>
+      {/* Gradient top border */}
+      <div className="section-divider" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm text-white" style={{ background: 'linear-gradient(135deg, #6C5CE7, #00D2FF)' }}>
-                CW
-              </div>
-              <span className="text-lg font-bold text-text">Click Win</span>
+              <Logo size={28} />
+              <span className="text-lg font-heading font-bold text-text">Click Win</span>
             </div>
             <p className="text-text-muted text-sm leading-relaxed max-w-xs">
               {t('footer.description')}
@@ -72,7 +74,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-text-muted hover:text-primary transition-colors"
+                    className="font-mono text-xs tracking-wider text-text-muted hover:text-primary transition-colors"
                   >
                     {t(link.labelKey)}
                   </Link>
@@ -107,12 +109,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-text-dim text-xs">
+        <div className="mt-10 pt-6 border-t border-white/5">
+          <p className="font-mono text-xs text-text-dim text-center">
             {t('footer.copyright', { year: currentYear })}
-          </p>
-          <p className="text-text-dim text-xs">
-            {t('footer.builtOn')}
           </p>
         </div>
       </div>

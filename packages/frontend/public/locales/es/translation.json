@@ -3,7 +3,8 @@
     "home": "Inicio",
     "about": "Acerca de",
     "help": "Ayuda",
-    "partner": "Ser Socio"
+    "partner": "Ser Socio",
+    "whitepaper": "Whitepaper"
   },
   "wallet": {
     "connect": "Conectar Billetera",
@@ -521,5 +522,102 @@
     "disclaimer": "Click Win es una plataforma de entretenimiento. Los clics digitales no son instrumentos financieros.",
     "copyright": "© {{year}} Click Win. Todos los derechos reservados.",
     "builtOn": "Construido en BNB Chain"
+  },
+  "whitepaper": {
+    "badge": "// DOCUMENTO TÉCNICO",
+    "hero": {
+      "title": "Whitepaper Click Win",
+      "subtitle": "Todo lo que necesitas saber sobre la plataforma de subastas digitales Click Win — tecnología, economía y visión."
+    },
+    "toc": {
+      "title": "Índice",
+      "s1": "Qué es Click Win",
+      "s2": "Cómo Funciona",
+      "s3": "Tecnología",
+      "s4": "Economía",
+      "s5": "FAQ",
+      "s6": "Asociaciones",
+      "s7": "Roadmap"
+    },
+    "about": {
+      "label": "// SECTION 01",
+      "title": "Qué es Click Win",
+      "desc": "Click Win es una plataforma de subastas digitales de última generación impulsada por BNB Chain. Cada clic cuesta $0.02 USDT y reinicia un cronómetro regresivo de 30 segundos. La última persona en hacer clic antes de que se agote el tiempo gana el premio con un descuento progresivo de hasta 50%.",
+      "mission": "Nuestra misión es democratizar las subastas a través de la transparencia blockchain, haciendo que la oportunidad de cada participante sea igual y cada transacción verificable on-chain."
+    },
+    "howItWorks": {
+      "label": "// SECTION 02",
+      "title": "Cómo Funciona",
+      "steps": {
+        "s1": { "title": "Conectar Billetera", "desc": "Conecta tu billetera BNB Chain (MetaMask, Trust Wallet, etc.) para autenticarte de forma segura." },
+        "s2": { "title": "Depositar USDT", "desc": "Deposita USDT (BEP-20) en tu cuenta Click Win. Depósito mínimo: 1 USDT. Cada clic cuesta $0.02." },
+        "s3": { "title": "Unirse a la Subasta", "desc": "Explora las subastas activas y elige una para participar. Cada subasta tiene un premio y un cronómetro." },
+        "s4": { "title": "Haz Clic para Pujar", "desc": "Cada clic reinicia el cronómetro de 30 segundos y te registra como el líder actual. ¡Haz clic estratégicamente!" },
+        "s5": { "title": "Gana el Premio", "desc": "Si eres el último en hacer clic cuando el cronómetro llega a cero, ganas el premio con hasta 50% de descuento." },
+        "s6": { "title": "Verificación On-Chain", "desc": "Todos los resultados se registran en BNB Chain para total transparencia y auditabilidad." }
+      }
+    },
+    "tech": {
+      "label": "// SECTION 03",
+      "title": "Stack Tecnológico",
+      "items": {
+        "t1": { "title": "Frontend Next.js", "desc": "Aplicación React con renderizado del lado del servidor y actualizaciones en tiempo real vía WebSocket." },
+        "t2": { "title": "Backend Node.js", "desc": "Servidor Express con caché Redis para tiempos de respuesta por debajo del milisegundo." },
+        "t3": { "title": "BNB Chain", "desc": "Contratos inteligentes en BNB Chain para registros de subastas transparentes e inmutables." },
+        "t4": { "title": "PostgreSQL", "desc": "Base de datos relacional para cuentas de usuarios, historial de subastas y analíticas." },
+        "t5": { "title": "WebSocket", "desc": "Comunicación bidireccional en tiempo real para actualizaciones en vivo del estado de las subastas." },
+        "t6": { "title": "HD Wallets", "desc": "Billeteras determinísticas jerárquicas para direcciones de depósito únicas y seguras por usuario." }
+      }
+    },
+    "economics": {
+      "label": "// SECTION 04",
+      "title": "Economía de la Plataforma",
+      "clickPrice": "Precio del Clic",
+      "clickPriceValue": "$0.02 USDT",
+      "maxDiscount": "Descuento Máximo",
+      "maxDiscountValue": "50%",
+      "timerDuration": "Duración del Timer",
+      "timerDurationValue": "30 segundos",
+      "referralBonus": "Bono de Referido",
+      "referralBonusValue": "20% de la primera compra",
+      "revenueModel": "Los ingresos se generan a partir de las tarifas de clic. La plataforma asegura que los ingresos totales por clics superen el valor del premio en al menos 20% (multiplicador de ingresos de 1.2x), garantizando sostenibilidad.",
+      "minDeposit": "Depósito Mínimo",
+      "minDepositValue": "1 USDT"
+    },
+    "faq": {
+      "label": "// SECTION 05",
+      "title": "Preguntas Frecuentes",
+      "items": {
+        "q1": { "q": "¿Es Click Win seguro?", "a": "Sí. Todas las transacciones se procesan en BNB Chain con total transparencia. Tus fondos están protegidos en billeteras HD con direcciones únicas." },
+        "q2": { "q": "¿Qué billetera necesito?", "a": "Cualquier billetera compatible con BNB Chain — MetaMask, Trust Wallet, Binance Chain Wallet o WalletConnect." },
+        "q3": { "q": "¿Cuánto cuesta cada clic?", "a": "Cada clic cuesta $0.02 USDT (BEP-20). El depósito mínimo es 1 USDT." },
+        "q4": { "q": "¿Cómo gano?", "a": "Sé la última persona en hacer clic antes de que el cronómetro de 30 segundos llegue a cero. Ganas el premio con hasta 50% de descuento." },
+        "q5": { "q": "¿Puedo retirar mi saldo?", "a": "Sí, puedes retirar USDT no utilizado de tu cuenta en cualquier momento a través del panel." },
+        "q6": { "q": "¿Cómo funciona el programa de referidos?", "a": "Comparte tu código de referido con amigos. Ganas 20% de su primera compra de clics como bono." },
+        "q7": { "q": "¿Qué pasa si varias personas hacen clic al mismo tiempo?", "a": "Nuestro servidor procesa los clics en orden de recepción. El clic que llega primero se registra como el nuevo líder." }
+      }
+    },
+    "partner": {
+      "label": "// SECTION 06",
+      "title": "Programa de Asociaciones",
+      "desc": "Asóciate con Click Win para expandir el ecosistema de subastas digitales. Ofrecemos múltiples niveles de asociación para influencers, comunidades y empresas.",
+      "opportunities": {
+        "o1": { "title": "Programa de Afiliados", "desc": "Gana comisiones refiriendo usuarios a la plataforma. 20% de bono en su primera compra." },
+        "o2": { "title": "Asociación Comunitaria", "desc": "Realiza subastas para tu comunidad. Marca personalizada, soporte dedicado y reparto de ingresos." },
+        "o3": { "title": "Integración Empresarial", "desc": "Soluciones white-label y acceso a API para empresas que desean agregar mecánicas de subasta." }
+      },
+      "contact": "¿Interesado en asociarte? Contáctanos en partners@clickwin.fun"
+    },
+    "roadmap": {
+      "label": "// SECTION 07",
+      "title": "Roadmap y Visión",
+      "phases": {
+        "p1": { "title": "Fase 1 — Fundación", "desc": "Lanzamiento de la plataforma, mecánicas principales de subasta, integración BNB Chain, sistema de billeteras." },
+        "p2": { "title": "Fase 2 — Crecimiento", "desc": "Programa de referidos, soporte multi-idioma, optimización móvil, construcción de comunidad." },
+        "p3": { "title": "Fase 3 — Expansión", "desc": "Nuevos tipos de subasta, premios NFT, gobernanza DAO, soporte cross-chain." },
+        "p4": { "title": "Fase 4 — Ecosistema", "desc": "Marketplace de APIs, soluciones white-label, asociaciones estratégicas, expansión global." }
+      },
+      "vision": "Nuestra visión es convertirnos en la principal plataforma de subastas descentralizada, haciendo que la compra competitiva sea accesible, transparente y divertida para todos en el mundo."
+    }
   }
 }

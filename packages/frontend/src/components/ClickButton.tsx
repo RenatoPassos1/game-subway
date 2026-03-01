@@ -149,24 +149,24 @@ export default function ClickButton() {
         {/* Button text */}
         <span className="relative z-10">
           {isCooling ? (
-            <span className="text-lg tabular-nums">
+            <span className="text-lg tabular-nums font-mono">
               {(cooldownMs / 1000).toFixed(1)}s
             </span>
           ) : (
-            'CLICK!'
+            <span className="font-heading">CLICK!</span>
           )}
         </span>
       </button>
 
       {/* Disabled reason */}
       {isDisabled && disabledReason && (
-        <p className="text-sm text-[#E0E0FF]/50">{disabledReason}</p>
+        <p className="text-sm text-text-muted">{disabledReason}</p>
       )}
 
       {/* Balance indicator */}
       {isAuthenticated && user && (
-        <p className="text-xs text-[#E0E0FF]/40">
-          <span className="text-[#FFD700] font-semibold">
+        <p className="text-xs text-text-dim">
+          <span className="text-accent font-semibold font-mono">
             {user.clickBalance}
           </span>{' '}
           clicks remaining

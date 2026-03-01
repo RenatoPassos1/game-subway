@@ -52,7 +52,7 @@ export default function Timer() {
               strokeWidth={STROKE_WIDTH}
             />
           </svg>
-          <span className="absolute text-3xl font-bold text-[#E0E0FF]/30 tabular-nums">
+          <span className="absolute text-3xl font-bold text-text/30 tabular-nums font-mono">
             --.-
           </span>
         </div>
@@ -110,12 +110,12 @@ export default function Timer() {
         {/* Center text */}
         <div className="absolute flex flex-col items-center">
           <span
-            className="text-4xl font-black tabular-nums"
+            className="text-4xl font-black tabular-nums font-mono"
             style={{ color: timerColor }}
           >
             {timeLeftFormatted}
           </span>
-          <span className="text-xs text-[#E0E0FF]/40 uppercase tracking-widest mt-1">
+          <span className="text-xs text-text-dim uppercase tracking-widest mt-1 font-mono">
             seconds
           </span>
         </div>

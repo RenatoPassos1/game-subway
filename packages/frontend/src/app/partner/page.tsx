@@ -33,11 +33,13 @@ export default function PartnerPage() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 grid-pattern">
           <div className="absolute top-1/4 right-1/3 w-80 h-80 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #FFD700 0%, transparent 70%)' }} />
         </div>
+        <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <span className="mono-label">// PARTNERSHIPS</span>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
             <span className="gradient-text">{t('partner.hero.title')}</span>
           </h1>
           <p className="text-text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -46,16 +48,19 @@ export default function PartnerPage() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* Why Partner */}
       <section className="section-container">
         <div className="text-center mb-12">
-          <h2 className="section-title">{t('partner.why.title')}</h2>
+          <span className="mono-label">// WHY_PARTNER</span>
+          <h2 className="font-heading section-title">{t('partner.why.title')}</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {WHY_PARTNER.map((item, idx) => (
-            <div key={idx} className="feature-card">
-              <div className="feature-icon">{item.icon}</div>
-              <h3 className="text-lg font-semibold text-text mb-2">{t(item.titleKey)}</h3>
+            <div key={idx} className="tech-card p-6 text-center">
+              <div className="text-3xl mb-3">{item.icon}</div>
+              <h3 className="font-heading text-lg font-semibold text-text mb-2">{t(item.titleKey)}</h3>
               <p className="text-sm text-text-muted">{t(item.descKey)}</p>
             </div>
           ))}
@@ -65,32 +70,38 @@ export default function PartnerPage() {
         </p>
       </section>
 
+      <div className="section-divider" />
+
       {/* Partnership Opportunities */}
       <section className="section-container">
         <div className="text-center mb-12">
-          <h2 className="section-title">{t('partner.opp.title')}</h2>
+          <span className="mono-label">// OPPORTUNITIES</span>
+          <h2 className="font-heading section-title">{t('partner.opp.title')}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {OPPORTUNITIES.map((item, idx) => (
-            <div key={idx} className="glass-card-hover p-8 text-center">
+            <div key={idx} className="tech-card p-8 text-center">
               <div className="text-4xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-semibold text-text mb-3">{t(item.titleKey)}</h3>
+              <h3 className="font-heading text-xl font-semibold text-text mb-3">{t(item.titleKey)}</h3>
               <p className="text-text-muted">{t(item.descKey)}</p>
             </div>
           ))}
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* How It Works */}
       <section className="section-container">
         <div className="text-center mb-12">
-          <h2 className="section-title">{t('partner.steps.title')}</h2>
+          <span className="mono-label">// PROCESS</span>
+          <h2 className="font-heading section-title">{t('partner.steps.title')}</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {PARTNER_STEPS.map((step) => (
             <div key={step.number} className="step-card">
-              <div className="step-number">{step.number}</div>
-              <h3 className="text-lg font-semibold text-text mb-2">{t(step.titleKey)}</h3>
+              <div className="step-number font-mono">{step.number}</div>
+              <h3 className="font-heading text-lg font-semibold text-text mb-2">{t(step.titleKey)}</h3>
               <p className="text-sm text-text-muted">{t(step.descKey)}</p>
             </div>
           ))}
@@ -100,10 +111,13 @@ export default function PartnerPage() {
         </p>
       </section>
 
+      <div className="section-divider" />
+
       {/* Referral Card + Dashboard */}
       <section className="section-container">
         <div className="text-center mb-8">
-          <h2 className="section-title">{t('partner.referral.title')}</h2>
+          <span className="mono-label">// REFERRAL_PROGRAM</span>
+          <h2 className="font-heading section-title">{t('partner.referral.title')}</h2>
           <p className="section-subtitle mx-auto">{t('partner.referral.subtitle')}</p>
         </div>
 
@@ -116,10 +130,13 @@ export default function PartnerPage() {
         <ReferralDashboard />
       </section>
 
+      <div className="section-divider" />
+
       {/* Contact CTA */}
       <section className="section-container">
-        <div className="glass-card p-8 md:p-12 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-text mb-4">{t('partner.cta.title')}</h2>
+        <div className="tech-card p-8 md:p-12 text-center">
+          <span className="mono-label">// CONTACT</span>
+          <h2 className="font-heading text-2xl md:text-3xl font-bold text-text mb-4">{t('partner.cta.title')}</h2>
           <p className="text-text-muted max-w-xl mx-auto mb-6">{t('partner.cta.desc')}</p>
           <a href="#" className="btn-primary text-lg px-8 py-3">
             {t('partner.cta.btn')}

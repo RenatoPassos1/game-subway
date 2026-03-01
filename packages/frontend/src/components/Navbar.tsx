@@ -6,18 +6,28 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import WalletButton from './WalletButton';
 import LanguageSelector from './LanguageSelector';
+import Logo from './Logo';
 
 const NAV_LINKS = [
   { href: '/', labelKey: 'nav.home' },
   { href: '/about', labelKey: 'nav.about' },
   { href: '/help', labelKey: 'nav.help' },
   { href: '/partner', labelKey: 'nav.partner' },
+  { href: '/whitepaper', labelKey: 'nav.whitepaper' },
 ];
 
 export default function Navbar() {
   const { t } = useTranslation();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Track scroll position for visual effects
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -30,15 +40,29 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10" style={{ background: 'rgba(15, 15, 35, 0.85)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+        scrolled
+          ? 'border-primary/20 shadow-glow-primary'
+          : 'border-white/10'
+      }`}
+      style={{
+        background: scrolled
+          ? 'rgba(15, 15, 35, 0.92)'
+          : 'rgba(15, 15, 35, 0.85)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+      }}
+    >
+      {/* Scanline overlay - visible on scroll */}
+      {scrolled && <div className="scanline-overlay rounded-none" />}
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm text-white" style={{ background: 'linear-gradient(135deg, #6C5CE7, #00D2FF)' }}>
-              CW
-            </div>
-            <span className="text-lg font-bold text-text group-hover:text-primary transition-colors hidden sm:block">
+          {/* Logo + Brand */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Logo size={34} className="transition-transform duration-300 group-hover:scale-110" />
+            <span className="text-lg font-bold font-heading text-text group-hover:text-primary transition-colors hidden sm:block">
               Click Win
             </span>
           </Link>
@@ -49,9 +73,9 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium font-mono tracking-wide transition-all duration-200 ${
                   isActive(link.href)
-                    ? 'text-primary bg-primary/10'
+                    ? 'text-primary bg-primary/10 border border-primary/20'
                     : 'text-text-muted hover:text-text hover:bg-white/5'
                 }`}
               >
@@ -70,13 +94,13 @@ export default function Navbar() {
               <WalletButton />
             </div>
 
-            {/* Mobile Hamburger */}
+            {/* Mobile Hamburger - tech-badge styled */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-lg text-text-muted hover:text-text hover:bg-white/5 transition-all"
+              className="md:hidden tech-badge !px-2 !py-1.5 cursor-pointer transition-all hover:border-primary/50"
               aria-label="Toggle menu"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
@@ -90,15 +114,16 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/10" style={{ background: 'rgba(15, 15, 35, 0.95)' }}>
-          <div className="px-4 py-4 space-y-2">
+        <div className="md:hidden border-t border-white/10 relative" style={{ background: 'rgba(15, 15, 35, 0.95)' }}>
+          <div className="scanline-overlay rounded-none" />
+          <div className="relative z-10 px-4 py-4 space-y-2">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                className={`block px-4 py-3 rounded-lg text-sm font-medium font-mono tracking-wide transition-all ${
                   isActive(link.href)
-                    ? 'text-primary bg-primary/10'
+                    ? 'text-primary bg-primary/10 border border-primary/20'
                     : 'text-text-muted hover:text-text hover:bg-white/5'
                 }`}
               >

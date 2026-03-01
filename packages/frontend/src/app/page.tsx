@@ -29,19 +29,20 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 grid-pattern">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #6C5CE7 0%, transparent 70%)' }} />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #00D2FF 0%, transparent 70%)' }} />
         </div>
+        <div className="scanline-overlay" />
 
         <div className="relative z-10 section-container text-center">
           <div className="max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 mb-8">
+            <div className="tech-badge mb-8">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-sm text-text-muted">{t('home.hero.badge')}</span>
+              <span>{t('home.hero.badge')}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight font-heading">
               <span className="text-text">{t('home.hero.titleLine1')}</span>
               <br />
               <span className="gradient-text">{t('home.hero.titleLine2')}</span>
@@ -70,8 +71,9 @@ export default function HomePage() {
           <p className="section-subtitle mx-auto">{t('home.auction.subtitle')}</p>
         </div>
 
-        <div className="glass-card p-8 md:p-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="glass-card p-8 md:p-12 relative">
+          <div className="scanline-overlay" />
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Auction Info Panel */}
             <AuctionPanel />
 
@@ -95,8 +97,8 @@ export default function HomePage() {
       {/* How It Works */}
       <section className="section-container">
         <div className="text-center mb-12">
+          <p className="mono-label mb-3">{t('home.howItWorks.subtitle')}</p>
           <h2 className="section-title">{t('home.howItWorks.title')}</h2>
-          <p className="section-subtitle mx-auto">{t('home.howItWorks.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -128,8 +130,9 @@ export default function HomePage() {
       <section className="section-container">
         <div className="glass-card p-8 md:p-16 text-center relative overflow-hidden">
           <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(ellipse at center, #6C5CE7 0%, transparent 70%)' }} />
+          <div className="scanline-overlay" />
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-text mb-4 font-heading">
               {t('home.finalCta.title')}
             </h2>
             <p className="text-text-muted text-lg mb-8 max-w-xl mx-auto">

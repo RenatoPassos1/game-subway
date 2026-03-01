@@ -3,7 +3,8 @@
     "home": "Home",
     "about": "About",
     "help": "Help",
-    "partner": "Be a Partner"
+    "partner": "Be a Partner",
+    "whitepaper": "Whitepaper"
   },
   "wallet": {
     "connect": "Connect Wallet",
@@ -521,5 +522,102 @@
     "disclaimer": "Click Win is an entertainment platform. Digital clicks are not financial instruments.",
     "copyright": "\u00a9 {{year}} Click Win. All rights reserved.",
     "builtOn": "Built on BNB Chain"
+  },
+  "whitepaper": {
+    "badge": "// TECHNICAL DOCUMENT",
+    "hero": {
+      "title": "Click Win Whitepaper",
+      "subtitle": "Everything you need to know about the Click Win digital auction platform — technology, economics, and vision."
+    },
+    "toc": {
+      "title": "Table of Contents",
+      "s1": "What is Click Win",
+      "s2": "How It Works",
+      "s3": "Technology",
+      "s4": "Economics",
+      "s5": "FAQ",
+      "s6": "Partnerships",
+      "s7": "Roadmap"
+    },
+    "about": {
+      "label": "// SECTION 01",
+      "title": "What is Click Win",
+      "desc": "Click Win is a next-generation digital auction platform powered by BNB Chain. Every click costs $0.02 USDT and resets a 30-second countdown timer. The last person to click before the timer runs out wins the prize at a progressive discount of up to 50%.",
+      "mission": "Our mission is to democratize auctions through blockchain transparency, making every participant's chance equal and every transaction verifiable on-chain."
+    },
+    "howItWorks": {
+      "label": "// SECTION 02",
+      "title": "How It Works",
+      "steps": {
+        "s1": { "title": "Connect Wallet", "desc": "Connect your BNB Chain wallet (MetaMask, Trust Wallet, etc.) to authenticate securely." },
+        "s2": { "title": "Deposit USDT", "desc": "Deposit USDT (BEP-20) to your Click Win account. Minimum deposit: 1 USDT. Each click costs $0.02." },
+        "s3": { "title": "Join Auction", "desc": "Browse active auctions and choose one to participate in. Each auction has a prize and a countdown timer." },
+        "s4": { "title": "Click to Bid", "desc": "Each click resets the 30-second timer and registers you as the current leader. Click strategically!" },
+        "s5": { "title": "Win the Prize", "desc": "If you're the last clicker when the timer reaches zero, you win the prize with up to 50% discount." },
+        "s6": { "title": "On-Chain Verification", "desc": "All results are recorded on BNB Chain for full transparency and auditability." }
+      }
+    },
+    "tech": {
+      "label": "// SECTION 03",
+      "title": "Technology Stack",
+      "items": {
+        "t1": { "title": "Next.js Frontend", "desc": "Server-side rendered React application with real-time WebSocket updates." },
+        "t2": { "title": "Node.js Backend", "desc": "Express server with Redis caching for sub-millisecond response times." },
+        "t3": { "title": "BNB Chain", "desc": "Smart contracts on BNB Chain for transparent, immutable auction records." },
+        "t4": { "title": "PostgreSQL", "desc": "Relational database for user accounts, auction history, and analytics." },
+        "t5": { "title": "WebSocket", "desc": "Real-time bidirectional communication for live auction state updates." },
+        "t6": { "title": "HD Wallets", "desc": "Hierarchical deterministic wallets for secure, unique deposit addresses per user." }
+      }
+    },
+    "economics": {
+      "label": "// SECTION 04",
+      "title": "Platform Economics",
+      "clickPrice": "Click Price",
+      "clickPriceValue": "$0.02 USDT",
+      "maxDiscount": "Max Discount",
+      "maxDiscountValue": "50%",
+      "timerDuration": "Timer Duration",
+      "timerDurationValue": "30 seconds",
+      "referralBonus": "Referral Bonus",
+      "referralBonusValue": "20% of first purchase",
+      "revenueModel": "Revenue is generated from click fees. The platform ensures total click revenue exceeds the prize value by at least 20% (revenue multiplier of 1.2x), guaranteeing sustainability.",
+      "minDeposit": "Min Deposit",
+      "minDepositValue": "1 USDT"
+    },
+    "faq": {
+      "label": "// SECTION 05",
+      "title": "Frequently Asked Questions",
+      "items": {
+        "q1": { "q": "Is Click Win safe?", "a": "Yes. All transactions are processed on BNB Chain with full transparency. Your funds are secured in HD wallets with unique addresses." },
+        "q2": { "q": "What wallet do I need?", "a": "Any BNB Chain compatible wallet — MetaMask, Trust Wallet, Binance Chain Wallet, or WalletConnect." },
+        "q3": { "q": "How much does each click cost?", "a": "Each click costs $0.02 USDT (BEP-20). Minimum deposit is 1 USDT." },
+        "q4": { "q": "How do I win?", "a": "Be the last person to click before the 30-second timer reaches zero. You win the prize with up to 50% discount." },
+        "q5": { "q": "Can I withdraw my balance?", "a": "Yes, you can withdraw unused USDT from your account at any time through the dashboard." },
+        "q6": { "q": "How does the referral program work?", "a": "Share your referral code with friends. You earn 20% of their first click purchase as a bonus." },
+        "q7": { "q": "What happens if multiple people click at the same time?", "a": "Our server processes clicks in order of receipt. The click that arrives first is recorded as the new leader." }
+      }
+    },
+    "partner": {
+      "label": "// SECTION 06",
+      "title": "Partnership Program",
+      "desc": "Partner with Click Win to expand the digital auction ecosystem. We offer multiple partnership tiers for influencers, communities, and businesses.",
+      "opportunities": {
+        "o1": { "title": "Affiliate Program", "desc": "Earn commissions by referring users to the platform. 20% bonus on their first purchase." },
+        "o2": { "title": "Community Partnership", "desc": "Run auctions for your community. Custom branding, dedicated support, and revenue sharing." },
+        "o3": { "title": "Business Integration", "desc": "White-label solutions and API access for businesses wanting to add auction mechanics." }
+      },
+      "contact": "Interested in partnering? Contact us at partners@clickwin.fun"
+    },
+    "roadmap": {
+      "label": "// SECTION 07",
+      "title": "Roadmap & Vision",
+      "phases": {
+        "p1": { "title": "Phase 1 — Foundation", "desc": "Platform launch, core auction mechanics, BNB Chain integration, wallet system." },
+        "p2": { "title": "Phase 2 — Growth", "desc": "Referral program, multi-language support, mobile optimization, community building." },
+        "p3": { "title": "Phase 3 — Expansion", "desc": "New auction types, NFT prizes, DAO governance, cross-chain support." },
+        "p4": { "title": "Phase 4 — Ecosystem", "desc": "API marketplace, white-label solutions, strategic partnerships, global expansion." }
+      },
+      "vision": "Our vision is to become the leading decentralized auction platform, making competitive buying accessible, transparent, and fun for everyone worldwide."
+    }
   }
 }
