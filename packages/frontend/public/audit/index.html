@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Security & Transparency — Auction Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-primary: #0a0b0d;
@@ -55,10 +56,160 @@
     z-index: 9999;
   }
 
+  /* ── SITE NAVBAR (Click Win) ── */
+  .site-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(15, 15, 35, 0.92);
+    border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.08);
+  }
+
+  .site-navbar-inner {
+    max-width: 1280px;
+    width: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .site-navbar-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .site-navbar-logo .logo-click {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .site-navbar-logo .logo-win {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .site-navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .site-navbar-links a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: #9090B0;
+    border: 1px solid transparent;
+  }
+
+  .site-navbar-links a:hover {
+    color: #E0E0FF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .site-navbar-links a.active {
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.2);
+  }
+
+  /* Mobile hamburger */
+  .site-navbar-hamburger {
+    display: none;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #E0E0FF;
+  }
+
+  .site-navbar-hamburger svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .site-navbar-mobile {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 35, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    z-index: 199;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-navbar-mobile.open {
+    display: flex;
+  }
+
+  .site-navbar-mobile a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: #9090B0;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .site-navbar-mobile a:hover {
+    color: #E0E0FF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .site-navbar-mobile a.active {
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.2);
+  }
+
+  @media (max-width: 900px) {
+    .site-navbar-links { display: none; }
+    .site-navbar-hamburger { display: block; }
+  }
+
   /* ── TOP BAR ── */
   .top-bar {
     position: fixed;
-    top: 0;
+    top: 64px;
     left: 0;
     right: 0;
     height: 48px;
@@ -110,10 +261,10 @@
   /* ── SIDEBAR NAV ── */
   .sidebar {
     position: fixed;
-    top: 48px;
+    top: 112px;
     left: 0;
     width: 260px;
-    height: calc(100vh - 48px);
+    height: calc(100vh - 112px);
     background: var(--bg-secondary);
     border-right: 1px solid var(--border);
     padding: 24px 0;
@@ -167,8 +318,8 @@
   /* ── MAIN CONTENT ── */
   .main {
     margin-left: 260px;
-    margin-top: 48px;
-    min-height: calc(100vh - 48px);
+    margin-top: 112px;
+    min-height: calc(100vh - 112px);
   }
 
   /* ── HERO ── */
@@ -702,7 +853,8 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .sidebar { display: none; }
-    .main { margin-left: 0; }
+    .main { margin-left: 0; margin-top: 112px; }
+    .top-bar { padding: 0 16px; }
     .hero { padding: 60px 24px 40px; }
     .content { padding: 0 24px 60px; }
     .hero h1 { font-size: 28px; }
@@ -727,6 +879,38 @@
 </style>
 </head>
 <body>
+
+<!-- SITE NAVBAR (Click Win) -->
+<nav class="site-navbar">
+  <div class="site-navbar-inner">
+    <a href="/" class="site-navbar-logo">
+      <img src="/favicon.svg" alt="Click Win">
+      <span class="logo-click">Click</span>
+      <span class="logo-win">Win</span>
+    </a>
+    <div class="site-navbar-links">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/help">Help</a>
+      <a href="/partner">Be a Partner</a>
+      <a href="/whitepaper">Whitepaper</a>
+      <a href="/audit/" class="active">Audit</a>
+    </div>
+    <button class="site-navbar-hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+<div id="mobileMenu" class="site-navbar-mobile">
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="/help">Help</a>
+  <a href="/partner">Be a Partner</a>
+  <a href="/whitepaper">Whitepaper</a>
+  <a href="/audit/" class="active">Audit</a>
+</div>
 
 <!-- TOP BAR -->
 <div class="top-bar">
@@ -1278,7 +1462,7 @@
         }
       }
     });
-  }, { threshold: 0.3, rootMargin: '-48px 0px 0px 0px' });
+  }, { threshold: 0.3, rootMargin: '-112px 0px 0px 0px' });
 
   sections.forEach(section => observer.observe(section));
 </script>
