@@ -293,25 +293,6 @@ export default function AuctionPanel() {
           </div>
         )}
 
-        {/* ===== Sponsor Card ===== */}
-        {auction?.sponsorImageUrl && (
-          <div className="px-2 py-1.5 rounded-md border border-white/5" style={{ background: 'rgba(26, 26, 46, 0.3)' }}>
-            <p className="text-[8px] text-text-dim font-mono uppercase tracking-wider mb-1 text-center">Sponsored by</p>
-            <a
-              href={auction.sponsorLink || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block hover:opacity-80 transition-opacity"
-            >
-              <img
-                src={auction.sponsorImageUrl}
-                alt="Sponsor"
-                className="h-8 mx-auto object-contain rounded"
-                style={{ maxWidth: '140px' }}
-              />
-            </a>
-          </div>
-        )}
       </div>
 
       {/* ===== BOTTOM: Click Button (left) + Timer (right) ===== */}
@@ -322,15 +303,6 @@ export default function AuctionPanel() {
         </div>
       </div>
 
-      {/* ===== Audited Badge (top-left corner) ===== */}
-      <div className="absolute top-3 left-3 z-20">
-        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#14F195]/30 bg-[#14F195]/10 backdrop-blur-sm">
-          <svg className="w-3 h-3 text-[#14F195]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-          </svg>
-          <span className="text-[9px] font-mono font-bold text-[#14F195] tracking-wide">Audited</span>
-        </div>
-      </div>
     </div>
   );
 }

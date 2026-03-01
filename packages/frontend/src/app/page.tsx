@@ -11,6 +11,7 @@ import DynamicCarousel from '../components/DynamicCarousel';
 import DynamicSideCards from '../components/DynamicSideCards';
 import PastAuctions from '../components/PastAuctions';
 import RevealOnScroll from '../components/RevealOnScroll';
+import { useAuction } from '../hooks/useAuction';
 
 // SVG icon components for steps
 const StepIcons = {
@@ -175,6 +176,7 @@ const STEPS = [
 export default function HomePage() {
   const { t } = useTranslation();
   const [showPastAuctions, setShowPastAuctions] = useState(false);
+  const { auction } = useAuction();
 
   return (
     <div>
@@ -214,8 +216,20 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Audited Badge - left side above carousel */}
+          <div className="flex justify-start mt-12 mb-4 pl-2">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-16 h-16 rounded-full bg-[#14F195] flex items-center justify-center shadow-[0_0_20px_rgba(20,241,149,0.3)]">
+                <svg className="w-8 h-8 text-[#0a0a1a]" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <span className="text-xs font-mono font-bold text-white tracking-widest uppercase">Audited</span>
+            </div>
+          </div>
+
           {/* Carousel + Side Cards below hero text */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             {/* Dynamic Carousel - takes 2 of 3 columns */}
             <RevealOnScroll className="lg:col-span-2">
               <DynamicCarousel />
@@ -235,6 +249,46 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <h2 className="section-title">{t('home.auction.title')}</h2>
             <p className="section-subtitle mx-auto">{t('home.auction.subtitle')}</p>
+          </div>
+        </RevealOnScroll>
+
+        {/* Sponsor Card - above auction grid */}
+        <RevealOnScroll delay={50}>
+          <div className="mb-6">
+            {auction?.sponsorImageUrl ? (
+              <a
+                href={auction.sponsorLink || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-2xl border border-white/10 overflow-hidden hover:border-[#14F195]/30 transition-all duration-300 group"
+                style={{ background: 'linear-gradient(135deg, rgba(20, 241, 149, 0.05), rgba(153, 69, 255, 0.05))' }}
+              >
+                <div className="flex items-center gap-4 p-4">
+                  <img
+                    src={auction.sponsorImageUrl}
+                    alt="Sponsor"
+                    className="h-16 w-auto max-w-[200px] object-contain rounded-lg"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] text-text-dim font-mono uppercase tracking-widest mb-1">Sponsored by</p>
+                    <p className="text-sm text-text-muted group-hover:text-[#14F195] transition-colors truncate font-mono">
+                      {auction.sponsorLink?.replace(/^https?:\/\//, '').replace(/\/$/, '') || 'Visit Sponsor'}
+                    </p>
+                  </div>
+                  <svg className="w-5 h-5 text-text-dim group-hover:text-[#14F195] transition-colors shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                  </svg>
+                </div>
+              </a>
+            ) : (
+              <div
+                className="rounded-2xl border border-dashed border-white/10 p-6 text-center"
+                style={{ background: 'rgba(26, 26, 46, 0.3)' }}
+              >
+                <p className="text-xs text-text-dim font-mono uppercase tracking-widest mb-1">Sponsor</p>
+                <p className="text-sm text-text-muted font-mono">{t('home.auction.sponsorPlaceholder', 'Your brand here')}</p>
+              </div>
+            )}
           </div>
         </RevealOnScroll>
 
