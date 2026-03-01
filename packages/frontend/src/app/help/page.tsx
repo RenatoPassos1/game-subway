@@ -158,7 +158,6 @@ export default function HelpPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// FAQ</span>
             <h2 className="font-heading section-title">{t('help.hero.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -203,7 +202,6 @@ export default function HelpPage() {
                   <span className={THEMES[3].iconColor}>{Icons.headphones}</span>
                 </div>
               </div>
-              <span className="mono-label">// SUPPORT</span>
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-text mb-4">{t('help.support.title')}</h2>
               <p className="text-text-muted max-w-xl mx-auto mb-6">{t('help.support.desc')}</p>
               <a href="#" className="btn-primary text-lg px-8 py-3">

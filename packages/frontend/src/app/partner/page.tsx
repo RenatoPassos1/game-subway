@@ -153,7 +153,6 @@ export default function PartnerPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// WHY_PARTNER</span>
             <h2 className="font-heading section-title">{t('partner.why.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -203,7 +202,6 @@ export default function PartnerPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// OPPORTUNITIES</span>
             <h2 className="font-heading section-title">{t('partner.opp.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -248,7 +246,6 @@ export default function PartnerPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// PROCESS</span>
             <h2 className="font-heading section-title">{t('partner.steps.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -299,7 +296,6 @@ export default function PartnerPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-8">
-            <span className="mono-label">// REFERRAL_PROGRAM</span>
             <h2 className="font-heading section-title">{t('partner.referral.title')}</h2>
             <p className="section-subtitle mx-auto">{t('partner.referral.subtitle')}</p>
           </div>

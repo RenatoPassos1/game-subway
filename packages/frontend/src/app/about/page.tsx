@@ -182,7 +182,6 @@ export default function AboutPage() {
             <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(ellipse at center, #6C5CE7 0%, transparent 70%)' }} />
             <div className="scanline-overlay" />
             <div className="relative z-10">
-              <span className="mono-label">// MISSION</span>
               <h2 className="font-heading section-title mb-6">{t('about.mission.title')}</h2>
               <p className="text-text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
                 {t('about.mission.desc')}
@@ -198,7 +197,6 @@ export default function AboutPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// HOW_IT_WORKS</span>
             <h2 className="font-heading section-title">{t('about.howItWorks.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -244,7 +242,6 @@ export default function AboutPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// WHY_CLICK_WIN</span>
             <h2 className="font-heading section-title">{t('about.why.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -294,7 +291,6 @@ export default function AboutPage() {
       <section className="section-container">
         <RevealOnScroll>
           <div className="text-center mb-12">
-            <span className="mono-label">// TECH_STACK</span>
             <h2 className="font-heading section-title">{t('about.tech.title')}</h2>
           </div>
         </RevealOnScroll>
@@ -342,7 +338,6 @@ export default function AboutPage() {
             <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(ellipse at center, #00D2FF 0%, transparent 70%)' }} />
             <div className="scanline-overlay" />
             <div className="relative z-10">
-              <span className="mono-label">// VISION</span>
               <h2 className="font-heading section-title mb-6">{t('about.vision.title')}</h2>
               <p className="text-text-muted text-lg max-w-3xl mx-auto leading-relaxed">
                 {t('about.vision.desc1')}
