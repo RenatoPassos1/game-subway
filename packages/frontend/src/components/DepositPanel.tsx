@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuthContext } from '../contexts/AuthContext';
 import { getDepositAddress } from '../utils/api';
 import { PRICE_PER_CLICK, MIN_DEPOSIT_AMOUNT } from '@click-win/shared/src/constants';
@@ -49,6 +50,7 @@ function QRCode({ value }: { value: string }) {
 type DepositToken = 'USDT' | 'BNB';
 
 export default function DepositPanel() {
+  const { t } = useTranslation();
   const { user, isAuthenticated, refreshBalance } = useAuthContext();
   const [depositAddr, setDepositAddr] = useState<DepositAddress | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -155,14 +157,22 @@ export default function DepositPanel() {
           </div>
         </div>
 
-        {/* BSC Warning - compact */}
-        <div className="flex items-center gap-2 bg-yellow-500/8 rounded-lg px-2.5 py-1.5 border border-yellow-500/15">
-          <svg className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-          <span className="text-[10px] text-yellow-300/80 leading-tight">
-            <strong>BSC only</strong> — Other networks = loss of funds
-          </span>
+        {/* BSC Warning - prominent */}
+        <div className="flex items-center gap-3 bg-red-500/10 rounded-xl px-4 py-3 border border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.08)]">
+          <div className="relative flex-shrink-0">
+            <div className="absolute inset-0 bg-red-500/20 rounded-full animate-ping" />
+            <svg className="relative w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xs font-bold text-red-400 uppercase tracking-wide">
+              ⚠ {t('depositPanel.bscWarning')}
+            </span>
+            <span className="text-[11px] text-red-300/80 font-medium">
+              {t('depositPanel.bscWarningDesc')}
+            </span>
+          </div>
         </div>
 
         {/* Token Selector - compact */}

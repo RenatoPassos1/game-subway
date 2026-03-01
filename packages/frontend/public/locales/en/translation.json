@@ -714,5 +714,9 @@
     "telegramOpened": "Telegram opened! Click the Start button in the bot.",
     "openAgain": "Open again",
     "alertsBtn": "Alerts"
+  },
+  "depositPanel": {
+    "bscWarning": "BSC only",
+    "bscWarningDesc": "Other networks = loss of funds"
   }
 }
