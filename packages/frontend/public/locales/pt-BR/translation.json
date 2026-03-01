@@ -17,6 +17,28 @@
       "titleLine2": "Seja Recompensado.",
       "subtitle": "A primeira plataforma de leilão movida a blockchain onde cada clique conta. Compre cliques, participe de leilões e ganhe prêmios com até 99% de desconto."
     },
+    "carousel": {
+      "slide1": {
+        "title": "Clique. Venca. Seja Recompensado.",
+        "desc": "O primeiro leilao blockchain onde cada clique conta. Junte-se a milhares de jogadores competindo por premios."
+      },
+      "slide2": {
+        "title": "Ate 99% de Desconto",
+        "desc": "Ganhe premios de alto valor por uma fracao do custo. Cada clique custa apenas $0,02 USDT na BNB Chain."
+      },
+      "slide3": {
+        "title": "Na BNB Chain",
+        "desc": "Totalmente transparente e seguro. Todos os leiloes sao registrados on-chain com contratos inteligentes verificaveis."
+      }
+    },
+    "sideCard": {
+      "liveLabel": "AO VIVO",
+      "liveTitle": "Leiloes Ativos",
+      "liveDesc": "Leiloes em tempo real 24/7. Conecte sua carteira e comece a competir por premios agora mesmo.",
+      "quickLabel": "INICIO RAPIDO",
+      "quickTitle": "Pronto em 30s",
+      "quickDesc": "Conecte sua carteira, deposite USDT e comece a clicar. Simples assim."
+    },
     "cta": {
       "start": "Comece a Clicar",
       "learn": "Saiba Mais"

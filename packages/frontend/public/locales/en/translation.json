@@ -17,6 +17,28 @@
       "titleLine2": "Get Rewarded.",
       "subtitle": "The first blockchain-powered auction platform where every click counts. Buy clicks, join auctions, and win prizes at up to 99% discount."
     },
+    "carousel": {
+      "slide1": {
+        "title": "Click. Win. Get Rewarded.",
+        "desc": "The first blockchain-powered auction where every click counts. Join thousands of players competing for prizes."
+      },
+      "slide2": {
+        "title": "Up to 99% Discount",
+        "desc": "Win high-value prizes at a fraction of the cost. Each click is just $0.02 USDT on BNB Chain."
+      },
+      "slide3": {
+        "title": "Powered by BNB Chain",
+        "desc": "Fully transparent and secure. All auctions are recorded on-chain with verifiable smart contracts."
+      }
+    },
+    "sideCard": {
+      "liveLabel": "LIVE NOW",
+      "liveTitle": "Active Auctions",
+      "liveDesc": "Real-time auctions running 24/7. Connect your wallet and start competing for prizes right now.",
+      "quickLabel": "QUICK START",
+      "quickTitle": "Ready in 30s",
+      "quickDesc": "Connect your wallet, deposit USDT, and start clicking. It's that simple."
+    },
     "cta": {
       "start": "Start Clicking",
       "learn": "Learn More"

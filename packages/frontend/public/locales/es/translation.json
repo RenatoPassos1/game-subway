@@ -17,6 +17,28 @@
       "titleLine2": "Recibe Recompensas.",
       "subtitle": "La primera plataforma de subastas impulsada por blockchain donde cada clic cuenta. Compra clics, participa en subastas y gana premios con hasta 99% de descuento."
     },
+    "carousel": {
+      "slide1": {
+        "title": "Haz Clic. Gana. Recibe Recompensas.",
+        "desc": "La primera subasta blockchain donde cada clic cuenta. Unete a miles de jugadores compitiendo por premios."
+      },
+      "slide2": {
+        "title": "Hasta 99% de Descuento",
+        "desc": "Gana premios de alto valor a una fraccion del costo. Cada clic cuesta solo $0,02 USDT en BNB Chain."
+      },
+      "slide3": {
+        "title": "En BNB Chain",
+        "desc": "Totalmente transparente y seguro. Todas las subastas se registran on-chain con contratos inteligentes verificables."
+      }
+    },
+    "sideCard": {
+      "liveLabel": "EN VIVO",
+      "liveTitle": "Subastas Activas",
+      "liveDesc": "Subastas en tiempo real 24/7. Conecta tu billetera y empieza a competir por premios ahora mismo.",
+      "quickLabel": "INICIO RAPIDO",
+      "quickTitle": "Listo en 30s",
+      "quickDesc": "Conecta tu billetera, deposita USDT y empieza a hacer clic. Asi de simple."
+    },
     "cta": {
       "start": "Empieza a Hacer Clic",
       "learn": "Saber Más"
