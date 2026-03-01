@@ -690,23 +690,17 @@
   <a href="#math"><span class="num">03</span> Matem&#225;tica do Leil&#227;o</a>
   <a href="#threshold"><span class="num">04</span> Limite de Receita</a>
   <a href="#closing"><span class="num">05</span> L&#243;gica de Fechamento</a>
-  <a href="#atomic"><span class="num">06</span> Processamento At&#244;mico de Cliques</a>
-  <a href="#antibot"><span class="num">07</span> Sistema Anti-Abuso</a>
-  <a href="#deposits"><span class="num">08</span> Monitoramento de Dep&#243;sitos</a>
-  <a href="#payout"><span class="num">09</span> Entrega do Pr&#234;mio</a>
-  <a href="#architecture"><span class="num">10</span> Arquitetura do Sistema</a>
-  <a href="#token"><span class="num">11</span> Consist&#234;ncia de Token</a>
-  <a href="#cannot"><span class="num">12</span> O que a Equipe N&#227;o Pode Fazer</a>
-  <a href="#history"><span class="num">13</span> Leil&#245;es Anteriores</a>
-  <a href="#logs"><span class="num">14</span> Logs &amp; Trilha de Auditoria</a>
-  <a href="#limitations"><span class="num">15</span> Limita&#231;&#245;es &amp; Riscos</a>
-  <a href="#verify"><span class="num">16</span> Instru&#231;&#245;es de Verifica&#231;&#227;o</a>
-  <a href="#faq"><span class="num">17</span> Perguntas Cr&#237;ticas</a>
+  <a href="#antibot"><span class="num">06</span> Prote&#231;&#227;o Anti-Bot</a>
+  <a href="#deposits"><span class="num">07</span> Monitoramento de Dep&#243;sitos</a>
+  <a href="#payout"><span class="num">08</span> Entrega do Pr&#234;mio</a>
+  <a href="#history"><span class="num">09</span> Leil&#245;es Anteriores</a>
+  <a href="#logs"><span class="num">10</span> Logs &amp; Trilha de Auditoria</a>
+  <a href="#faq"><span class="num">11</span> Perguntas Cr&#237;ticas</a>
   <a href="#atomic"><span class="num">12</span> Processamento At&#244;mico</a>
   <a href="#team-limits"><span class="num">13</span> O que a Equipe N&#227;o Pode Fazer</a>
   <a href="#architecture"><span class="num">14</span> Arquitetura do Sistema</a>
   <a href="#token"><span class="num">15</span> Consist&#234;ncia de Token</a>
-  <a href="#limitations"><span class="num">16</span> Limita&#231;&#245;es &amp; Risco</a>
+  <a href="#limitations"><span class="num">16</span> Limita&#231;&#245;es &amp; Riscos</a>
   <a href="#verify-payout"><span class="num">17</span> Como Verificar um Pagamento</a>
   <div class="divider"></div>
   <a href="#audit-report"><span class="num">&#9733;</span> Relat&#243;rio de Auditoria</a>
@@ -881,50 +875,7 @@
       </div>
     </div>
 
-    <!-- 06 PROCESSAMENTO ATÔMICO DE CLIQUES -->
-    <div class="section" id="atomic">
-      <div class="section-number">Se&#231;&#227;o 06</div>
-      <h2>Processamento At&#244;mico de Cliques</h2>
-      <p>Cada clique no sistema &#233; processado como uma opera&#231;&#227;o at&#244;mica do lado do servidor. A aplica&#231;&#227;o cliente (frontend) &#233; uma camada de exibi&#231;&#227;o somente leitura &mdash; n&#227;o possui acesso de escrita ao estado do leil&#227;o.</p>
-
-      <h3>Garantias de Processamento</h3>
-      <div class="flow-steps">
-        <div class="flow-step">
-          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
-          <div class="step-content">
-            <div class="step-title">Apenas no Servidor</div>
-            <div class="step-desc">Valida&#231;&#227;o de clique, dedu&#231;&#227;o de saldo, extens&#227;o do timer e muta&#231;&#227;o de estado ocorrem exclusivamente no backend. Nenhuma requisi&#231;&#227;o do cliente pode alterar vari&#225;veis do leil&#227;o diretamente.</div>
-          </div>
-        </div>
-        <div class="flow-step">
-          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
-          <div class="step-content">
-            <div class="step-title">Atualiza&#231;&#245;es At&#244;micas</div>
-            <div class="step-desc">Cada clique v&#225;lido dispara uma &#250;nica transa&#231;&#227;o at&#244;mica no banco de dados que atualiza: contagem de cliques, desconto acumulado, estado do timer e &#250;ltima carteira v&#225;lida &mdash; tudo em uma opera&#231;&#227;o. N&#227;o h&#225; janela para estado parcial ou condi&#231;&#245;es de corrida.</div>
-          </div>
-        </div>
-        <div class="flow-step">
-          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
-          <div class="step-content">
-            <div class="step-title">Backend &#233; Autoritativo</div>
-            <div class="step-desc">Se o frontend exibir um valor diferente do estado do backend, o backend &#233; a fonte da verdade. O frontend sincroniza periodicamente, mas nunca escreve.</div>
-          </div>
-        </div>
-        <div class="flow-step">
-          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
-          <div class="step-content">
-            <div class="step-title">Rejei&#231;&#227;o em Estado Inv&#225;lido</div>
-            <div class="step-desc">Cliques s&#227;o rejeitados se: a carteira n&#227;o tem saldo suficiente, o leil&#227;o n&#227;o est&#225; ativo, limites de taxa s&#227;o excedidos, ou a detec&#231;&#227;o de bot sinaliza a requisi&#231;&#227;o. Cliques rejeitados n&#227;o afetam nenhuma vari&#225;vel do leil&#227;o.</div>
-          </div>
-        </div>
-      </div>
-      <div class="info-card green">
-        <div class="card-label">Garantia de Integridade</div>
-        <p>N&#227;o existe endpoint de API, painel administrativo ou ferramenta interna que permita manipula&#231;&#227;o direta do estado do leil&#227;o fora do pipeline de processamento at&#244;mico de cliques. A &#250;nica forma de alterar o estado do leil&#227;o &#233; atrav&#233;s de um clique v&#225;lido, validado pelo servidor.</p>
-      </div>
-    </div>
-
-    <!-- 07 SISTEMA ANTI-ABUSO -->
+    <!-- 06 SISTEMA ANTI-ABUSO -->
     <div class="section" id="antibot">
       <div class="section-number">Se&#231;&#227;o 06</div>
       <h2>Prote&#231;&#227;o Anti-Bot</h2>

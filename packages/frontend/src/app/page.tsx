@@ -206,27 +206,25 @@ export default function HomePage() {
               {t('home.hero.subtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="btn-action text-lg px-8 py-4 w-full sm:w-auto animate-cta-pulse">
-                {t('home.cta.start')}
-              </button>
-              <Link href="/about" className="btn-secondary text-lg px-8 py-4 w-full sm:w-auto text-center">
-                {t('home.cta.learn')}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              {/* Audited Badge - left of CTA buttons */}
+              <Link href="/audit" className="relative flex flex-col items-center gap-2 group shrink-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[16rem] h-[16rem] rounded-full pointer-events-none animate-hero-glow" style={{ background: 'radial-gradient(circle, rgba(20, 241, 149, 0.18) 0%, rgba(20, 241, 149, 0.06) 35%, transparent 65%)' }} />
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-[#14F195] flex items-center justify-center shadow-[0_0_60px_rgba(20,241,149,0.4)] transition-transform group-hover:scale-105">
+                  <svg className="w-14 h-14 sm:w-16 sm:h-16 text-[#0a0a1a]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                </div>
+                <span className="relative text-sm font-mono font-bold text-white tracking-widest uppercase">Audited</span>
               </Link>
-            </div>
-          </div>
-
-          {/* Audited Badge - centered in light orb */}
-          <div className="flex justify-center mt-12 mb-4">
-            <div className="relative flex flex-col items-center gap-3">
-              {/* Light orb glow behind badge */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] rounded-full pointer-events-none animate-hero-glow" style={{ background: 'radial-gradient(circle, rgba(20, 241, 149, 0.18) 0%, rgba(20, 241, 149, 0.06) 35%, transparent 65%)' }} />
-              <div className="relative w-48 h-48 rounded-full bg-[#14F195] flex items-center justify-center shadow-[0_0_80px_rgba(20,241,149,0.5)]">
-                <svg className="w-24 h-24 text-[#0a0a1a]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <button className="btn-action text-lg px-8 py-4 w-full sm:w-auto animate-cta-pulse">
+                  {t('home.cta.start')}
+                </button>
+                <Link href="/about" className="btn-secondary text-lg px-8 py-4 w-full sm:w-auto text-center">
+                  {t('home.cta.learn')}
+                </Link>
               </div>
-              <span className="relative text-lg font-mono font-bold text-white tracking-widest uppercase">Audited</span>
             </div>
           </div>
 
