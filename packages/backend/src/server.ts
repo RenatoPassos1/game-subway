@@ -17,6 +17,12 @@ import { adsRoutes } from './routes/ads.routes';
 import { advertiserRoutes } from './routes/advertiser.routes';
 import { cryptoRoutes } from './routes/crypto.routes';
 import { adminRoutes } from './routes/admin.routes';
+import { pushRoutes } from './routes/push.routes';
+import { telegramRoutes } from './routes/telegram.routes';
+import { alertsRoutes } from './routes/alerts.routes';
+import { startNotificationWorker, stopNotificationWorker } from './queue/worker';
+import { closeQueue } from './queue/queue';
+import { startScheduler, stopScheduler } from './services/scheduler';
 import {
   registerWebSocket,
   getConnectionCount,
@@ -88,6 +94,9 @@ async function buildServer() {
   await fastify.register(advertiserRoutes);
   await fastify.register(cryptoRoutes);
   await fastify.register(adminRoutes);
+  await fastify.register(pushRoutes);
+  await fastify.register(telegramRoutes);
+  await fastify.register(alertsRoutes);
 
   // ============ Register WebSocket ============
   await registerWebSocket(fastify);
@@ -227,11 +236,16 @@ async function start(): Promise<void> {
     logger.info(`Server listening on http://${HOST}:${PORT}`);
     logger.info(`Environment: ${NODE_ENV}`);
 
-    // Connect Redis in background, then start timer manager
+    // Connect Redis in background, then start timer manager + notification system
     connectRedisAndLoadScripts()
       .then(() => {
         startTimerManager();
         logger.info('Auction timer manager started');
+
+        // Start notification worker and scheduler
+        startNotificationWorker();
+        startScheduler();
+        logger.info('Notification system started (worker + scheduler)');
       })
       .catch((err) => {
         logger.warn({ err }, 'Redis initial connection deferred, timer manager not started');
@@ -249,6 +263,11 @@ async function start(): Promise<void> {
 
     // Stop timer manager
     stopTimerManager();
+
+    // Stop notification system
+    stopScheduler();
+    await stopNotificationWorker();
+    await closeQueue();
 
     // Close HTTP/WS server
     if (fastify) {

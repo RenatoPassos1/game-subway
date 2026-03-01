@@ -582,3 +582,109 @@ export const GET_MAIN_AUCTION = `
   WHERE is_main = true AND status IN ('PENDING', 'ACTIVE', 'CLOSING')
   LIMIT 1
 `;
+
+// ============ Notification Subscriptions ============
+
+export const UPSERT_NOTIFICATION_SUB = `
+  INSERT INTO notification_subscriptions (user_id, channel, destination, preferences)
+  VALUES ($1, $2, $3, $4)
+  ON CONFLICT (user_id, channel) DO UPDATE
+  SET destination = EXCLUDED.destination,
+      preferences = EXCLUDED.preferences,
+      is_active = true,
+      updated_at = NOW()
+  RETURNING *
+`;
+
+export const DEACTIVATE_NOTIFICATION_SUB = `
+  UPDATE notification_subscriptions
+  SET is_active = false, updated_at = NOW()
+  WHERE user_id = $1 AND channel = $2
+  RETURNING *
+`;
+
+export const GET_NOTIFICATION_SUBS_BY_USER = `
+  SELECT * FROM notification_subscriptions
+  WHERE user_id = $1 AND is_active = true
+`;
+
+export const GET_ALL_ACTIVE_SUBS_BY_CHANNEL = `
+  SELECT ns.*, u.wallet_address
+  FROM notification_subscriptions ns
+  JOIN users u ON u.id = ns.user_id
+  WHERE ns.channel = $1 AND ns.is_active = true
+`;
+
+export const GET_SUB_BY_USER_CHANNEL = `
+  SELECT * FROM notification_subscriptions
+  WHERE user_id = $1 AND channel = $2
+`;
+
+export const MARK_SUB_INACTIVE = `
+  UPDATE notification_subscriptions
+  SET is_active = false, updated_at = NOW()
+  WHERE id = $1
+`;
+
+export const UPDATE_SUB_PREFERENCES = `
+  UPDATE notification_subscriptions
+  SET preferences = $2, updated_at = NOW()
+  WHERE user_id = $1 AND channel = $3 AND is_active = true
+  RETURNING *
+`;
+
+// ============ Telegram Link Tokens ============
+
+export const CREATE_TELEGRAM_LINK_TOKEN = `
+  INSERT INTO telegram_link_tokens (token, user_id, expires_at)
+  VALUES ($1, $2, $3)
+  RETURNING *
+`;
+
+export const GET_TELEGRAM_LINK_TOKEN = `
+  SELECT * FROM telegram_link_tokens
+  WHERE token = $1 AND used_at IS NULL AND expires_at > NOW()
+`;
+
+export const MARK_TELEGRAM_TOKEN_USED = `
+  UPDATE telegram_link_tokens
+  SET used_at = NOW()
+  WHERE token = $1
+`;
+
+export const FIND_SUB_BY_TELEGRAM_CHAT = `
+  SELECT * FROM notification_subscriptions
+  WHERE channel = 'telegram' AND destination->>'chat_id' = $1 AND is_active = true
+`;
+
+// ============ Notification Logs ============
+
+export const INSERT_NOTIFICATION_LOG = `
+  INSERT INTO notification_logs (user_id, channel, event_type, payload, status, error_text)
+  VALUES ($1, $2, $3, $4, $5, $6)
+  RETURNING *
+`;
+
+export const GET_NOTIFICATION_LOGS = `
+  SELECT * FROM notification_logs
+  WHERE user_id = $1
+  ORDER BY created_at DESC
+  LIMIT $2 OFFSET $3
+`;
+
+// ============ Auctions (for scheduler) ============
+
+export const GET_SCHEDULED_AUCTIONS_STARTING_BETWEEN = `
+  SELECT * FROM auctions
+  WHERE status = 'PENDING'
+    AND scheduled_start IS NOT NULL
+    AND scheduled_start BETWEEN $1 AND $2
+  ORDER BY scheduled_start ASC
+`;
+
+export const GET_AUCTIONS_GOING_LIVE = `
+  SELECT * FROM auctions
+  WHERE status = 'ACTIVE'
+    AND started_at IS NOT NULL
+    AND started_at BETWEEN $1 AND $2
+`;

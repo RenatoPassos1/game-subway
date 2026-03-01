@@ -12,6 +12,8 @@ const PUBLIC_ROUTES = new Set([
   '/ws',
   '/ads/active',
   '/crypto/bnb-price',
+  '/push/vapid-public-key',
+  '/telegram/webhook',
 ]);
 
 // Route prefixes that are public
@@ -20,6 +22,9 @@ const PUBLIC_PREFIXES = [
   '/referral/validate/',   // GET /referral/validate/:code
   '/ads/',                 // GET /ads/active, POST /ads/impression, /ads/click
   '/crypto/ad/verify/',    // GET /crypto/ad/verify/:orderId
+  '/alerts/',              // GET /alerts/me, POST /alerts/preferences, etc
+  '/telegram/',            // POST /telegram/link-token, webhook, admin endpoints
+  '/push/',                // POST /push/subscribe, /push/unsubscribe
 ];
 
 function isPublicRoute(url: string): boolean {
