@@ -13,7 +13,6 @@ export default function WalletButton() {
     shortAddress,
     isConnected,
     isCorrectChain,
-    isMetaMaskInstalled,
     connectWallet,
     disconnectWallet,
     switchToBNBChain,
@@ -101,10 +100,9 @@ export default function WalletButton() {
       <div className="flex flex-col items-end gap-1">
         <button
           onClick={handleConnect}
-          disabled={!isMetaMaskInstalled}
-          className="px-4 py-2 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#6C5CE7] to-[#00D2FF] text-white hover:opacity-90 active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="px-4 py-2 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#6C5CE7] to-[#00D2FF] text-white hover:opacity-90 active:scale-95 transition-all"
         >
-          {isMetaMaskInstalled ? 'Connect Wallet' : 'Install MetaMask'}
+          Connect Wallet
         </button>
         {error && (
           <p className="text-xs text-red-400 max-w-[200px] text-right">

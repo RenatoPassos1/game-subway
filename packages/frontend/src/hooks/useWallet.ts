@@ -11,7 +11,6 @@ interface UseWalletReturn {
   isConnected: boolean;
   isCorrectChain: boolean;
   chainId: number;
-  isMetaMaskInstalled: boolean;
   connectWallet: () => Promise<void>;
   disconnectWallet: () => void;
   signMessage: (message: string) => Promise<string>;
@@ -30,11 +29,6 @@ export function useWallet(): UseWalletReturn {
   }, [ctx.walletAddress]);
 
   const connectWallet = useCallback(async () => {
-    if (!ctx.isMetaMaskInstalled) {
-      throw new Error(
-        'MetaMask is not installed. Please install MetaMask browser extension to connect your wallet.'
-      );
-    }
     await ctx.connectWallet();
   }, [ctx]);
 
@@ -50,7 +44,6 @@ export function useWallet(): UseWalletReturn {
     isConnected: ctx.isConnected,
     isCorrectChain,
     chainId: ctx.chainId,
-    isMetaMaskInstalled: ctx.isMetaMaskInstalled,
     connectWallet,
     disconnectWallet: ctx.disconnectWallet,
     signMessage: ctx.signMessage,

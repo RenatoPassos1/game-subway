@@ -3,6 +3,7 @@
 import I18nProvider from '@/components/I18nProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import AppKitProvider from '../components/AppKitProvider';
 import { WalletProvider } from '../contexts/WalletContext';
 import { AuthProvider } from '../contexts/AuthContext';
 import { AuctionProvider } from '../contexts/AuctionContext';
@@ -21,17 +22,19 @@ export default function ClientProviders({
 }) {
   return (
     <I18nProvider>
-      <WalletProvider>
-        <AuthProvider>
-          <AuctionProvider>
-            <ReferralCapture>
-              <Navbar />
-              <main className="flex-1 pt-16">{children}</main>
-              <Footer />
-            </ReferralCapture>
-          </AuctionProvider>
-        </AuthProvider>
-      </WalletProvider>
+      <AppKitProvider>
+        <WalletProvider>
+          <AuthProvider>
+            <AuctionProvider>
+              <ReferralCapture>
+                <Navbar />
+                <main className="flex-1 pt-16">{children}</main>
+                <Footer />
+              </ReferralCapture>
+            </AuctionProvider>
+          </AuthProvider>
+        </WalletProvider>
+      </AppKitProvider>
     </I18nProvider>
   );
 }

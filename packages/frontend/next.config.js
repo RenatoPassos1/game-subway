@@ -19,6 +19,16 @@ const nextConfig = {
       ...config.resolve.alias,
       // Force ethers to use CJS build (avoids @noble/* ESM issues)
       'ethers': path.resolve(__dirname, '../../node_modules/ethers/lib.commonjs/ethers.js'),
+      // wagmi connectors optional peer deps – stub them out
+      // (AppKit handles wallet connections via its own bridge)
+      'porto/internal': false,
+      'porto': false,
+      '@coinbase/wallet-sdk': false,
+      '@metamask/sdk': false,
+      '@walletconnect/ethereum-provider': false,
+      '@safe-global/safe-apps-provider': false,
+      '@safe-global/safe-apps-sdk': false,
+      '@base-org/account': false,
     };
 
     // Allow .js extension imports to resolve without requiring
@@ -29,6 +39,21 @@ const nextConfig = {
         fullySpecified: false,
       },
     });
+
+    // WalletConnect / AppKit optional dependencies – not needed at runtime
+    // but cause build warnings if not externalised.
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    config.externals = config.externals || [];
+    if (Array.isArray(config.externals)) {
+      config.externals.push('pino-pretty', 'lokijs', 'encoding');
+    }
 
     return config;
   },
