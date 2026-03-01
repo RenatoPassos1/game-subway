@@ -177,6 +177,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
 
         // 4. Store token and user
+        // Set module-level authToken IMMEDIATELY so child effects
+        // (e.g. DepositPanel) that fire on the same render cycle
+        // already have the token available for API requests.
+        setAuthToken(response.token);
         setToken(response.token);
         setUser(response.user);
       } finally {
