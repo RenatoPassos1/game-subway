@@ -8,6 +8,7 @@ import pino from 'pino';
 import { redis, redisSub, closeRedis } from './redis/client';
 import { loadScripts } from './redis/scripts';
 import { closePool } from './db/client';
+import { runMigrations } from './db/migrate';
 import { authRoutes } from './routes/auth.routes';
 import { userRoutes } from './routes/user.routes';
 import { auctionRoutes } from './routes/auction.routes';
@@ -215,6 +216,11 @@ async function start(): Promise<void> {
   let fastify: Awaited<ReturnType<typeof buildServer>> | null = null;
 
   try {
+    // Run pending database migrations before anything else
+    await runMigrations().catch((err) => {
+      logger.warn({ err }, 'Auto-migration failed (non-fatal, server will start anyway)');
+    });
+
     // Build and start server FIRST (so healthcheck port is open)
     fastify = await buildServer();
     await fastify.listen({ port: PORT, host: HOST });

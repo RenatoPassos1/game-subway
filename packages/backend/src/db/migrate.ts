@@ -1,24 +1,51 @@
+// ============================================================
+// Auto-Migration Runner
+// Executes pending SQL migrations on server startup.
+// Uses a _migrations table to track which files have run.
+// All migration files already contain BEGIN/COMMIT.
+// ============================================================
+
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import pg from 'pg';
 import pino from 'pino';
+import { pool } from './client';
 
-const { Pool } = pg;
 const logger = pino({ name: 'migrator' });
 
-const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://clickwin:clickwin_dev_password@localhost:5432/clickwin';
+/**
+ * Run all pending migrations from the migrations directory.
+ * Called during server startup. Does NOT exit the process.
+ * Each .sql file is expected to handle its own transaction (BEGIN/COMMIT).
+ */
+export async function runMigrations(): Promise<void> {
+  // Resolve migrations directory
+  // In Docker production: /app/packages/backend/migrations/
+  // __dirname in dist: .../dist/db/ → ../../migrations = .../migrations/
+  const possibleDirs = [
+    path.resolve(__dirname, '../../migrations'),
+    path.resolve(process.cwd(), 'packages/backend/migrations'),
+    path.resolve(process.cwd(), 'migrations'),
+  ];
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const MIGRATIONS_DIR = path.resolve(__dirname, '../../migrations');
+  let migrationsDir = '';
+  for (const dir of possibleDirs) {
+    if (fs.existsSync(dir)) {
+      migrationsDir = dir;
+      break;
+    }
+  }
 
-async function run(): Promise<void> {
-  const pool = new Pool({ connectionString: DATABASE_URL });
+  if (!migrationsDir) {
+    logger.warn('No migrations directory found, skipping auto-migration');
+    return;
+  }
+
+  logger.info({ dir: migrationsDir }, 'Auto-migration: checking for pending migrations...');
+
   const client = await pool.connect();
 
   try {
-    // Ensure _migrations table exists
+    // Ensure _migrations tracking table exists
     await client.query(`
       CREATE TABLE IF NOT EXISTS _migrations (
         id SERIAL PRIMARY KEY,
@@ -33,8 +60,8 @@ async function run(): Promise<void> {
     );
     const appliedSet = new Set(applied.map((r) => r.name));
 
-    // Read migration files
-    const files = fs.readdirSync(MIGRATIONS_DIR)
+    // Read migration files sorted lexicographically
+    const files = fs.readdirSync(migrationsDir)
       .filter((f) => f.endsWith('.sql'))
       .sort();
 
@@ -47,49 +74,53 @@ async function run(): Promise<void> {
 
     for (const file of files) {
       if (appliedSet.has(file)) {
-        logger.info(`Skipping already applied migration: ${file}`);
-        continue;
+        continue; // Already applied
       }
 
-      const filePath = path.join(MIGRATIONS_DIR, file);
+      const filePath = path.join(migrationsDir, file);
       const sql = fs.readFileSync(filePath, 'utf-8');
 
       logger.info(`Applying migration: ${file}`);
 
-      await client.query('BEGIN');
       try {
+        // Execute the SQL file as-is (files already contain BEGIN/COMMIT)
         await client.query(sql);
+
+        // Record migration as applied
         await client.query(
-          'INSERT INTO _migrations (name) VALUES ($1)',
+          'INSERT INTO _migrations (name) VALUES ($1) ON CONFLICT (name) DO NOTHING',
           [file],
         );
-        await client.query('COMMIT');
-        logger.info(`Migration applied successfully: ${file}`);
+
         appliedCount++;
+        logger.info(`Migration applied: ${file}`);
       } catch (err) {
-        await client.query('ROLLBACK');
-        logger.error({ err, file }, `Migration failed: ${file}`);
-        throw err;
+        logger.error({ err, file }, `Migration FAILED: ${file}`);
+        // Stop processing - later migrations may depend on this one
+        logger.warn('Stopping migration runner. Remaining migrations will retry on next startup.');
+        return;
       }
     }
 
     if (appliedCount === 0) {
-      logger.info('All migrations already applied');
+      logger.info(`All ${files.length} migrations already applied`);
     } else {
-      logger.info(`Applied ${appliedCount} migration(s)`);
+      logger.info(`Applied ${appliedCount} new migration(s) out of ${files.length} total`);
     }
   } finally {
     client.release();
-    await pool.end();
   }
 }
 
-run()
-  .then(() => {
-    logger.info('Migration runner completed');
-    process.exit(0);
-  })
-  .catch((err) => {
-    logger.error({ err }, 'Migration runner failed');
-    process.exit(1);
-  });
+// Allow running as standalone script: npx tsx src/db/migrate.ts
+if (process.argv[1]?.endsWith('migrate.ts') || process.argv[1]?.endsWith('migrate.js')) {
+  runMigrations()
+    .then(() => {
+      logger.info('Migration runner completed');
+      process.exit(0);
+    })
+    .catch((err) => {
+      logger.error({ err }, 'Migration runner failed');
+      process.exit(1);
+    });
+}
