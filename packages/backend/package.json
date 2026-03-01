@@ -8,7 +8,9 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "tsx src/server.ts",
-    "migrate": "tsx src/db/migrate.ts"
+    "migrate": "tsx src/db/migrate.ts",
+    "consolidate": "tsx src/scripts/consolidate.ts",
+    "consolidate:execute": "tsx src/scripts/consolidate.ts --execute"
   },
   "dependencies": {
     "fastify": "^5.2.1",
