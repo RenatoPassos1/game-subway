@@ -122,22 +122,29 @@ export default function WalletButton() {
   // Connected to BSC but not authenticated
   if (!isAuthenticated) {
     return (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-mono text-[#00D2FF]">{shortAddress}</span>
-        <button
-          onClick={handleLogin}
-          disabled={isLoading}
-          className="px-4 py-2 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#6C5CE7] to-[#00D2FF] text-white hover:opacity-90 active:scale-95 transition-all disabled:opacity-60"
-        >
-          {isLoading ? (
-            <span className="flex items-center gap-1">
-              <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Signing...
-            </span>
-          ) : (
-            'Sign In'
-          )}
-        </button>
+      <div className="flex flex-col items-end gap-1">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-mono text-[#00D2FF]">{shortAddress}</span>
+          <button
+            onClick={handleLogin}
+            disabled={isLoading}
+            className="px-4 py-2 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#6C5CE7] to-[#00D2FF] text-white hover:opacity-90 active:scale-95 transition-all disabled:opacity-60"
+          >
+            {isLoading ? (
+              <span className="flex items-center gap-1">
+                <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Signing...
+              </span>
+            ) : (
+              'Sign In'
+            )}
+          </button>
+        </div>
+        {error && (
+          <p className="text-xs text-red-400 max-w-[250px] text-right">
+            {error}
+          </p>
+        )}
       </div>
     );
   }

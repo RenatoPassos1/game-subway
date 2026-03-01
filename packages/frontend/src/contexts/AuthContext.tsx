@@ -6,6 +6,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { getNonce, verifyAuth, getBalance, setAuthToken } from '../utils/api';
@@ -134,9 +135,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [token]);
 
   // ---------- Auto-logout when wallet disconnects ----------
+  // Skip the first render: on hard refresh, wallet hasn't reconnected yet
+  // but user is loaded from localStorage. Without this guard the effect
+  // would immediately clear the token before MetaMask has a chance to
+  // return accounts via eth_accounts.
+  const walletInitRef = useRef(false);
   useEffect(() => {
+    if (!walletInitRef.current) {
+      walletInitRef.current = true;
+      return;
+    }
     if (!isConnected && user) {
-      // Wallet disconnected - clear auth
+      // Wallet actually disconnected after being connected - clear auth
       setToken(null);
       setUser(null);
     }

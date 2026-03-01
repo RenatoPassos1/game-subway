@@ -108,7 +108,7 @@ export async function getBalance(): Promise<ClickBalance> {
 // ========== Deposit Endpoints ==========
 
 export async function getDepositAddress(): Promise<DepositAddress> {
-  return request<DepositAddress>('/deposit/address');
+  return request<DepositAddress>('/user/deposit-address');
 }
 
 // ========== Auction Endpoints ==========
@@ -127,14 +127,14 @@ export async function getActiveAuction(): Promise<AuctionState | null> {
 // ========== Referral Endpoints ==========
 
 export async function getReferralStats(): Promise<ReferralStats> {
-  return request<ReferralStats>('/referral/stats');
+  return request<ReferralStats>('/user/referral/stats');
 }
 
 export async function getReferralHistory(
   page = 1,
   limit = 20
 ): Promise<{ data: ReferralHistoryEntry[]; total: number; page: number; pages: number }> {
-  return request(`/referral/history?page=${page}&limit=${limit}`);
+  return request(`/user/referral/history?page=${page}&limit=${limit}`);
 }
 
 // ========== User Endpoints ==========

@@ -10,8 +10,8 @@ interface LanguageOption {
 
 const LANGUAGES: LanguageOption[] = [
   { code: 'en', label: 'English', flag: 'EN' },
-  { code: 'pt-BR', label: 'Portugues', flag: 'PT' },
-  { code: 'es', label: 'Espanol', flag: 'ES' },
+  { code: 'pt-BR', label: 'Português', flag: 'PT' },
+  { code: 'es', label: 'Español', flag: 'ES' },
 ];
 
 const LANG_STORAGE_KEY = 'clickwin_language';

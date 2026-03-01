@@ -30,19 +30,30 @@ jobs:
       - name: Build shared package
         run: npm run build --workspace=shared
 
-      - name: Set API URL for production
-        run: echo "NEXT_PUBLIC_API_URL=https://backend-api-production-078e.up.railway.app" >> packages/frontend/.env.production
+      - name: Set production env vars
+        run: |
+          printf 'NEXT_PUBLIC_API_URL=https://backend-api-production-078e.up.railway.app\nNEXT_PUBLIC_WS_URL=wss://backend-api-production-078e.up.railway.app/ws\n' > packages/frontend/.env.production
 
       - name: Build frontend (static export)
         run: npm run build --workspace=packages/frontend
 
+      - name: Install lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
       - name: Deploy to Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          local-dir: packages/frontend/out/
-          server-dir: ./
-          dangerous-clean-slate: false
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASSWORD" "ftp://$FTP_HOST" -e "
+            set ftp:ssl-allow yes
+            set ftp:ssl-force no
+            set ftp:passive-mode yes
+            set net:timeout 60
+            set net:max-retries 5
+            set net:reconnect-interval-base 10
+            set mirror:parallel-transfer-count 3
+            mirror --reverse --delete --verbose packages/frontend/out/ ./
+            bye
+          "
