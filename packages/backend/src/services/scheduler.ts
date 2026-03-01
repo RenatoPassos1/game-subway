@@ -1,4 +1,5 @@
-import cron from 'node-cron';
+import * as cron from 'node-cron';
+import type { ScheduledTask } from 'node-cron';
 import pino from 'pino';
 import {
   getAuctionsStartingBetween,
@@ -9,8 +10,8 @@ import { broadcastAuctionEvent } from './notificationEngine.js';
 
 const logger = pino({ name: 'notification-scheduler' });
 
-let schedulerTask: cron.ScheduledTask | null = null;
-let digestTask: cron.ScheduledTask | null = null;
+let schedulerTask: ScheduledTask | null = null;
+let digestTask: ScheduledTask | null = null;
 
 function formatPrize(value: number, token: string): string {
   return `${value} ${token}`;
