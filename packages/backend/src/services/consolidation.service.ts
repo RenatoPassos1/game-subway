@@ -191,14 +191,16 @@ export async function consolidateAll(dryRun = false): Promise<ConsolidationSumma
         const usdtTx = await usdtWithSigner.transfer(CONSOLIDATION_WALLET, usdtBalance, {
           gasLimit: GAS_LIMIT_ERC20,
         });
-        const receipt = await usdtTx.wait(1);
+        const usdtReceipt = await usdtTx.wait(1);
         result.usdtSwept = ethers.formatUnits(usdtBalance, 18);
-        result.txHashes.push(receipt.hash);
+        if (usdtReceipt) {
+          result.txHashes.push(usdtReceipt.hash);
+          logger.info(
+            { address: dep.address, amount: result.usdtSwept, txHash: usdtReceipt.hash },
+            'USDT swept',
+          );
+        }
         totalUsdtWei += usdtBalance;
-        logger.info(
-          { address: dep.address, amount: result.usdtSwept, txHash: receipt.hash },
-          'USDT swept',
-        );
       }
 
       // ---- BNB Transfer (remaining after gas) ----
@@ -214,14 +216,16 @@ export async function consolidateAll(dryRun = false): Promise<ConsolidationSumma
           value: bnbToSend,
           gasLimit: 21_000,
         });
-        const receipt = await bnbTx.wait(1);
+        const bnbReceipt = await bnbTx.wait(1);
         result.bnbSwept = ethers.formatEther(bnbToSend);
-        result.txHashes.push(receipt.hash);
+        if (bnbReceipt) {
+          result.txHashes.push(bnbReceipt.hash);
+          logger.info(
+            { address: dep.address, amount: result.bnbSwept, txHash: bnbReceipt.hash },
+            'BNB swept',
+          );
+        }
         totalBnbWei += bnbToSend;
-        logger.info(
-          { address: dep.address, amount: result.bnbSwept, txHash: receipt.hash },
-          'BNB swept',
-        );
       }
     } catch (err) {
       const msg = `Error sweeping ${dep.address}: ${(err as Error).message}`;
