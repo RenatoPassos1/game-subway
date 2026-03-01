@@ -24,6 +24,9 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: '/favicon.svg',
+  },
   title: {
     default: 'Click Win - Digital Auction Platform on BNB Chain',
     template: '%s | Click Win',

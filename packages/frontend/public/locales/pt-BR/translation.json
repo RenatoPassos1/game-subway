@@ -543,7 +543,8 @@
     "community": "Comunidade",
     "disclaimer": "Click Win é uma plataforma de entretenimento. Cliques digitais não são instrumentos financeiros.",
     "copyright": "\u00a9 {{year}} Click Win. Todos os direitos reservados.",
-    "builtOn": "Construído na BNB Chain"
+    "builtOn": "Construído na BNB Chain",
+    "advertise": "Anuncie Conosco"
   },
   "whitepaper": {
     "badge": "// DOCUMENTO TÉCNICO",
@@ -641,5 +642,59 @@
       },
       "vision": "Nossa visão é nos tornarmos a principal plataforma de leilões descentralizada, tornando a compra competitiva acessível, transparente e divertida para todos no mundo inteiro."
     }
+  },
+  "referralCta": {
+    "signIn": "Faça login para obter seu link de indicação.",
+    "title": "Indique e Ganhe",
+    "earnBonus": "Ganhe <accent>{{pct}}% de cliques bônus</accent>",
+    "earnDesc": "no primeiro depósito do seu amigo",
+    "copy": "Copiar",
+    "copied": "✓",
+    "twitter": "Twitter",
+    "telegram": "Telegram",
+    "referred": "Indicados",
+    "earned": "Ganhos",
+    "shareTwitterText": "Entre no Click Win e ganhe cliques bônus no seu primeiro depósito! {{link}}",
+    "shareTelegramText": "Entre no Click Win e ganhe cliques bônus no seu primeiro depósito!"
+  },
+  "upcoming": {
+    "title": "Próximos Leilões",
+    "queued": "{{count}} na fila",
+    "startingSoon": "Em Breve",
+    "scheduled": "Agendado",
+    "specialEvent": "Evento Especial",
+    "upTo": "até {{discount}}",
+    "runsAllDay": "Leilões 24 horas por dia",
+    "viewAll": "Ver Todos",
+    "noUpcoming": "Nenhum leilão programado"
+  },
+  "ads": {
+    "sponsored": "Patrocinado",
+    "ad": "Anúncio",
+    "close": "Fechar",
+    "tokenInfo": "Informações do Token",
+    "tokenName": "Token",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "listedOn": "Listado em",
+    "visit": "Visitar"
+  },
+  "pastAuctions": {
+    "title": "Leilões Anteriores",
+    "subtitle": "Explore o histórico de leilões finalizados",
+    "viewHistory": "Ver Histórico de Leilões",
+    "totalAuctions": "Total de Leilões",
+    "totalPrizes": "Prêmios Distribuídos",
+    "avgDiscount": "Desconto Médio",
+    "winner": "Vencedor",
+    "discount": "Desconto",
+    "clicks": "Cliques",
+    "date": "Data",
+    "error": "Falha ao carregar leilões",
+    "retry": "Tentar Novamente",
+    "empty": "Nenhum leilão anterior encontrado",
+    "prev": "Anterior",
+    "next": "Próximo",
+    "pageOf": "Página {{page}} de {{pages}}"
   }
 }

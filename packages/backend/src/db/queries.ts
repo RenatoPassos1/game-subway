@@ -248,3 +248,337 @@ export const INSERT_AUDIT_LOG = `
   INSERT INTO audit_logs (event_type, actor, payload, ip_address)
   VALUES ($1, $2, $3, $4)
 `;
+
+// ============ Admins ============
+
+export const FIND_ADMIN_BY_WALLET = `
+  SELECT * FROM admins
+  WHERE LOWER(wallet_address) = LOWER($1) AND is_active = true
+`;
+
+export const IS_ADMIN = `
+  SELECT id, role FROM admins
+  WHERE LOWER(wallet_address) = LOWER($1) AND is_active = true
+  LIMIT 1
+`;
+
+// ============ Advertisers ============
+
+export const FIND_ADVERTISER_BY_USER = `
+  SELECT * FROM advertisers WHERE user_id = $1
+`;
+
+export const FIND_ADVERTISER_BY_WALLET = `
+  SELECT * FROM advertisers
+  WHERE LOWER(wallet_address) = LOWER($1)
+`;
+
+export const CREATE_ADVERTISER = `
+  INSERT INTO advertisers (user_id, wallet_address, display_name, email, whatsapp, telegram, website, social_links)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+  RETURNING *
+`;
+
+export const UPDATE_ADVERTISER = `
+  UPDATE advertisers
+  SET display_name = COALESCE($2, display_name),
+      email = COALESCE($3, email),
+      whatsapp = COALESCE($4, whatsapp),
+      telegram = COALESCE($5, telegram),
+      website = COALESCE($6, website),
+      social_links = COALESCE($7, social_links),
+      updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+export const LIST_ADVERTISERS = `
+  SELECT a.*, u.wallet_address AS user_wallet
+  FROM advertisers a
+  JOIN users u ON u.id = a.user_id
+  ORDER BY a.created_at DESC
+  LIMIT $1 OFFSET $2
+`;
+
+export const VERIFY_ADVERTISER = `
+  UPDATE advertisers SET is_verified = $2, updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+// ============ Ad Slot Types ============
+
+export const GET_AD_SLOT_TYPES = `
+  SELECT * FROM ad_slot_types WHERE is_active = true ORDER BY price_usdt ASC
+`;
+
+export const GET_AD_SLOT_BY_SLUG = `
+  SELECT * FROM ad_slot_types WHERE slug = $1 AND is_active = true
+`;
+
+// ============ Ad Campaigns ============
+
+export const CREATE_AD_CAMPAIGN = `
+  INSERT INTO ad_campaigns (
+    advertiser_id, slot_type_id, title, description, image_url, click_url,
+    is_token_promo, token_address, token_name, token_exchanges, price_usdt, status
+  )
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'PENDING_PAYMENT')
+  RETURNING *
+`;
+
+export const UPDATE_CAMPAIGN_STATUS = `
+  UPDATE ad_campaigns SET status = $2, updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+export const GET_CAMPAIGN_BY_ID = `
+  SELECT c.*, ast.slug AS slot_type_slug, ast.label AS slot_type_label,
+         ast.duration_days, adv.display_name AS advertiser_name
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  JOIN advertisers adv ON adv.id = c.advertiser_id
+  WHERE c.id = $1
+`;
+
+export const GET_CAMPAIGNS_BY_ADVERTISER = `
+  SELECT c.*, ast.slug AS slot_type_slug, ast.label AS slot_type_label
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  WHERE c.advertiser_id = $1
+  ORDER BY c.created_at DESC
+  LIMIT $2 OFFSET $3
+`;
+
+export const GET_LIVE_CAMPAIGNS_BY_SLOT = `
+  SELECT c.*, ast.slug AS slot_type_slug,
+         adv.display_name AS advertiser_name
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  JOIN advertisers adv ON adv.id = c.advertiser_id
+  WHERE ast.slug = $1 AND c.status = 'LIVE'
+  ORDER BY c.queue_position ASC
+`;
+
+export const GET_NEXT_QUEUE_POSITION = `
+  SELECT COALESCE(MAX(queue_position), 0) + 1 AS next_position
+  FROM ad_campaigns
+  WHERE slot_type_id = $1 AND status IN ('APPROVED', 'SCHEDULED', 'LIVE')
+`;
+
+export const GET_SCHEDULED_CAMPAIGNS = `
+  SELECT c.*, ast.slug AS slot_type_slug, ast.duration_days
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  WHERE c.status = 'SCHEDULED'
+    AND c.scheduled_start <= NOW()
+  ORDER BY c.queue_position ASC
+`;
+
+export const GET_NEXT_AVAILABLE_DATE = `
+  SELECT COALESCE(
+    MAX(c.scheduled_end),
+    NOW()
+  ) AS next_date
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  WHERE ast.slug = $1
+    AND c.status IN ('APPROVED', 'SCHEDULED', 'LIVE')
+`;
+
+export const LIST_ALL_CAMPAIGNS = `
+  SELECT c.*, ast.slug AS slot_type_slug, ast.label AS slot_type_label,
+         adv.display_name AS advertiser_name
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  JOIN advertisers adv ON adv.id = c.advertiser_id
+  WHERE ($1::text IS NULL OR c.status = $1)
+    AND ($2::text IS NULL OR ast.slug = $2)
+  ORDER BY c.created_at DESC
+  LIMIT $3 OFFSET $4
+`;
+
+export const UPDATE_CAMPAIGN_SCHEDULE = `
+  UPDATE ad_campaigns
+  SET queue_position = $2,
+      scheduled_start = $3,
+      scheduled_end = $4,
+      status = 'SCHEDULED',
+      updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+export const UPDATE_CAMPAIGN_IMPRESSIONS = `
+  UPDATE ad_campaigns
+  SET impressions = impressions + $2,
+      clicks = clicks + $3,
+      updated_at = NOW()
+  WHERE id = $1
+`;
+
+export const UPDATE_CAMPAIGN_CONTENT = `
+  UPDATE ad_campaigns
+  SET title = COALESCE($2, title),
+      description = COALESCE($3, description),
+      image_url = COALESCE($4, image_url),
+      click_url = COALESCE($5, click_url),
+      is_token_promo = COALESCE($6, is_token_promo),
+      token_address = COALESCE($7, token_address),
+      token_name = COALESCE($8, token_name),
+      token_exchanges = COALESCE($9, token_exchanges),
+      status = CASE WHEN status = 'PAID' THEN 'PENDING_REVIEW' ELSE status END,
+      updated_at = NOW()
+  WHERE id = $1 AND status IN ('PENDING_PAYMENT', 'PAID')
+  RETURNING *
+`;
+
+export const CAMPAIGN_GO_LIVE = `
+  UPDATE ad_campaigns
+  SET status = 'LIVE',
+      actual_start = NOW(),
+      updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+export const CAMPAIGN_REJECT = `
+  UPDATE ad_campaigns
+  SET status = 'REJECTED',
+      updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+export const COUNT_QUEUE_LENGTH = `
+  SELECT COUNT(*) AS queue_length
+  FROM ad_campaigns c
+  JOIN ad_slot_types ast ON ast.id = c.slot_type_id
+  WHERE ast.slug = $1
+    AND c.status IN ('APPROVED', 'SCHEDULED', 'LIVE')
+`;
+
+// ============ Ad Crypto Orders ============
+
+export const CREATE_AD_CRYPTO_ORDER = `
+  INSERT INTO ad_crypto_orders (
+    campaign_id, advertiser_id, token, amount_usdt, amount_token,
+    bnb_price_usdt, receiver_wallet, status
+  )
+  VALUES ($1, $2, $3, $4, $5, $6, $7, 'PENDING')
+  RETURNING *
+`;
+
+export const UPDATE_AD_ORDER_STATUS = `
+  UPDATE ad_crypto_orders
+  SET status = $2,
+      confirmations = COALESCE($3, confirmations),
+      verified_amount = COALESCE($4, verified_amount),
+      verified_from = COALESCE($5, verified_from),
+      confirmed_at = CASE WHEN $2 = 'CONFIRMED' THEN NOW() ELSE confirmed_at END,
+      updated_at = NOW()
+  WHERE id = $1
+  RETURNING *
+`;
+
+export const UPDATE_AD_ORDER_TX_HASH = `
+  UPDATE ad_crypto_orders
+  SET tx_hash = $2,
+      status = 'SUBMITTED',
+      submitted_at = NOW(),
+      updated_at = NOW()
+  WHERE id = $1 AND status = 'PENDING'
+  RETURNING *
+`;
+
+export const GET_AD_ORDER_BY_ID = `
+  SELECT o.*, c.title AS campaign_title, c.status AS campaign_status
+  FROM ad_crypto_orders o
+  JOIN ad_campaigns c ON c.id = o.campaign_id
+  WHERE o.id = $1
+`;
+
+export const GET_PENDING_AD_ORDERS = `
+  SELECT * FROM ad_crypto_orders
+  WHERE status IN ('PENDING', 'SUBMITTED', 'CONFIRMING')
+  ORDER BY created_at ASC
+`;
+
+export const GET_AD_ORDER_BY_TX_HASH = `
+  SELECT * FROM ad_crypto_orders WHERE tx_hash = $1
+`;
+
+export const GET_AD_ORDERS_BY_CAMPAIGN = `
+  SELECT * FROM ad_crypto_orders
+  WHERE campaign_id = $1
+  ORDER BY created_at DESC
+`;
+
+export const GET_AD_ORDERS_BY_ADVERTISER = `
+  SELECT o.*, c.title AS campaign_title
+  FROM ad_crypto_orders o
+  JOIN ad_campaigns c ON c.id = o.campaign_id
+  WHERE o.advertiser_id = $1
+  ORDER BY o.created_at DESC
+  LIMIT $2 OFFSET $3
+`;
+
+export const LIST_ALL_AD_ORDERS = `
+  SELECT o.*, c.title AS campaign_title, adv.display_name AS advertiser_name
+  FROM ad_crypto_orders o
+  JOIN ad_campaigns c ON c.id = o.campaign_id
+  JOIN advertisers adv ON adv.id = o.advertiser_id
+  ORDER BY o.created_at DESC
+  LIMIT $1 OFFSET $2
+`;
+
+export const INSERT_AD_PAYMENT_LOG = `
+  INSERT INTO ad_payment_log (order_id, campaign_id, event, details)
+  VALUES ($1, $2, $3, $4)
+`;
+
+// ============ Auctions (enhanced) ============
+
+export const CREATE_AUCTION_ENHANCED = `
+  INSERT INTO auctions (
+    prize_value, prize_token, prize_description, status,
+    min_revenue_multiplier, max_discount_pct, discount_per_click,
+    timer_duration, image_url, scheduled_start, is_main, display_order
+  )
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+  RETURNING *
+`;
+
+export const GET_UPCOMING_AUCTIONS = `
+  SELECT * FROM auctions
+  WHERE status = 'PENDING' AND scheduled_start IS NOT NULL
+  ORDER BY display_order ASC, scheduled_start ASC
+  LIMIT $1
+`;
+
+export const GET_PAST_AUCTIONS = `
+  SELECT * FROM auctions
+  WHERE status IN ('ENDED', 'SETTLED')
+  ORDER BY ended_at DESC
+  LIMIT $1 OFFSET $2
+`;
+
+export const SET_MAIN_AUCTION = `
+  UPDATE auctions SET is_main = false WHERE is_main = true;
+  UPDATE auctions SET is_main = true WHERE id = $1 RETURNING *
+`;
+
+export const CLEAR_MAIN_AUCTION = `
+  UPDATE auctions SET is_main = false WHERE is_main = true
+`;
+
+export const SET_MAIN_AUCTION_BY_ID = `
+  UPDATE auctions SET is_main = true, updated_at = NOW() WHERE id = $1 RETURNING *
+`;
+
+export const GET_MAIN_AUCTION = `
+  SELECT * FROM auctions
+  WHERE is_main = true AND status IN ('PENDING', 'ACTIVE', 'CLOSING')
+  LIMIT 1
+`;

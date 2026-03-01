@@ -12,9 +12,19 @@ import { authRoutes } from './routes/auth.routes';
 import { userRoutes } from './routes/user.routes';
 import { auctionRoutes } from './routes/auction.routes';
 import { referralRoutes } from './routes/referral.routes';
-import { registerWebSocket, getConnectionCount } from './ws/handler';
+import { adsRoutes } from './routes/ads.routes';
+import { advertiserRoutes } from './routes/advertiser.routes';
+import { cryptoRoutes } from './routes/crypto.routes';
+import { adminRoutes } from './routes/admin.routes';
+import {
+  registerWebSocket,
+  getConnectionCount,
+  broadcastReferralBonus,
+  broadcastBalanceUpdate,
+} from './ws/handler';
 import { startTimerManager, stopTimerManager } from './ws/timer';
 import { getRateLimitOptions } from './middleware/rate-limit';
+import type { WsReferralBonusPayload, WsBalancePayload } from '../../../shared/src/types';
 
 const logger = pino({ name: 'server' });
 
@@ -73,11 +83,120 @@ async function buildServer() {
   await fastify.register(userRoutes);
   await fastify.register(auctionRoutes);
   await fastify.register(referralRoutes);
+  await fastify.register(adsRoutes);
+  await fastify.register(advertiserRoutes);
+  await fastify.register(cryptoRoutes);
+  await fastify.register(adminRoutes);
 
   // ============ Register WebSocket ============
   await registerWebSocket(fastify);
 
   return fastify;
+}
+
+// Channel names must match the watcher's events.ts CHANNELS
+const REDIS_CHANNELS = {
+  BALANCE_UPDATED: 'balance:updated',
+  REFERRAL_BONUS: 'referral:bonus',
+} as const;
+
+/**
+ * Watcher event envelope:
+ * { type: string, payload: T, timestamp: number }
+ */
+interface EventMessage<T = unknown> {
+  type: string;
+  payload: T;
+  timestamp: number;
+}
+
+/** Payload shape emitted by watcher for referral:bonus */
+interface WatcherReferralPayload {
+  referrerId: string;
+  referredId: string;
+  referredWallet: string;
+  clicksEarned: number;
+  depositId: string;
+}
+
+/** Payload shape emitted by watcher for balance:updated */
+interface WatcherBalancePayload {
+  userId: string;
+  clicks: number;
+  totalPurchased: number;
+  depositId: string;
+}
+
+function setupRedisPubSub(): void {
+  // Message handler for all subscribed channels
+  redisSub.on('message', (channel: string, raw: string) => {
+    try {
+      const message: EventMessage = JSON.parse(raw);
+
+      switch (channel) {
+        case REDIS_CHANNELS.REFERRAL_BONUS: {
+          const wp = message.payload as WatcherReferralPayload;
+          // Transform watcher payload → WS payload for frontend
+          const wsPayload: WsReferralBonusPayload = {
+            referredUser: wp.referredWallet,
+            clicksEarned: wp.clicksEarned,
+            depositId: wp.depositId,
+          };
+          broadcastReferralBonus(wp.referrerId, wsPayload);
+
+          // Also update referrer's balance via WS so UI refreshes immediately
+          // We read the new balance from Redis to get the accurate total
+          redis.get(`user:${wp.referrerId}:clicks`).then((clicksStr) => {
+            const clicks = parseInt(clicksStr ?? '0', 10);
+            broadcastBalanceUpdate(wp.referrerId, {
+              clicks,
+              totalPurchased: clicks, // best-effort; real total is in PG
+            } as WsBalancePayload);
+          }).catch((err) => {
+            logger.warn({ err, referrerId: wp.referrerId }, 'Failed to fetch balance for referrer broadcast');
+          });
+
+          logger.info(
+            { referrerId: wp.referrerId, clicksEarned: wp.clicksEarned, depositId: wp.depositId },
+            'Referral bonus broadcast sent via WS'
+          );
+          break;
+        }
+
+        case REDIS_CHANNELS.BALANCE_UPDATED: {
+          const bp = message.payload as WatcherBalancePayload;
+          const wsPayload: WsBalancePayload = {
+            clicks: bp.clicks,
+            totalPurchased: bp.totalPurchased,
+          };
+          broadcastBalanceUpdate(bp.userId, wsPayload);
+          logger.debug(
+            { userId: bp.userId, clicks: bp.clicks },
+            'Balance update broadcast sent via WS'
+          );
+          break;
+        }
+
+        default:
+          logger.warn({ channel }, 'Received message on unhandled channel');
+      }
+    } catch (err) {
+      logger.error({ err, channel }, 'Failed to process Redis pub/sub message');
+    }
+  });
+
+  // Subscribe to channels
+  redisSub.subscribe(
+    REDIS_CHANNELS.REFERRAL_BONUS,
+    REDIS_CHANNELS.BALANCE_UPDATED,
+    (err, count) => {
+      if (err) {
+        logger.error({ err }, 'Failed to subscribe to Redis channels');
+      } else {
+        logger.info({ count }, 'Subscribed to Redis pub/sub channels');
+      }
+    }
+  );
 }
 
 async function connectRedisAndLoadScripts(): Promise<void> {
@@ -86,6 +205,10 @@ async function connectRedisAndLoadScripts(): Promise<void> {
   await redisSub.connect();
   logger.info('Redis connected, loading Lua scripts...');
   await loadScripts();
+
+  // Wire up Redis pub/sub → WebSocket broadcast
+  setupRedisPubSub();
+  logger.info('Redis pub/sub → WebSocket bridge active');
 }
 
 async function start(): Promise<void> {

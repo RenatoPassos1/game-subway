@@ -10,12 +10,16 @@ const PUBLIC_ROUTES = new Set([
   '/auth/verify',
   '/auction/active',
   '/ws',
+  '/ads/active',
+  '/crypto/bnb-price',
 ]);
 
 // Route prefixes that are public
 const PUBLIC_PREFIXES = [
-  '/auction/',      // GET /auction/:id and /auction/:id/history
-  '/referral/validate/', // GET /referral/validate/:code
+  '/auction/',             // GET /auction/:id, /auction/upcoming, /auction/past
+  '/referral/validate/',   // GET /referral/validate/:code
+  '/ads/',                 // GET /ads/active, POST /ads/impression, /ads/click
+  '/crypto/ad/verify/',    // GET /crypto/ad/verify/:orderId
 ];
 
 function isPublicRoute(url: string): boolean {

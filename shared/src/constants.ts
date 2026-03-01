@@ -70,3 +70,47 @@ export const REDIS_KEYS = {
   rateLimit: (userId: string, auctionId: string) => `rate:${userId}:${auctionId}`,
   nonce: (address: string) => `nonce:${address}`,
 } as const;
+
+// ============ Advertising System ============
+
+// Platform wallet that receives ad payments
+export const PLATFORM_WALLET = '0x2b77C4cD1a1955E51DF2D8eBE50187566c71Cc48';
+
+// Advertising slot type slugs
+export const AD_SLOT_TYPES = {
+  CAROUSEL: 'carousel',
+  SIDE_CARD: 'side_card',
+} as const;
+
+// Ad campaign lifecycle states
+export const AD_CAMPAIGN_STATES = {
+  PENDING_PAYMENT: 'PENDING_PAYMENT',
+  PAID: 'PAID',
+  APPROVED: 'APPROVED',
+  SCHEDULED: 'SCHEDULED',
+  LIVE: 'LIVE',
+  COMPLETED: 'COMPLETED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED',
+} as const;
+
+// Ad crypto order states
+export const AD_ORDER_STATES = {
+  PENDING: 'PENDING',
+  SUBMITTED: 'SUBMITTED',
+  CONFIRMING: 'CONFIRMING',
+  CONFIRMED: 'CONFIRMED',
+  FAILED: 'FAILED',
+  EXPIRED: 'EXPIRED',
+  REFUNDED: 'REFUNDED',
+} as const;
+
+// BNB price cache TTL in seconds
+export const BNB_PRICE_CACHE_TTL = 60;
+
+// Order expiry time in minutes
+export const AD_ORDER_EXPIRY_MINUTES = 30;
+
+// Minimum confirmations for ad payments
+export const MIN_CONFIRMATIONS_AD = 15;

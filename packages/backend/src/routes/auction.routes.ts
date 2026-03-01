@@ -4,13 +4,11 @@ import {
   getActiveAuction,
   getAuctionState,
   getAuctionClickHistory,
-  createAuction,
-  type CreateAuctionParams,
 } from '../services/auction.service';
+import { query } from '../db/client';
+import { GET_UPCOMING_AUCTIONS, GET_PAST_AUCTIONS } from '../db/queries';
 
 const logger = pino({ name: 'auction-routes' });
-
-const ADMIN_API_KEY = process.env.ADMIN_API_KEY || 'dev-admin-key';
 
 export async function auctionRoutes(fastify: FastifyInstance): Promise<void> {
   // GET /auction/active - public
@@ -25,6 +23,27 @@ export async function auctionRoutes(fastify: FastifyInstance): Promise<void> {
 
     const state = await getAuctionState(auction.id);
     return state;
+  });
+
+  // GET /auction/upcoming - public, upcoming scheduled auctions
+  fastify.get<{
+    Querystring: { limit?: string };
+  }>('/auction/upcoming', async (request, _reply) => {
+    const limit = Math.min(parseInt(request.query.limit || '10', 10), 50);
+    const result = await query(GET_UPCOMING_AUCTIONS, [limit]);
+    return { auctions: result.rows };
+  });
+
+  // GET /auction/past - public, past auctions paginated
+  fastify.get<{
+    Querystring: { page?: string; limit?: string };
+  }>('/auction/past', async (request, _reply) => {
+    const page = parseInt(request.query.page || '1', 10);
+    const limit = Math.min(parseInt(request.query.limit || '10', 10), 50);
+    const offset = (page - 1) * limit;
+
+    const result = await query(GET_PAST_AUCTIONS, [limit, offset]);
+    return { data: result.rows, page, limit };
   });
 
   // GET /auction/:id - public
@@ -61,48 +80,5 @@ export async function auctionRoutes(fastify: FastifyInstance): Promise<void> {
       page,
       limit,
     };
-  });
-
-  // POST /admin/auction/create - admin only (API key)
-  fastify.post<{
-    Body: CreateAuctionParams;
-  }>('/admin/auction/create', {
-    schema: {
-      body: {
-        type: 'object',
-        required: ['prizeValue'],
-        properties: {
-          prizeValue: { type: 'number' },
-          prizeToken: { type: 'string' },
-          prizeDescription: { type: 'string' },
-          minRevenueMultiplier: { type: 'number' },
-          maxDiscountPct: { type: 'number' },
-          discountPerClick: { type: 'number' },
-          timerDuration: { type: 'number' },
-          autoStart: { type: 'boolean' },
-        },
-      },
-    },
-  }, async (request, reply) => {
-    // Verify admin API key
-    const apiKey = request.headers['x-api-key'];
-    if (apiKey !== ADMIN_API_KEY) {
-      return reply.status(403).send({
-        error: 'FORBIDDEN',
-        message: 'Invalid admin API key.',
-      });
-    }
-
-    try {
-      const auction = await createAuction(request.body);
-      logger.info({ auctionId: auction.id }, 'Admin created auction');
-      return { auction };
-    } catch (err) {
-      logger.error({ err }, 'Failed to create auction');
-      return reply.status(500).send({
-        error: 'CREATE_AUCTION_FAILED',
-        message: 'Failed to create auction.',
-      });
-    }
   });
 }

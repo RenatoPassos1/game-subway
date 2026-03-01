@@ -60,6 +60,7 @@
     @apply border-primary/30;
     background: rgba(26, 26, 46, 0.8);
     box-shadow: 0 8px 32px rgba(108, 92, 231, 0.15);
+    transform: translateY(-3px);
   }
 
   /* ---- Tech Card (borda topo animada) ---- */
@@ -87,6 +88,7 @@
     @apply border-white/10;
     background: rgba(26, 26, 46, 0.7);
     box-shadow: 0 4px 24px rgba(108, 92, 231, 0.12);
+    transform: translateY(-4px);
   }
 
   /* ---- Scanline Overlay ---- */
@@ -145,6 +147,22 @@
     box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
   }
 
+  /* ---- Action CTA Button (urgency) ---- */
+  .btn-action {
+    @apply relative inline-flex items-center justify-center px-6 py-3 font-bold text-white rounded-xl transition-all duration-200 font-heading;
+    background: linear-gradient(135deg, #FF3B30 0%, #FF7A18 100%);
+    box-shadow: 0 4px 15px rgba(255, 59, 48, 0.3);
+  }
+
+  .btn-action:hover {
+    @apply scale-105;
+    box-shadow: 0 6px 25px rgba(255, 59, 48, 0.5), 0 0 40px rgba(255, 122, 24, 0.2);
+  }
+
+  .btn-action:active {
+    @apply scale-[0.98];
+  }
+
   /* ---- Section Container ---- */
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
@@ -184,7 +202,7 @@
     background: linear-gradient(90deg, transparent 0%, rgba(108, 92, 231, 0.3) 50%, transparent 100%);
   }
 
-  /* ---- Legal Page Styles ---- */
+  /* ---- Legal Page Styles (Tech Aesthetic) ---- */
   .legal-content h2 {
     @apply text-2xl font-bold text-text mt-10 mb-4 font-heading;
   }
@@ -205,13 +223,60 @@
     @apply leading-relaxed;
   }
 
+  /* Legal section cards */
+  .legal-section {
+    @apply relative overflow-hidden rounded-xl border border-white/5 p-6 transition-all duration-300;
+    background: rgba(26, 26, 46, 0.4);
+    backdrop-filter: blur(8px);
+  }
+
+  .legal-section::before {
+    content: '';
+    @apply absolute top-0 left-0 w-[3px] h-full;
+    background: linear-gradient(180deg, #6C5CE7, #00D2FF);
+  }
+
+  .legal-section:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.6);
+  }
+
+  .legal-section-number {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold font-mono mr-3 flex-shrink-0;
+    background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
+  }
+
+  /* Prize shimmer text */
+  .prize-shimmer {
+    background: linear-gradient(
+      90deg,
+      #FFD700 0%,
+      #FFF8DC 25%,
+      #FFD700 50%,
+      #FFF8DC 75%,
+      #FFD700 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: prizeShimmer 3s ease-in-out infinite;
+  }
+
   /* ---- FAQ Accordion ---- */
   .faq-item {
     @apply glass-card border-white/5 overflow-hidden transition-all duration-300;
   }
 
+  .faq-item:hover {
+    @apply border-white/10;
+    box-shadow: 0 4px 16px rgba(108, 92, 231, 0.08);
+    transform: translateY(-2px);
+  }
+
   .faq-item[data-open="true"] {
     @apply border-primary/20;
+    transform: none;
   }
 
   .faq-question {
@@ -222,27 +287,144 @@
     @apply px-5 pb-5 text-text-muted leading-relaxed;
   }
 
-  /* ---- Stat Card ---- */
+  /* ---- Stat Card (Futuristic) ---- */
   .stat-card {
-    @apply tech-card text-center;
+    @apply relative overflow-hidden rounded-xl border border-white/5 p-5 text-center transition-all duration-500;
+    background: rgba(26, 26, 46, 0.5);
+    backdrop-filter: blur(12px);
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-[2px];
+    background: var(--stat-accent, linear-gradient(90deg, transparent, #6C5CE7, #00D2FF, transparent));
+    opacity: 0.8;
+  }
+
+  .stat-card::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(ellipse at 50% 0%, var(--stat-glow, rgba(108, 92, 231, 0.08)) 0%, transparent 70%);
+    transition: opacity 0.5s;
+  }
+
+  .stat-card:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.7);
+    box-shadow: 0 4px 24px var(--stat-shadow, rgba(108, 92, 231, 0.12));
+    transform: translateY(-4px);
+  }
+
+  .stat-card:hover::after {
+    opacity: 1.5;
+  }
+
+  .stat-icon-wrap {
+    @apply relative inline-flex items-center justify-center w-12 h-12 rounded-full mb-3;
+  }
+
+  .stat-icon-ping {
+    @apply absolute inset-0 rounded-full border-2 animate-ping;
+    border-color: var(--stat-ping, rgba(108, 92, 231, 0.15));
+    animation-duration: 3s;
+  }
+
+  .stat-icon-ring {
+    @apply absolute inset-0 rounded-full border;
+    border-color: var(--stat-ring, rgba(108, 92, 231, 0.1));
+  }
+
+  .stat-icon-inner {
+    @apply relative w-10 h-10 rounded-full flex items-center justify-center;
+    background: var(--stat-icon-bg, rgba(108, 92, 231, 0.1));
   }
 
   .stat-value {
-    @apply text-3xl md:text-4xl font-bold gradient-text font-heading;
+    @apply text-3xl md:text-4xl font-bold font-heading;
+    background: var(--stat-gradient, linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .stat-label {
     @apply text-text-muted text-sm mt-2 font-mono uppercase tracking-wider;
   }
 
-  /* ---- Step Card ---- */
+  /* ---- Step Card (Futuristic) ---- */
   .step-card {
-    @apply tech-card flex flex-col items-center text-center;
+    @apply relative overflow-hidden rounded-xl border border-white/5 p-6 flex flex-col items-center text-center transition-all duration-500;
+    background: rgba(26, 26, 46, 0.5);
+    backdrop-filter: blur(12px);
+  }
+
+  .step-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-[2px];
+    background: var(--step-accent, linear-gradient(90deg, transparent, #6C5CE7, #00D2FF, transparent));
+    opacity: 0.8;
+  }
+
+  .step-card::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(ellipse at 50% 0%, var(--step-glow, rgba(108, 92, 231, 0.08)) 0%, transparent 70%);
+    transition: opacity 0.5s;
+  }
+
+  .step-card:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.7);
+    box-shadow: 0 4px 24px var(--step-shadow, rgba(108, 92, 231, 0.12));
+    transform: translateY(-4px);
+  }
+
+  .step-card:hover::after {
+    opacity: 1.5;
+  }
+
+  .step-icon-wrap {
+    @apply relative inline-flex items-center justify-center w-14 h-14 rounded-full mb-4;
+  }
+
+  .step-icon-ping {
+    @apply absolute inset-0 rounded-full border-2 animate-ping;
+    border-color: var(--step-ping, rgba(108, 92, 231, 0.15));
+    animation-duration: 3s;
+  }
+
+  .step-icon-ring {
+    @apply absolute inset-0 rounded-full border;
+    border-color: var(--step-ring, rgba(108, 92, 231, 0.1));
+  }
+
+  .step-icon-inner {
+    @apply relative w-12 h-12 rounded-full flex items-center justify-center;
+    background: var(--step-icon-bg, rgba(108, 92, 231, 0.1));
   }
 
   .step-number {
-    @apply w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold mb-4 font-mono;
-    background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
+    @apply absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold font-mono text-white z-10;
+    background: var(--step-num-bg, linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%));
+    box-shadow: 0 0 8px var(--step-num-shadow, rgba(108, 92, 231, 0.4));
+  }
+
+  /* QR code pulse effect */
+  .qr-pulse-wrap {
+    @apply relative inline-flex items-center justify-center;
+  }
+
+  .qr-pulse-ring {
+    @apply absolute rounded-lg border-2 animate-ping pointer-events-none;
+    border-color: rgba(0, 210, 255, 0.2);
+    animation-duration: 2.5s;
+    inset: -4px;
+  }
+
+  .qr-pulse-ring-outer {
+    @apply absolute rounded-lg border pointer-events-none;
+    border-color: rgba(0, 210, 255, 0.08);
+    inset: -6px;
   }
 
   /* ---- Feature Card ---- */
@@ -257,7 +439,7 @@
 
   /* ---- KPI Card (tipo dashboard) ---- */
   .kpi-card {
-    @apply relative overflow-hidden rounded-xl border border-white/5 p-5;
+    @apply relative overflow-hidden rounded-xl border border-white/5 p-5 transition-all duration-300;
     background: rgba(26, 26, 46, 0.5);
   }
 
@@ -267,6 +449,13 @@
     background: linear-gradient(180deg, #6C5CE7, #00D2FF);
     animation: borderFlow 3s linear infinite;
     background-size: 100% 200%;
+  }
+
+  .kpi-card:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.7);
+    box-shadow: 0 4px 24px rgba(108, 92, 231, 0.1);
+    transform: translateY(-3px);
   }
 
   /* ---- Badge / Chip ---- */
@@ -283,6 +472,137 @@
       linear-gradient(rgba(108, 92, 231, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(108, 92, 231, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
+  }
+
+  /* ==========================================
+     Auction Card
+     ========================================== */
+  .auction-card {
+    @apply relative overflow-hidden rounded-2xl border border-white/5 transition-all duration-500;
+    background: rgba(26, 26, 46, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .auction-card:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.7);
+    box-shadow:
+      0 8px 32px rgba(153, 69, 255, 0.12),
+      0 0 60px rgba(20, 241, 149, 0.04);
+  }
+
+  .auction-status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-white border border-white/10;
+  }
+
+  .auction-kpi {
+    @apply relative rounded-lg border border-white/5 p-3 transition-all duration-300;
+    background: rgba(26, 26, 46, 0.4);
+  }
+
+  .auction-kpi:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.6);
+  }
+
+  .auction-progress-track {
+    @apply relative w-full h-1.5 rounded-full overflow-hidden;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .auction-progress-bar {
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+  }
+
+  .auction-last-click {
+    @apply flex items-center justify-between p-2.5 rounded-lg border border-white/5 transition-all duration-300;
+    background: rgba(26, 26, 46, 0.3);
+  }
+
+  .auction-last-click:hover {
+    @apply border-white/10;
+    background: rgba(26, 26, 46, 0.5);
+  }
+
+  /* ==========================================
+     Click Button
+     ========================================== */
+  .click-btn-container {
+    @apply relative flex items-center justify-center;
+    width: 140px;
+    height: 140px;
+  }
+
+  .click-btn {
+    @apply w-[120px] h-[120px] rounded-full flex items-center justify-center cursor-pointer transition-all duration-200;
+    z-index: 2;
+  }
+
+  .click-btn-active {
+    background: linear-gradient(145deg, rgba(153, 69, 255, 0.25) 0%, rgba(20, 241, 149, 0.15) 100%);
+    border: 2px solid rgba(153, 69, 255, 0.35);
+    box-shadow:
+      0 0 20px rgba(153, 69, 255, 0.2),
+      inset 0 0 20px rgba(153, 69, 255, 0.08);
+  }
+
+  .click-btn-active:hover {
+    border-color: rgba(153, 69, 255, 0.5);
+    box-shadow:
+      0 0 30px rgba(153, 69, 255, 0.3),
+      inset 0 0 25px rgba(153, 69, 255, 0.12);
+    transform: scale(1.04);
+  }
+
+  .click-btn-active:active {
+    transform: scale(0.96);
+    box-shadow:
+      0 0 15px rgba(20, 241, 149, 0.4),
+      inset 0 0 30px rgba(20, 241, 149, 0.15);
+    border-color: rgba(20, 241, 149, 0.5);
+  }
+
+  .click-btn-disabled {
+    background: rgba(26, 26, 46, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.06);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .click-btn-flash {
+    box-shadow:
+      0 0 40px rgba(20, 241, 149, 0.5),
+      0 0 80px rgba(20, 241, 149, 0.2) !important;
+    border-color: rgba(20, 241, 149, 0.6) !important;
+  }
+
+  /* Ping inside button */
+  .click-btn-ping {
+    @apply absolute inset-0 rounded-full border-2 pointer-events-none animate-ping;
+    border-color: rgba(153, 69, 255, 0.15);
+    animation-duration: 2.5s;
+  }
+
+  .click-btn-border-pulse {
+    @apply absolute inset-[-1px] rounded-full pointer-events-none;
+    border: 1px solid rgba(20, 241, 149, 0.08);
+    animation: clickBorderPulse 3s ease-in-out infinite;
+  }
+
+  /* Orbit rings around button */
+  .click-orbit-ring {
+    @apply absolute rounded-full pointer-events-none;
+    inset: -10px;
+    border: 1px dashed rgba(153, 69, 255, 0.15);
+    animation: orbitSpin 12s linear infinite;
+  }
+
+  .click-orbit-ring-inner {
+    @apply absolute rounded-full pointer-events-none;
+    inset: -4px;
+    border: 1px solid rgba(20, 241, 149, 0.08);
+    animation: orbitSpin 8s linear infinite reverse;
   }
 }
 
@@ -329,5 +649,78 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Navbar icon pulse (grow/shrink) */
+  .icon-pulse {
+    animation: iconPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes iconPulse {
+    0%, 100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 0px rgba(108, 92, 231, 0));
+    }
+    50% {
+      transform: scale(1.18);
+      filter: drop-shadow(0 0 8px rgba(108, 92, 231, 0.5));
+    }
+  }
+
+  /* Click button orbit spin */
+  @keyframes orbitSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Click button border pulse */
+  @keyframes clickBorderPulse {
+    0%, 100% {
+      border-color: rgba(20, 241, 149, 0.05);
+      transform: scale(1);
+    }
+    50% {
+      border-color: rgba(20, 241, 149, 0.15);
+      transform: scale(1.02);
+    }
+  }
+
+  /* Neon spin for round click button border */
+  @keyframes neonSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Red neon pulsing ring for click button */
+  @keyframes neonRedPulse {
+    0%, 100% {
+      border-color: rgba(255, 59, 48, 0.5);
+      box-shadow: 0 0 6px rgba(255,59,48,0.3), 0 0 15px rgba(255,59,48,0.15);
+      transform: scale(1);
+    }
+    50% {
+      border-color: rgba(255, 59, 48, 1);
+      box-shadow: 0 0 15px rgba(255,59,48,0.8), 0 0 35px rgba(255,59,48,0.5), 0 0 60px rgba(255,59,48,0.2);
+      transform: scale(1.04);
+    }
+  }
+
+  /* Thin scrollbar for upcoming auctions */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(153, 69, 255, 0.2) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(153, 69, 255, 0.2);
+    border-radius: 2px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(153, 69, 255, 0.4);
   }
 }

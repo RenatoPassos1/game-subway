@@ -24,6 +24,14 @@ const config: Config = {
           light: '#FFE033',
           dark: '#E6C200',
         },
+        action: {
+          DEFAULT: '#FF3B30',
+          light: '#FF7A18',
+        },
+        success: {
+          DEFAULT: '#00E676',
+          light: '#69F0AE',
+        },
         background: {
           DEFAULT: '#0F0F23',
           light: '#161633',
@@ -49,12 +57,15 @@ const config: Config = {
         'gradient-accent': 'linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)',
         'gradient-dark': 'linear-gradient(180deg, #0F0F23 0%, #1A1A2E 100%)',
         'gradient-card': 'linear-gradient(135deg, rgba(108, 92, 231, 0.1) 0%, rgba(0, 210, 255, 0.1) 100%)',
+        'gradient-action': 'linear-gradient(135deg, #FF3B30 0%, #FF7A18 100%)',
       },
       boxShadow: {
         'glow-primary': '0 0 20px rgba(108, 92, 231, 0.3)',
         'glow-secondary': '0 0 20px rgba(0, 210, 255, 0.3)',
         'glow-accent': '0 0 20px rgba(255, 215, 0, 0.3)',
         'glow-lg': '0 0 40px rgba(108, 92, 231, 0.4), 0 0 80px rgba(0, 210, 255, 0.15)',
+        'glow-action': '0 0 20px rgba(255, 59, 48, 0.4), 0 0 40px rgba(255, 122, 24, 0.2)',
+        'glow-success': '0 0 20px rgba(0, 230, 118, 0.3)',
       },
       animation: {
         'pulse-slow': 'pulse 3s ease-in-out infinite',
@@ -65,6 +76,11 @@ const config: Config = {
         'border-flow': 'borderFlow 3s linear infinite',
         'flicker': 'flicker 4s ease-in-out infinite',
         'data-stream': 'dataStream 20s linear infinite',
+        'breathe': 'breathe 3s ease-in-out infinite',
+        'urgency-pulse': 'urgencyPulse 1s ease-in-out infinite',
+        'prize-shimmer': 'prizeShimmer 3s ease-in-out infinite',
+        'hero-glow': 'heroGlow 4s ease-in-out infinite alternate',
+        'cta-pulse': 'ctaPulse 3.5s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -96,6 +112,26 @@ const config: Config = {
         dataStream: {
           '0%': { backgroundPosition: '0% 0%' },
           '100%': { backgroundPosition: '0% 100%' },
+        },
+        breathe: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.03)', opacity: '0.95' },
+        },
+        urgencyPulse: {
+          '0%, 100%': { boxShadow: '0 0 10px rgba(239, 68, 68, 0.3)' },
+          '50%': { boxShadow: '0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(239, 68, 68, 0.2)' },
+        },
+        prizeShimmer: {
+          '0%': { backgroundPosition: '-200% center' },
+          '100%': { backgroundPosition: '200% center' },
+        },
+        heroGlow: {
+          '0%': { opacity: '0.4', transform: 'scale(1)' },
+          '100%': { opacity: '0.7', transform: 'scale(1.05)' },
+        },
+        ctaPulse: {
+          '0%, 100%': { boxShadow: '0 0 10px rgba(255, 59, 48, 0.2)' },
+          '50%': { boxShadow: '0 0 25px rgba(255, 59, 48, 0.5), 0 0 50px rgba(255, 122, 24, 0.2)' },
         },
       },
     },

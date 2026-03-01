@@ -543,7 +543,8 @@
     "community": "Comunidad",
     "disclaimer": "Click Win es una plataforma de entretenimiento. Los clics digitales no son instrumentos financieros.",
     "copyright": "© {{year}} Click Win. Todos los derechos reservados.",
-    "builtOn": "Construido en BNB Chain"
+    "builtOn": "Construido en BNB Chain",
+    "advertise": "Anunciar con Nosotros"
   },
   "whitepaper": {
     "badge": "// DOCUMENTO TÉCNICO",
@@ -641,5 +642,59 @@
       },
       "vision": "Nuestra visión es convertirnos en la principal plataforma de subastas descentralizada, haciendo que la compra competitiva sea accesible, transparente y divertida para todos en el mundo."
     }
+  },
+  "referralCta": {
+    "signIn": "Inicia sesión para obtener tu enlace de referido.",
+    "title": "Refiere y Gana",
+    "earnBonus": "Gana <accent>{{pct}}% de clics de bonificación</accent>",
+    "earnDesc": "del primer depósito de tu amigo",
+    "copy": "Copiar",
+    "copied": "✓",
+    "twitter": "Twitter",
+    "telegram": "Telegram",
+    "referred": "Referidos",
+    "earned": "Ganados",
+    "shareTwitterText": "¡Únete a Click Win y obtén clics de bonificación en tu primer depósito! {{link}}",
+    "shareTelegramText": "¡Únete a Click Win y obtén clics de bonificación en tu primer depósito!"
+  },
+  "upcoming": {
+    "title": "Próximas Subastas",
+    "queued": "{{count}} en cola",
+    "startingSoon": "Próximamente",
+    "scheduled": "Programada",
+    "specialEvent": "Evento Especial",
+    "upTo": "hasta {{discount}}",
+    "runsAllDay": "Subastas las 24 horas",
+    "viewAll": "Ver Todas",
+    "noUpcoming": "No hay subastas programadas"
+  },
+  "ads": {
+    "sponsored": "Patrocinado",
+    "ad": "Anuncio",
+    "close": "Cerrar",
+    "tokenInfo": "Información del Token",
+    "tokenName": "Token",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "listedOn": "Listado en",
+    "visit": "Visitar"
+  },
+  "pastAuctions": {
+    "title": "Subastas Anteriores",
+    "subtitle": "Explora el historial de subastas completadas",
+    "viewHistory": "Ver Historial de Subastas",
+    "totalAuctions": "Total de Subastas",
+    "totalPrizes": "Premios Otorgados",
+    "avgDiscount": "Descuento Promedio",
+    "winner": "Ganador",
+    "discount": "Descuento",
+    "clicks": "Clics",
+    "date": "Fecha",
+    "error": "Error al cargar subastas",
+    "retry": "Reintentar",
+    "empty": "No se encontraron subastas anteriores",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "pageOf": "Página {{page}} de {{pages}}"
   }
 }

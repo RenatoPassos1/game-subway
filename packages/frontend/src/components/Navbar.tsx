@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import WalletButton from './WalletButton';
 import LanguageSelector from './LanguageSelector';
-import Logo from './Logo';
 
 const NAV_LINKS = [
   { href: '/', labelKey: 'nav.home' },
@@ -60,10 +59,17 @@ export default function Navbar() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo + Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <Logo size={34} className="transition-transform duration-300 group-hover:scale-110" />
-            <span className="text-lg font-bold font-heading text-text group-hover:text-primary transition-colors hidden sm:block">
-              Click Win
+          <Link href="/" className="flex items-center gap-2 group">
+            <img
+              src="/favicon.svg"
+              alt="Click Win"
+              className="w-8 h-8 icon-pulse"
+            />
+            <span className="text-xl font-bold font-heading gradient-text transition-opacity duration-300 group-hover:opacity-80">
+              Click
+            </span>
+            <span className="text-xl font-bold font-heading text-white transition-colors duration-300 group-hover:text-primary">
+              Win
             </span>
           </Link>
 

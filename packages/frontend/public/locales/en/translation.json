@@ -543,7 +543,8 @@
     "community": "Community",
     "disclaimer": "Click Win is an entertainment platform. Digital clicks are not financial instruments.",
     "copyright": "\u00a9 {{year}} Click Win. All rights reserved.",
-    "builtOn": "Built on BNB Chain"
+    "builtOn": "Built on BNB Chain",
+    "advertise": "Advertise with Us"
   },
   "whitepaper": {
     "badge": "// TECHNICAL DOCUMENT",
@@ -641,5 +642,59 @@
       },
       "vision": "Our vision is to become the leading decentralized auction platform, making competitive buying accessible, transparent, and fun for everyone worldwide."
     }
+  },
+  "referralCta": {
+    "signIn": "Sign in to get your referral link.",
+    "title": "Refer & Earn",
+    "earnBonus": "Earn <accent>{{pct}}% bonus clicks</accent>",
+    "earnDesc": "from your friend's first deposit",
+    "copy": "Copy",
+    "copied": "✓",
+    "twitter": "Twitter",
+    "telegram": "Telegram",
+    "referred": "Referred",
+    "earned": "Earned",
+    "shareTwitterText": "Join Click Win and get bonus clicks on your first deposit! {{link}}",
+    "shareTelegramText": "Join Click Win and get bonus clicks on your first deposit!"
+  },
+  "upcoming": {
+    "title": "Upcoming Auctions",
+    "queued": "{{count}} queued",
+    "startingSoon": "Starting Soon",
+    "scheduled": "Scheduled",
+    "specialEvent": "Special Event",
+    "upTo": "up to {{discount}}",
+    "runsAllDay": "Auctions run 24/7",
+    "viewAll": "View All",
+    "noUpcoming": "No upcoming auctions"
+  },
+  "ads": {
+    "sponsored": "Sponsored",
+    "ad": "Ad",
+    "close": "Close",
+    "tokenInfo": "Token Information",
+    "tokenName": "Token",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "listedOn": "Listed on",
+    "visit": "Visit"
+  },
+  "pastAuctions": {
+    "title": "Past Auctions",
+    "subtitle": "Browse completed auction history",
+    "viewHistory": "View Auction History",
+    "totalAuctions": "Total Auctions",
+    "totalPrizes": "Prizes Awarded",
+    "avgDiscount": "Avg Discount",
+    "winner": "Winner",
+    "discount": "Discount",
+    "clicks": "Clicks",
+    "date": "Date",
+    "error": "Failed to load auctions",
+    "retry": "Retry",
+    "empty": "No past auctions found",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {{page}} of {{pages}}"
   }
 }

@@ -228,3 +228,173 @@ export interface ClickBalance {
   available_clicks: number;
   total_purchased: number;
 }
+
+// ============ Admin ============
+export interface Admin {
+  id: string;
+  wallet_address: string;
+  role: 'FOUNDER' | 'ADMIN' | 'MODERATOR';
+  label: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// ============ Advertiser ============
+export interface Advertiser {
+  id: string;
+  user_id: string;
+  wallet_address: string;
+  display_name: string;
+  email: string | null;
+  whatsapp: string | null;
+  telegram: string | null;
+  website: string | null;
+  social_links: Record<string, string>;
+  is_verified: boolean;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// ============ Ad Slot Type ============
+export interface AdSlotType {
+  id: string;
+  slug: string;
+  label: string;
+  description: string | null;
+  price_usdt: number;
+  duration_days: number;
+  max_concurrent: number;
+  is_active: boolean;
+  created_at: string;
+}
+
+// ============ Ad Campaign ============
+export type AdCampaignStatus =
+  | 'PENDING_PAYMENT'
+  | 'PAID'
+  | 'APPROVED'
+  | 'SCHEDULED'
+  | 'LIVE'
+  | 'COMPLETED'
+  | 'REJECTED'
+  | 'CANCELLED'
+  | 'REFUNDED';
+
+export interface AdCampaign {
+  id: string;
+  advertiser_id: string;
+  slot_type_id: string;
+  status: AdCampaignStatus;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  click_url: string | null;
+  is_token_promo: boolean;
+  token_address: string | null;
+  token_name: string | null;
+  token_exchanges: string[];
+  queue_position: number | null;
+  scheduled_start: string | null;
+  scheduled_end: string | null;
+  actual_start: string | null;
+  actual_end: string | null;
+  price_usdt: number;
+  price_bnb: number | null;
+  paid_token: 'BNB' | 'USDT' | null;
+  paid_amount: number | null;
+  payment_tx_hash: string | null;
+  impressions: number;
+  clicks: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Public-facing campaign data (no sensitive fields) */
+export interface AdCampaignPublic {
+  id: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  click_url: string | null;
+  slot_type: string;
+  status: AdCampaignStatus;
+  is_token_promo: boolean;
+  token_name: string | null;
+  scheduled_start: string | null;
+  scheduled_end: string | null;
+  impressions: number;
+  clicks: number;
+}
+
+/** Active ad returned by /ads/active */
+export interface ActiveAd {
+  campaign_id: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  click_url: string | null;
+  slot_type: string;
+  advertiser_name: string;
+  is_token_promo: boolean;
+  token_name: string | null;
+  token_exchanges: string[];
+}
+
+/** Slot availability info */
+export interface AdAvailability {
+  next_available_date: string | null;
+  slot_type: string;
+  current_queue_length: number;
+}
+
+// ============ Ad Crypto Order ============
+export type AdOrderStatus =
+  | 'PENDING'
+  | 'SUBMITTED'
+  | 'CONFIRMING'
+  | 'CONFIRMED'
+  | 'FAILED'
+  | 'EXPIRED'
+  | 'REFUNDED';
+
+export interface AdCryptoOrder {
+  id: string;
+  campaign_id: string;
+  advertiser_id: string;
+  token: 'BNB' | 'USDT';
+  amount_usdt: number;
+  amount_token: number;
+  bnb_price_usdt: number | null;
+  receiver_wallet: string;
+  tx_hash: string | null;
+  confirmations: number;
+  status: AdOrderStatus;
+  verified_amount: number | null;
+  verified_from: string | null;
+  block_number: number | null;
+  block_timestamp: string | null;
+  expires_at: string;
+  submitted_at: string | null;
+  confirmed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// ============ Ad Payment Log ============
+export interface AdPaymentLog {
+  id: string;
+  order_id: string;
+  campaign_id: string;
+  event: string;
+  details: Record<string, unknown>;
+  created_at: string;
+}
+
+// ============ BNB Quote ============
+export interface BnbQuote {
+  price_usdt: number;
+  amount_bnb: number;
+  expires_at: number;
+}

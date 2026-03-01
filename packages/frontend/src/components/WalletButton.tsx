@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useWallet } from '../hooks/useWallet';
 import { useAuthContext } from '../contexts/AuthContext';
+
+const FOUNDER_WALLET = '0x2b77C4cD1a1955E51DF2D8eBE50187566c71Cc48';
 
 export default function WalletButton() {
   const {
@@ -21,6 +24,11 @@ export default function WalletButton() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const isAdmin = useMemo(
+    () => walletAddress?.toLowerCase() === FOUNDER_WALLET.toLowerCase(),
+    [walletAddress],
+  );
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -214,6 +222,25 @@ export default function WalletButton() {
               </svg>
               {copied ? 'Copied!' : 'Copy Address'}
             </button>
+
+            {/* Admin Panel - founder only */}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={() => setIsDropdownOpen(false)}
+                className="w-full px-4 py-2 text-left text-sm text-[#FFD700] hover:bg-[#FFD700]/10 transition-colors flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+                Admin Panel
+              </Link>
+            )}
 
             <button
               onClick={handleDisconnect}

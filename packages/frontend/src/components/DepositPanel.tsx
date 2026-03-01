@@ -6,63 +6,42 @@ import { getDepositAddress } from '../utils/api';
 import { PRICE_PER_CLICK, MIN_DEPOSIT_AMOUNT } from '@click-win/shared/src/constants';
 import type { DepositAddress } from '@click-win/shared/src/types';
 
-// ---------- Simple QR code using inline SVG ----------
-// Generates a basic visual representation; for production you'd use qrcode.react.
-// We'll render a data-uri QR via the canvas API as a fallback.
-
-function QRPlaceholder({ value }: { value: string }) {
+// ---------- Compact QR code ----------
+function QRCode({ value }: { value: string }) {
   const [dataUrl, setDataUrl] = useState<string>('');
 
   useEffect(() => {
-    // Try dynamic import of qrcode library if available
-    // Fallback to a styled address display
     async function generateQR() {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const QRCode = (await import('qrcode')) as any;
         const url = await QRCode.toDataURL(value, {
-          width: 180,
+          width: 140,
           margin: 2,
           color: { dark: '#E0E0FF', light: '#00000000' },
         });
         setDataUrl(url);
       } catch {
-        // qrcode not available, show placeholder
         setDataUrl('');
       }
     }
     generateQR();
   }, [value]);
 
-  if (dataUrl) {
+  if (!dataUrl) {
     return (
-      <img
-        src={dataUrl}
-        alt="Deposit address QR code"
-        className="w-44 h-44 rounded-lg bg-white/5 p-2"
-      />
+      <div className="w-28 h-28 rounded-lg bg-white/5 border border-secondary/20 flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
     );
   }
 
-  // Styled fallback
   return (
-    <div className="w-44 h-44 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center p-3">
-      <div className="grid grid-cols-8 gap-[2px]">
-        {Array.from({ length: 64 }).map((_, i) => (
-          <div
-            key={i}
-            className={`w-[4px] h-[4px] rounded-[1px] ${
-              // Pseudo-random pattern based on address chars
-              value.charCodeAt(i % value.length) % 3 === 0
-                ? 'bg-primary'
-                : value.charCodeAt(i % value.length) % 3 === 1
-                ? 'bg-secondary'
-                : 'bg-white/10'
-            }`}
-          />
-        ))}
-      </div>
-    </div>
+    <img
+      src={dataUrl}
+      alt="QR Code"
+      className="w-28 h-28 rounded-lg bg-white/5 p-1.5 border border-secondary/20"
+    />
   );
 }
 
@@ -77,18 +56,26 @@ export default function DepositPanel() {
   const [selectedToken, setSelectedToken] = useState<DepositToken>('USDT');
   const [usdtAmount, setUsdtAmount] = useState('10');
   const [copied, setCopied] = useState(false);
+  const [balanceAnimated, setBalanceAnimated] = useState(false);
 
-  // Calculate clicks from USDT amount
   const clicksForAmount = useMemo(() => {
     const amount = parseFloat(usdtAmount);
     if (isNaN(amount) || amount < MIN_DEPOSIT_AMOUNT) return 0;
     return Math.floor(amount / PRICE_PER_CLICK);
   }, [usdtAmount]);
 
-  // Fetch deposit address
+  const prevBalance = React.useRef(user?.clickBalance ?? 0);
+  useEffect(() => {
+    const current = user?.clickBalance ?? 0;
+    if (current !== prevBalance.current && prevBalance.current !== 0) {
+      setBalanceAnimated(true);
+      setTimeout(() => setBalanceAnimated(false), 600);
+    }
+    prevBalance.current = current;
+  }, [user?.clickBalance]);
+
   useEffect(() => {
     if (!isAuthenticated) return;
-
     setIsLoading(true);
     setError(null);
     getDepositAddress()
@@ -104,7 +91,6 @@ export default function DepositPanel() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
       const el = document.createElement('textarea');
       el.value = depositAddr.address;
       document.body.appendChild(el);
@@ -118,109 +104,126 @@ export default function DepositPanel() {
 
   if (!isAuthenticated) {
     return (
-      <div className="tech-card p-8 text-center">
-        <p className="text-text-muted">Connect your wallet and sign in to deposit.</p>
+      <div className="tech-card p-6 text-center h-full flex flex-col items-center justify-center">
+        <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
+          <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <p className="text-text-muted text-sm">Connect your wallet to deposit.</p>
       </div>
     );
   }
 
   return (
-    <div className="tech-card overflow-hidden p-0">
-      <div className="h-1 bg-gradient-to-r from-accent via-primary to-accent" />
+    <div className="tech-card overflow-hidden p-0 h-full flex flex-col relative group">
+      {/* Top accent bar */}
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-primary to-secondary" />
 
-      <div className="p-6 space-y-6">
-        <h2 className="text-xl font-bold text-text font-heading">Deposit & Buy Clicks</h2>
+      {/* Subtle corner decorations */}
+      <div className="absolute top-0 right-0 w-16 h-16 opacity-20 pointer-events-none">
+        <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
+          <path d="M64 0v16h-2V2H48V0h16z" fill="currentColor" className="text-primary" />
+        </svg>
+      </div>
+      <div className="absolute bottom-0 left-0 w-16 h-16 opacity-20 pointer-events-none">
+        <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
+          <path d="M0 64v-16h2v14h14v2H0z" fill="currentColor" className="text-secondary" />
+        </svg>
+      </div>
 
-        {/* Current Balance */}
-        <div className="kpi-card flex items-center justify-between">
-          <span className="mono-label">Your Click Balance</span>
-          <span className="text-2xl font-bold text-accent tabular-nums font-mono">
-            {user?.clickBalance ?? 0}
-          </span>
-        </div>
-
-        {/* Network Info */}
-        <div className="flex items-center gap-2 bg-yellow-500/10 rounded-lg px-3 py-2">
-          <svg
-            className="w-4 h-4 text-yellow-400 flex-shrink-0"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <span className="text-xs text-yellow-300">
-            Send only on <strong>BNB Smart Chain (BSC)</strong>. Other networks will result in loss of funds.
-          </span>
-        </div>
-
-        {/* Token Selector */}
-        <div>
-          <label className="mono-label mb-2 block">
-            Select Token
-          </label>
-          <div className="flex gap-2">
-            {(['USDT', 'BNB'] as DepositToken[]).map((token) => (
-              <button
-                key={token}
-                onClick={() => setSelectedToken(token)}
-                className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all font-mono ${
-                  selectedToken === token
-                    ? 'bg-gradient-primary text-white'
-                    : 'bg-white/5 text-text-muted hover:bg-white/10'
-                }`}
-              >
-                {token}
-              </button>
-            ))}
+      <div className="p-5 flex-1 flex flex-col space-y-4">
+        {/* Header + Balance */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 className="text-base font-bold text-text font-heading">Deposit</h2>
+          </div>
+          <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all duration-300 ${
+            balanceAnimated ? 'bg-accent/15 ring-1 ring-accent/30 scale-105' : 'bg-white/5'
+          }`}>
+            <span className="text-[10px] text-text-muted font-mono uppercase">Clicks</span>
+            <span className={`text-lg font-bold tabular-nums font-mono transition-all duration-300 ${
+              balanceAnimated ? 'text-accent' : 'text-accent'
+            }`}>
+              {user?.clickBalance ?? 0}
+            </span>
           </div>
         </div>
 
-        {/* Deposit Address + QR */}
+        {/* BSC Warning - compact */}
+        <div className="flex items-center gap-2 bg-yellow-500/8 rounded-lg px-2.5 py-1.5 border border-yellow-500/15">
+          <svg className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          <span className="text-[10px] text-yellow-300/80 leading-tight">
+            <strong>BSC only</strong> — Other networks = loss of funds
+          </span>
+        </div>
+
+        {/* Token Selector - compact */}
+        <div className="flex gap-1.5">
+          {(['USDT', 'BNB'] as DepositToken[]).map((token) => (
+            <button
+              key={token}
+              onClick={() => setSelectedToken(token)}
+              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 font-mono ${
+                selectedToken === token
+                  ? 'bg-gradient-primary text-white shadow-glow-primary'
+                  : 'bg-white/5 text-text-muted hover:bg-white/10 border border-white/5'
+              }`}
+            >
+              {token}
+            </button>
+          ))}
+        </div>
+
+        {/* QR + Address */}
         {isLoading ? (
-          <div className="flex justify-center py-8">
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="flex justify-center py-6">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : error ? (
-          <div className="bg-red-500/10 rounded-lg p-3 text-sm text-red-300">
+          <div className="bg-red-500/10 rounded-lg p-2.5 text-xs text-red-300 border border-red-500/20">
             {error}
           </div>
         ) : depositAddr ? (
-          <div className="space-y-4">
-            <div className="flex flex-col items-center gap-3">
-              <QRPlaceholder value={depositAddr.address} />
+          <div className="space-y-3 flex-1">
+            <div className="flex justify-center">
+              <div className="qr-pulse-wrap">
+                <div className="qr-pulse-ring-outer" />
+                <div className="qr-pulse-ring" />
+                <QRCode value={depositAddr.address} />
+              </div>
             </div>
-
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <input
                 type="text"
                 readOnly
                 value={depositAddr.address}
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm font-mono text-secondary truncate focus:outline-none"
+                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-[11px] font-mono text-secondary truncate focus:outline-none focus:border-secondary/50"
               />
               <button
                 onClick={handleCopy}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex-shrink-0 ${
                   copied
-                    ? 'bg-green-500/20 text-green-300'
-                    : 'bg-white/10 text-text hover:bg-white/20'
+                    ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                    : 'bg-white/10 text-text hover:bg-white/20 border border-white/10'
                 }`}
               >
-                {copied ? 'Copied!' : 'Copy'}
+                {copied ? '✓' : 'Copy'}
               </button>
             </div>
           </div>
         ) : null}
 
-        {/* Click Calculator */}
-        <div>
-          <label className="mono-label mb-2 block">
-            Click Calculator
-          </label>
-          <div className="flex items-center gap-3">
+        {/* Click Calculator - compact */}
+        <div className="mt-auto pt-2 border-t border-white/5">
+          <div className="flex items-center gap-2">
             <div className="relative flex-1">
               <input
                 type="number"
@@ -228,34 +231,31 @@ export default function DepositPanel() {
                 step="1"
                 value={usdtAmount}
                 onChange={(e) => setUsdtAmount(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 pr-14 text-text font-mono focus:outline-none focus:border-primary/50"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 pr-12 text-sm text-text font-mono focus:outline-none focus:border-primary/50 transition-colors"
                 placeholder="Amount"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-text-dim font-mono">
+              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-text-dim font-mono">
                 USDT
               </span>
             </div>
-            <span className="text-text-dim">=</span>
-            <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 min-w-[100px] text-center">
-              <span className="text-lg font-bold text-accent tabular-nums font-mono">
+            <span className="text-text-dim text-sm">=</span>
+            <div
+              className="border rounded-lg px-3 py-1.5 min-w-[90px] text-center"
+              style={{
+                background: 'rgba(255, 215, 0, 0.08)',
+                borderColor: 'rgba(255, 215, 0, 0.2)',
+                boxShadow: '0 0 12px rgba(255, 215, 0, 0.06)',
+              }}
+            >
+              <span className="text-base font-bold text-accent tabular-nums font-mono">
                 {clicksForAmount}
               </span>
-              <span className="text-xs text-text-dim ml-1 font-mono">clicks</span>
+              <span className="text-[9px] text-accent/70 ml-0.5 font-mono">clicks</span>
             </div>
           </div>
-          <p className="text-xs text-text-dim mt-1 font-mono">
-            1 click = ${PRICE_PER_CLICK.toFixed(2)} USDT &middot; Min deposit: ${MIN_DEPOSIT_AMOUNT} USDT
+          <p className="text-[10px] text-text-dim mt-1 font-mono">
+            1 click = ${PRICE_PER_CLICK.toFixed(2)} · Min: ${MIN_DEPOSIT_AMOUNT} USDT
           </p>
-        </div>
-
-        {/* Recent Deposits placeholder */}
-        <div>
-          <h3 className="text-sm font-semibold text-text-muted mb-2 font-heading">
-            Recent Deposits
-          </h3>
-          <div className="bg-white/5 rounded-lg p-4 text-center text-sm text-text-dim">
-            Your deposit history will appear here once you make your first deposit.
-          </div>
         </div>
       </div>
     </div>
