@@ -685,17 +685,29 @@
 <!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-label">Conte&#250;do</div>
-  <a href="#purpose"><span class="num">01</span> Objetivo</a>
+  <a href="#purpose"><span class="num">01</span> Prop&#243;sito</a>
   <a href="#definitions"><span class="num">02</span> Defini&#231;&#245;es</a>
   <a href="#math"><span class="num">03</span> Matem&#225;tica do Leil&#227;o</a>
   <a href="#threshold"><span class="num">04</span> Limite de Receita</a>
   <a href="#closing"><span class="num">05</span> L&#243;gica de Fechamento</a>
-  <a href="#antibot"><span class="num">06</span> Sistema Anti-Bot</a>
-  <a href="#deposits"><span class="num">07</span> Monitoramento de Dep&#243;sitos</a>
-  <a href="#payout"><span class="num">08</span> Entrega do Pr&#234;mio</a>
-  <a href="#history"><span class="num">09</span> Leil&#245;es Anteriores</a>
-  <a href="#logs"><span class="num">10</span> Logs &amp; Auditoria</a>
-  <a href="#faq"><span class="num">11</span> Perguntas Cr&#237;ticas</a>
+  <a href="#atomic"><span class="num">06</span> Processamento At&#244;mico de Cliques</a>
+  <a href="#antibot"><span class="num">07</span> Sistema Anti-Abuso</a>
+  <a href="#deposits"><span class="num">08</span> Monitoramento de Dep&#243;sitos</a>
+  <a href="#payout"><span class="num">09</span> Entrega do Pr&#234;mio</a>
+  <a href="#architecture"><span class="num">10</span> Arquitetura do Sistema</a>
+  <a href="#token"><span class="num">11</span> Consist&#234;ncia de Token</a>
+  <a href="#cannot"><span class="num">12</span> O que a Equipe N&#227;o Pode Fazer</a>
+  <a href="#history"><span class="num">13</span> Leil&#245;es Anteriores</a>
+  <a href="#logs"><span class="num">14</span> Logs &amp; Trilha de Auditoria</a>
+  <a href="#limitations"><span class="num">15</span> Limita&#231;&#245;es &amp; Riscos</a>
+  <a href="#verify"><span class="num">16</span> Instru&#231;&#245;es de Verifica&#231;&#227;o</a>
+  <a href="#faq"><span class="num">17</span> Perguntas Cr&#237;ticas</a>
+  <a href="#atomic"><span class="num">12</span> Processamento At&#244;mico</a>
+  <a href="#team-limits"><span class="num">13</span> O que a Equipe N&#227;o Pode Fazer</a>
+  <a href="#architecture"><span class="num">14</span> Arquitetura do Sistema</a>
+  <a href="#token"><span class="num">15</span> Consist&#234;ncia de Token</a>
+  <a href="#limitations"><span class="num">16</span> Limita&#231;&#245;es &amp; Risco</a>
+  <a href="#verify-payout"><span class="num">17</span> Como Verificar um Pagamento</a>
   <div class="divider"></div>
   <a href="#audit-report"><span class="num">&#9733;</span> Relat&#243;rio de Auditoria</a>
 </nav>
@@ -779,6 +791,16 @@
         <div class="card-label">Restri&#231;&#227;o R&#237;gida</div>
         <p>O desconto nunca pode exceder 50% do valor do pr&#234;mio. Uma vez que D_raw atinge 0,50 &#215; P, cliques adicionais n&#227;o aumentam o desconto. O vencedor sempre recebe pelo menos 50% do pr&#234;mio declarado.</p>
       </div>
+      <h3>F&#243;rmula de Receita</h3>
+      <div class="formula-block">
+        <span class="comment">// Receita total gerada pelo leil&#227;o</span><br>
+        <span class="keyword">Receita</span> = (n &times; C) + D_cap<br><br>
+        <span class="comment">// Condi&#231;&#227;o m&#237;nima de fechamento</span><br>
+        Receita <span class="keyword">&ge;</span> <span class="value">1.20</span> &times; P<br><br>
+        <span class="comment">// Interpreta&#231;&#227;o:</span><br>
+        <span class="comment">// O leil&#227;o s&#243; pode fechar quando a receita total</span><br>
+        <span class="comment">// (pagamentos de cliques + desconto limitado) &ge; 120% do valor do pr&#234;mio</span>
+      </div>
       <p>O frontend exibe o desconto atual e o pagamento projetado em tempo real, mas esses valores s&#227;o reflexos somente leitura do estado do backend. A aplica&#231;&#227;o cliente n&#227;o tem acesso de escrita &#224;s vari&#225;veis do leil&#227;o.</p>
     </div>
 
@@ -798,6 +820,17 @@
         <p>Se o limite de receita de 120% n&#227;o foi atingido, o leil&#227;o n&#227;o pode encerrar &#8212; independentemente do estado do temporizador. O leil&#227;o continua aceitando cliques at&#233; que esta condi&#231;&#227;o seja satisfeita.</p>
       </div>
       <p>Este limite existe para garantir que a plataforma possa sempre cobrir o pagamento do pr&#234;mio mais os custos operacionais. &#201; uma salvaguarda estrutural, n&#227;o uma decis&#227;o discricion&#225;ria.</p>
+
+      <h3>Regra Formal de Receita</h3>
+      <div class="formula-block">
+        <span class="comment">// F&#243;rmula de Receita M&#237;nima</span><br>
+        <span class="keyword">Revenue</span> = (n &times; C) + D_cap<br><br>
+        <span class="comment">// Condi&#231;&#227;o para fechamento do leil&#227;o</span><br>
+        Revenue <span class="keyword">&ge;</span> <span class="value">1.20</span> &times; P<br><br>
+        <span class="comment">// Expandido</span><br>
+        (n &times; C) + min(n &times; &Delta;, <span class="value">0.50</span> &times; P) <span class="keyword">&ge;</span> <span class="value">1.20</span> &times; P
+      </div>
+      <p>Esta f&#243;rmula garante que nenhum leil&#227;o seja fechado com preju&#237;zo. O limite de 120% inclui tanto a receita de cliques quanto o desconto limitado como componente da receita total da plataforma. O sistema avalia esta condi&#231;&#227;o atomicamente em cada evento de clique.</p>
     </div>
 
     <!-- 05 -->
@@ -848,18 +881,97 @@
       </div>
     </div>
 
-    <!-- 06 -->
+    <!-- 06 PROCESSAMENTO ATÔMICO DE CLIQUES -->
+    <div class="section" id="atomic">
+      <div class="section-number">Se&#231;&#227;o 06</div>
+      <h2>Processamento At&#244;mico de Cliques</h2>
+      <p>Cada clique no sistema &#233; processado como uma opera&#231;&#227;o at&#244;mica do lado do servidor. A aplica&#231;&#227;o cliente (frontend) &#233; uma camada de exibi&#231;&#227;o somente leitura &mdash; n&#227;o possui acesso de escrita ao estado do leil&#227;o.</p>
+
+      <h3>Garantias de Processamento</h3>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Apenas no Servidor</div>
+            <div class="step-desc">Valida&#231;&#227;o de clique, dedu&#231;&#227;o de saldo, extens&#227;o do timer e muta&#231;&#227;o de estado ocorrem exclusivamente no backend. Nenhuma requisi&#231;&#227;o do cliente pode alterar vari&#225;veis do leil&#227;o diretamente.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Atualiza&#231;&#245;es At&#244;micas</div>
+            <div class="step-desc">Cada clique v&#225;lido dispara uma &#250;nica transa&#231;&#227;o at&#244;mica no banco de dados que atualiza: contagem de cliques, desconto acumulado, estado do timer e &#250;ltima carteira v&#225;lida &mdash; tudo em uma opera&#231;&#227;o. N&#227;o h&#225; janela para estado parcial ou condi&#231;&#245;es de corrida.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Backend &#233; Autoritativo</div>
+            <div class="step-desc">Se o frontend exibir um valor diferente do estado do backend, o backend &#233; a fonte da verdade. O frontend sincroniza periodicamente, mas nunca escreve.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Rejei&#231;&#227;o em Estado Inv&#225;lido</div>
+            <div class="step-desc">Cliques s&#227;o rejeitados se: a carteira n&#227;o tem saldo suficiente, o leil&#227;o n&#227;o est&#225; ativo, limites de taxa s&#227;o excedidos, ou a detec&#231;&#227;o de bot sinaliza a requisi&#231;&#227;o. Cliques rejeitados n&#227;o afetam nenhuma vari&#225;vel do leil&#227;o.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">Garantia de Integridade</div>
+        <p>N&#227;o existe endpoint de API, painel administrativo ou ferramenta interna que permita manipula&#231;&#227;o direta do estado do leil&#227;o fora do pipeline de processamento at&#244;mico de cliques. A &#250;nica forma de alterar o estado do leil&#227;o &#233; atrav&#233;s de um clique v&#225;lido, validado pelo servidor.</p>
+      </div>
+    </div>
+
+    <!-- 07 SISTEMA ANTI-ABUSO -->
     <div class="section" id="antibot">
       <div class="section-number">Se&#231;&#227;o 06</div>
       <h2>Prote&#231;&#227;o Anti-Bot</h2>
-      <p>O sistema emprega m&#250;ltiplas camadas de detec&#231;&#227;o automatizada de abuso para garantir participa&#231;&#227;o justa. Esses mecanismos operam no lado do servidor e n&#227;o podem ser contornados pelo cliente.</p>
-      <h3>Camadas de Prote&#231;&#227;o</h3>
-      <p>
-        Limita&#231;&#227;o de taxa por endere&#231;o de carteira restringe a frequ&#234;ncia de cliques de qualquer participante individual. Limites baseados em sess&#227;o impedem atividade automatizada sustentada. Detec&#231;&#227;o de rajadas anormais identifica e sinaliza padr&#245;es de clique n&#227;o humanos. Toda valida&#231;&#227;o de clique &#233; executada no lado do servidor &#8212; requisi&#231;&#245;es do lado do cliente sem valida&#231;&#227;o adequada s&#227;o rejeitadas. Bloqueio autom&#225;tico tempor&#225;rio &#233; aplicado a carteiras que acionam limites de abuso.
-      </p>
+      <p>O sistema emprega m&#250;ltiplas camadas de detec&#231;&#227;o automatizada de abusos para garantir participa&#231;&#227;o justa. Estes mecanismos operam do lado do servidor e n&#227;o podem ser contornados pelo cliente.</p>
+
+      <h3>Mecanismos de Prote&#231;&#227;o</h3>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Limite de Frequ&#234;ncia por Carteira</div>
+            <div class="step-desc">Cada endere&#231;o de carteira est&#225; sujeito a uma frequ&#234;ncia m&#225;xima de cliques. Cliques que excedem este limite s&#227;o rejeitados no servidor antes de qualquer muta&#231;&#227;o de estado.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Limites Baseados em Sess&#227;o</div>
+            <div class="step-desc">Independente dos limites por carteira, cada sess&#227;o autenticada possui limites cumulativos de cliques. Isso impede a reciclagem de sess&#245;es como vetor de contorno.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Detec&#231;&#227;o de Padr&#245;es de Rajada</div>
+            <div class="step-desc">O backend analisa distribui&#231;&#245;es de tempo de cliques em tempo real. Padr&#245;es n&#227;o-humanos (intervalo fixo, rajadas sub-segundo) acionam marca&#231;&#227;o autom&#225;tica e suspens&#227;o tempor&#225;ria.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Valida&#231;&#227;o Exclusivamente no Servidor</div>
+            <div class="step-desc">Toda valida&#231;&#227;o de cliques &#233; executada exclusivamente no backend. Requisi&#231;&#245;es do lado do cliente sem valida&#231;&#227;o adequada do servidor s&#227;o rejeitadas. Nenhum clique &#233; aceito com base em dados reportados pelo cliente.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Bloqueio Tempor&#225;rio Autom&#225;tico</div>
+            <div class="step-desc">Carteiras que acionam limites de abuso s&#227;o temporariamente bloqueadas. A dura&#231;&#227;o do bloqueio escala com viola&#231;&#245;es repetidas. Bloqueios s&#227;o aplicados no servidor e n&#227;o podem ser contornados mudando de sess&#227;o.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="info-card amber">
         <div class="card-label">Aviso de Seguran&#231;a</div>
-        <p>Por raz&#245;es de seguran&#231;a, os limites espec&#237;ficos n&#227;o s&#227;o divulgados publicamente. Os par&#226;metros de detec&#231;&#227;o s&#227;o calibrados para minimizar falsos positivos enquanto mant&#234;m preven&#231;&#227;o efetiva de bots.</p>
+        <p>Limites espec&#237;ficos e par&#226;metros de detec&#231;&#227;o n&#227;o s&#227;o divulgados publicamente para prevenir ajuste adversarial. Os par&#226;metros s&#227;o calibrados para minimizar falsos positivos mantendo preven&#231;&#227;o eficaz contra bots.</p>
       </div>
     </div>
 
@@ -1012,17 +1124,49 @@
     <div class="section" id="logs">
       <div class="section-number">Se&#231;&#227;o 10</div>
       <h2>Logs e Auditoria Interna</h2>
-      <p>A plataforma mant&#233;m logs internos abrangentes para as seguintes categorias de eventos:</p>
-      <p>
-        Eventos de clique &#8212; timestamp, carteira, ID do leil&#227;o, resultado da valida&#231;&#227;o, estado do temporizador ap&#243;s o clique.
-        Transi&#231;&#245;es de estado do leil&#227;o &#8212; cria&#231;&#227;o, ativa&#231;&#227;o, limite atingido, temporizador expirado, encerrado.
-        Execu&#231;&#227;o de pagamento &#8212; inicia&#231;&#227;o, tx hash, confirma&#231;&#227;o on-chain, atualiza&#231;&#227;o de status.
-        Monitoramento de dep&#243;sitos &#8212; transa&#231;&#245;es recebidas, contagem de confirma&#231;&#245;es, emiss&#227;o de cr&#233;ditos.
-      </p>
-      <p>Todas as a&#231;&#245;es administrativas s&#227;o registradas com ID do operador e timestamp. Os logs s&#227;o retidos para fins de auditoria e s&#227;o revis&#225;veis internamente.</p>
+      <p>A plataforma mant&#233;m registros internos abrangentes e somente-adi&#231;&#227;o para as seguintes categorias de eventos:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Eventos de Clique</div>
+            <div class="step-desc">Cada tentativa de clique &#233; registrada com: timestamp, endere&#231;o da carteira, ID do leil&#227;o, resultado da valida&#231;&#227;o (aceito/rejeitado + motivo), e estado do timer ap&#243;s processamento.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Transi&#231;&#245;es de Estado do Leil&#227;o</div>
+            <div class="step-desc">Todos os eventos do ciclo de vida s&#227;o registrados: cria&#231;&#227;o, ativa&#231;&#227;o, limite de receita atingido, expira&#231;&#227;o do timer, evento de fechamento. Cada transi&#231;&#227;o inclui os valores de estado anterior e novo.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Trilha de Execu&#231;&#227;o de Pagamento</div>
+            <div class="step-desc">Ciclo de vida do pagamento: timestamp de inicia&#231;&#227;o, hash da transa&#231;&#227;o, bloco de confirma&#231;&#227;o on-chain, atualiza&#231;&#227;o de status para Verificado. Cada etapa &#233; registrada independentemente.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Monitoramento de Dep&#243;sitos</div>
+            <div class="step-desc">Transa&#231;&#245;es recebidas, contagem de confirma&#231;&#245;es, eventos de emiss&#227;o de cr&#233;dito. Inclui hash da transa&#231;&#227;o, n&#250;mero do bloco, valor e carteira atribu&#237;da.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">A&#231;&#245;es Administrativas</div>
+            <div class="step-desc">Todas as a&#231;&#245;es de operadores s&#227;o registradas com ID do operador, timestamp, tipo de a&#231;&#227;o e recursos afetados. Nenhuma a&#231;&#227;o administrativa ocorre sem uma entrada de log correspondente.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="info-card blue">
         <div class="card-label">Pol&#237;tica de Auditoria</div>
-        <p>A estrutura interna dos logs e mecanismos de armazenamento n&#227;o s&#227;o divulgados publicamente. Os logs s&#227;o mantidos em formato adequado para auditoria interna e, se necess&#225;rio, revis&#227;o por terceiros.</p>
+        <p>Os registros s&#227;o somente-adi&#231;&#227;o e retidos indefinidamente para fins de auditoria. A estrutura interna dos logs e mecanismos de armazenamento n&#227;o s&#227;o divulgados publicamente. Os registros s&#227;o mantidos em formato adequado para auditoria interna e, se necess&#225;rio, revis&#227;o forense por terceiros.</p>
       </div>
     </div>
 
@@ -1080,6 +1224,227 @@
         <div class="faq-a"><div class="faq-a-inner">
           O leil&#227;o continua. N&#227;o ser&#225; encerrado at&#233; que o limite de receita de 120% seja satisfeito, independentemente do estado do temporizador. Isso protege tanto a capacidade da plataforma de cumprir o pr&#234;mio quanto a expectativa dos participantes de um leil&#227;o v&#225;lido e financiado.
         </div></div>
+      </div>
+    </div>
+
+    <!-- 12 PROCESSAMENTO ATÔMICO -->
+    <div class="section" id="atomic">
+      <div class="section-number">Se&#231;&#227;o 12</div>
+      <h2>Processamento At&#244;mico de Estado do Leil&#227;o</h2>
+      <p>Cada clique aciona uma transa&#231;&#227;o at&#244;mica no servidor. As seguintes vari&#225;veis de estado s&#227;o atualizadas em uma &#250;nica opera&#231;&#227;o, sem estado intermedi&#225;rio vis&#237;vel para qualquer cliente ou processo:</p>
+      <div class="formula-block">
+        <span class="comment">// Atualiza&#231;&#227;o at&#244;mica de estado por clique v&#225;lido</span><br>
+        <span class="keyword">atomicUpdate</span>(auctionId) {<br>
+        &nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= n + 1<br>
+        &nbsp;&nbsp;D_raw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= n &times; &Delta;<br>
+        &nbsp;&nbsp;D_cap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= min(D_raw, <span class="value">0.50</span> &times; P)<br>
+        &nbsp;&nbsp;timer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= timer + extension<br>
+        &nbsp;&nbsp;lastWallet = msg.sender<br>
+        &nbsp;&nbsp;revenue&nbsp;&nbsp;&nbsp;= (n &times; C) + D_cap<br>
+        }
+      </div>
+      <p>Se qualquer etapa desta transa&#231;&#227;o falhar, toda a opera&#231;&#227;o sofre rollback. N&#227;o existe cen&#225;rio de atualiza&#231;&#227;o parcial de estado. Isso elimina condi&#231;&#245;es de corrida, exploits de duplo-clique e vetores de manipula&#231;&#227;o de timer.</p>
+      <div class="info-card green">
+        <div class="card-label">Backend Autoritativo</div>
+        <p>A aplica&#231;&#227;o cliente &#233; uma camada de exibi&#231;&#227;o somente-leitura. Ela n&#227;o pode escrever no estado do leil&#227;o, modificar o timer, alterar contagens de cliques ou influenciar a condi&#231;&#227;o de fechamento. Todas as muta&#231;&#245;es de estado s&#227;o iniciadas e validadas pelo servidor.</p>
+      </div>
+    </div>
+
+    <!-- 13 O QUE A EQUIPE NÃO PODE FAZER -->
+    <div class="section" id="team-limits">
+      <div class="section-number">Se&#231;&#227;o 13</div>
+      <h2>O que a Equipe N&#227;o Pode Fazer</h2>
+      <p>As seguintes a&#231;&#245;es s&#227;o estruturalmente imposs&#237;veis dentro da arquitetura atual do sistema. N&#227;o s&#227;o restri&#231;&#245;es de pol&#237;tica &mdash; s&#227;o impossibilidades t&#233;cnicas impostas pelo c&#243;digo:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">N&#227;o pode participar de leil&#245;es</div>
+            <div class="step-desc">Contas administrativas n&#227;o possuem funcionalidade de clique. Endere&#231;os de carteiras internas s&#227;o exclu&#237;dos da participa&#231;&#227;o via filtragem de endere&#231;os no servidor. N&#227;o existe mecanismo para a equipe agir como participante.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">N&#227;o pode fechar um leil&#227;o antecipadamente</div>
+            <div class="step-desc">N&#227;o existe endpoint administrativo para for&#231;ar o fechamento de um leil&#227;o. O fechamento requer tanto a expira&#231;&#227;o do timer quanto a satisfa&#231;&#227;o do limite de receita. Estas condi&#231;&#245;es s&#227;o avaliadas no servidor sem mecanismo de override.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">N&#227;o pode escolher ou influenciar o vencedor</div>
+            <div class="step-desc">O vencedor &#233; determinado exclusivamente pelo &#250;ltimo clique v&#225;lido antes da expira&#231;&#227;o do timer. N&#227;o h&#225; sele&#231;&#227;o, sorteio ou designa&#231;&#227;o discricion&#225;ria. O resultado &#233; determin&#237;stico e imut&#225;vel ap&#243;s o fechamento.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">N&#227;o pode alterar o desconto ou f&#243;rmula de pagamento</div>
+            <div class="step-desc">As f&#243;rmulas matem&#225;ticas (&Delta; = 0.10 &times; C, D_cap = min(D_raw, 0.50 &times; P), Net Payout = P &minus; D_cap) s&#227;o codificadas na l&#243;gica do servidor. Nenhum par&#226;metro de tempo de execu&#231;&#227;o pode alterar estes valores durante um leil&#227;o ativo.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">N&#227;o pode modificar registros de leil&#245;es passados</div>
+            <div class="step-desc">Registros de leil&#245;es conclu&#237;dos, incluindo contagens de cliques, endere&#231;os de vencedores, valores de pagamento e hashes de transa&#231;&#227;o, s&#227;o imut&#225;veis. Transa&#231;&#245;es de pagamento s&#227;o registradas on-chain e verific&#225;veis independentemente via BscScan.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card red">
+        <div class="card-label">Garantia Estrutural</div>
+        <p>Estas limita&#231;&#245;es n&#227;o s&#227;o promessas &mdash; s&#227;o restri&#231;&#245;es arquiteturais. N&#227;o podem ser contornadas sem reescrever e reimplantar a aplica&#231;&#227;o servidor, o que seria um evento detect&#225;vel e audit&#225;vel.</p>
+      </div>
+    </div>
+
+    <!-- 14 ARQUITETURA DO SISTEMA -->
+    <div class="section" id="architecture">
+      <div class="section-number">Se&#231;&#227;o 14</div>
+      <h2>Vis&#227;o Geral da Arquitetura do Sistema</h2>
+      <p>A plataforma opera em uma arquitetura em camadas com separa&#231;&#227;o estrita de responsabilidades. Cada camada possui uma responsabilidade definida e limite de confian&#231;a:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Camada 1 &mdash; Aplica&#231;&#227;o Cliente (Somente-Leitura)</div>
+            <div class="step-desc">Frontend baseado em React que exibe estado do leil&#227;o, timer, desconto e valores de pagamento. O cliente n&#227;o tem acesso de escrita a nenhuma vari&#225;vel do leil&#227;o. Todos os dados exibidos s&#227;o obtidos da API do backend.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Camada 2 &mdash; Gateway de API</div>
+            <div class="step-desc">Gerencia autentica&#231;&#227;o, limita&#231;&#227;o de frequ&#234;ncia e valida&#231;&#227;o de requisi&#231;&#245;es. Rejeita requisi&#231;&#245;es malformadas ou n&#227;o autorizadas antes que alcancem a camada de l&#243;gica de neg&#243;cios.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Camada 3 &mdash; Motor do Leil&#227;o (Lado do Servidor)</div>
+            <div class="step-desc">L&#243;gica de neg&#243;cios central: valida&#231;&#227;o de cliques, gerenciamento de timer, c&#225;lculo de desconto, avalia&#231;&#227;o de limite de receita e aplica&#231;&#227;o de condi&#231;&#227;o de fechamento. Todas as muta&#231;&#245;es de estado do leil&#227;o ocorrem exclusivamente nesta camada.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Camada 4 &mdash; Banco de Dados (Estado Persistente)</div>
+            <div class="step-desc">Armazena registros de leil&#245;es, logs de cliques, saldos de usu&#225;rios e hist&#243;rico de pagamentos. Todas as opera&#231;&#245;es de escrita usam transa&#231;&#245;es at&#244;micas com rollback em caso de falha.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Camada 5 &mdash; Monitor de Blockchain</div>
+            <div class="step-desc">Escuta eventos on-chain na BNB Chain: dep&#243;sitos recebidos em endere&#231;os atribu&#237;dos, confirma&#231;&#245;es de transa&#231;&#245;es de pagamento. Opera independentemente da camada de API.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Camada 6 &mdash; Verifica&#231;&#227;o On-Chain</div>
+            <div class="step-desc">Cruza refer&#234;ncias de registros internos de pagamento com dados do BscScan: endere&#231;o do destinat&#225;rio, valor em USDT, confirma&#231;&#227;o de bloco. Esta &#233; a &#226;ncora final de confian&#231;a &mdash; qualquer discrep&#226;ncia seria publicamente vis&#237;vel.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 CONSISTÊNCIA DE TOKEN -->
+    <div class="section" id="token">
+      <div class="section-number">Se&#231;&#227;o 15</div>
+      <h2>Declara&#231;&#227;o de Consist&#234;ncia de Token</h2>
+      <p>Todas as opera&#231;&#245;es financeiras na plataforma utilizam um &#250;nico padr&#227;o de token fixo:</p>
+      <div class="formula-block">
+        <span class="comment">// Especifica&#231;&#227;o do token</span><br>
+        <span class="keyword">Token</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= USDT (Tether)<br>
+        <span class="keyword">Padr&#227;o</span>&nbsp;&nbsp;&nbsp;= BEP-20<br>
+        <span class="keyword">Rede</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= BNB Smart Chain<br>
+        <span class="keyword">Contrato</span>&nbsp;&nbsp;= <span class="value">0x55d398326f99059fF775485246999027B3197955</span>
+      </div>
+      <p>N&#227;o h&#225; suporte multi-token, nenhum token nativo e nenhum mecanismo de troca de tokens. Dep&#243;sitos s&#227;o aceitos apenas em USDT BEP-20. Pagamentos s&#227;o executados apenas em USDT BEP-20. Isso elimina risco de incompatibilidade de tokens e simplifica a verifica&#231;&#227;o on-chain.</p>
+      <div class="info-card green">
+        <div class="card-label">Pol&#237;tica de Token &#218;nico</div>
+        <p>A plataforma n&#227;o emite, cunha ou gerencia nenhum token propriet&#225;rio. Todo fluxo de valor passa pelo contrato padr&#227;o USDT BEP-20, que &#233; independentemente audit&#225;vel no BscScan.</p>
+      </div>
+    </div>
+
+    <!-- 16 LIMITAÇÕES & RISCO -->
+    <div class="section" id="limitations">
+      <div class="section-number">Se&#231;&#227;o 16</div>
+      <h2>Limita&#231;&#245;es Operacionais &amp; Divulga&#231;&#227;o de Riscos</h2>
+      <p>As seguintes limita&#231;&#245;es operacionais e riscos s&#227;o divulgados de forma transparente. Esta se&#231;&#227;o existe para definir expectativas precisas, n&#227;o para isentar responsabilidade.</p>
+
+      <div class="info-card amber">
+        <div class="card-label">Execu&#231;&#227;o Manual de Pagamento</div>
+        <p>Pagamentos de pr&#234;mios s&#227;o atualmente executados manualmente pelo administrador via MetaMask. Embora todos os pagamentos at&#233; o momento tenham sido executados corretamente e verificados on-chain, este processo depende da disponibilidade do operador. Uma atualiza&#231;&#227;o futura para pagamentos autom&#225;ticos via contrato inteligente est&#225; planejada.</p>
+      </div>
+
+      <div class="info-card amber">
+        <div class="card-label">Depend&#234;ncia de Rede</div>
+        <p>A plataforma opera na BNB Smart Chain. Confirma&#231;&#245;es de dep&#243;sito e verifica&#231;&#245;es de pagamento est&#227;o sujeitas &#224;s condi&#231;&#245;es da rede, incluindo tempos de bloco, congestionamento e taxas de g&#225;s. A plataforma n&#227;o controla a infraestrutura da BNB Chain.</p>
+      </div>
+
+      <div class="info-card amber">
+        <div class="card-label">Sem Mecanismo de Reembolso</div>
+        <p>Custos de clique n&#227;o s&#227;o reembols&#225;veis ap&#243;s o clique ser validado e aceito. Dep&#243;sitos creditados no saldo do usu&#225;rio s&#227;o consumidos por cliques e n&#227;o podem ser sacados. Isto &#233; por design &mdash; o modelo de leil&#227;o requer participa&#231;&#227;o irrevers&#237;vel para funcionar.</p>
+      </div>
+
+      <div class="info-card amber">
+        <div class="card-label">Incerteza Regulat&#243;ria</div>
+        <p>Plataformas de leil&#227;o baseadas em blockchain podem estar sujeitas a interpreta&#231;&#245;es regulat&#243;rias vari&#225;veis em diferentes jurisdi&#231;&#245;es. Os usu&#225;rios s&#227;o respons&#225;veis por garantir conformidade com suas regulamenta&#231;&#245;es locais. A plataforma n&#227;o fornece consultoria jur&#237;dica, fiscal ou financeira.</p>
+      </div>
+    </div>
+
+    <!-- 17 COMO VERIFICAR UM PAGAMENTO -->
+    <div class="section" id="verify-payout">
+      <div class="section-number">Se&#231;&#227;o 17</div>
+      <h2>Como Verificar um Pagamento</h2>
+      <p>Qualquer usu&#225;rio pode verificar independentemente que um pagamento foi executado corretamente. Nenhuma confian&#231;a na plataforma &#233; necess&#225;ria. Siga estas etapas:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Etapa 1 &mdash; Localize o Hash da Transa&#231;&#227;o</div>
+            <div class="step-desc">Na tabela de Leil&#245;es Anteriores ou na p&#225;gina de detalhes do leil&#227;o, encontre o link do tx hash para o pagamento que deseja verificar.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Etapa 2 &mdash; Abra o BscScan</div>
+            <div class="step-desc">Clique no link do hash da transa&#231;&#227;o. Ele abrir&#225; os detalhes da transa&#231;&#227;o no BscScan (bscscan.com), o explorador p&#250;blico de blocos da BNB Chain.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Etapa 3 &mdash; Verifique o Destinat&#225;rio</div>
+            <div class="step-desc">Confirme que o endere&#231;o "To" no BscScan corresponde ao endere&#231;o da carteira do vencedor exibido na plataforma. Isso prova que a pessoa correta recebeu o pagamento.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Etapa 4 &mdash; Verifique o Valor</div>
+            <div class="step-desc">Verifique o campo "Value" no BscScan. O valor em USDT transferido deve corresponder ao Net Payout (P &minus; D_cap) calculado pela f&#243;rmula do leil&#227;o.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Etapa 5 &mdash; Confirme o Bloco</div>
+            <div class="step-desc">Verifique que a transa&#231;&#227;o possui um n&#250;mero de bloco confirmado e status "Success". Isso confirma que a transfer&#234;ncia foi finalizada on-chain e &#233; irrevers&#237;vel.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card green">
+        <div class="card-label">Modelo de Confian&#231;a</div>
+        <p>A blockchain &#233; a fonte final de verdade. Se os dados on-chain correspondem aos registros da plataforma, o pagamento est&#225; verificado. Se n&#227;o correspondem, a discrep&#226;ncia &#233; publicamente vis&#237;vel e audit&#225;vel. Esta &#233; a base do modelo de transpar&#234;ncia da plataforma.</p>
       </div>
     </div>
 

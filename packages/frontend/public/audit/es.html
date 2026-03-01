@@ -696,6 +696,12 @@
   <a href="#history"><span class="num">09</span> Subastas Anteriores</a>
   <a href="#logs"><span class="num">10</span> Logs y Auditor&#237;a</a>
   <a href="#faq"><span class="num">11</span> Preguntas Cr&#237;ticas</a>
+  <a href="#atomic"><span class="num">12</span> Procesamiento At&#243;mico</a>
+  <a href="#team-limits"><span class="num">13</span> Lo que el Equipo No Puede Hacer</a>
+  <a href="#architecture"><span class="num">14</span> Arquitectura del Sistema</a>
+  <a href="#token"><span class="num">15</span> Consistencia de Token</a>
+  <a href="#limitations"><span class="num">16</span> Limitaciones &amp; Riesgo</a>
+  <a href="#verify-payout"><span class="num">17</span> C&#243;mo Verificar un Pago</a>
   <div class="divider"></div>
   <a href="#audit-report"><span class="num">&#9733;</span> Informe de Auditor&#237;a</a>
 </nav>
@@ -798,6 +804,17 @@
         <p>Si el l&#237;mite de ingresos del 120% no se ha alcanzado, la subasta no puede cerrarse &#8212; independientemente del estado del temporizador. La subasta contin&#250;a aceptando clics hasta que esta condici&#243;n se cumpla.</p>
       </div>
       <p>Este l&#237;mite existe para garantizar que la plataforma siempre pueda cubrir el pago del premio m&#225;s los costos operativos. Es una salvaguarda estructural, no una decisi&#243;n discrecional.</p>
+
+      <h3>Regla Formal de Ingresos</h3>
+      <div class="formula-block">
+        <span class="comment">// F&#243;rmula de Ingresos M&#237;nimos</span><br>
+        <span class="keyword">Revenue</span> = (n &times; C) + D_cap<br><br>
+        <span class="comment">// Condici&#243;n para cierre de subasta</span><br>
+        Revenue <span class="keyword">&ge;</span> <span class="value">1.20</span> &times; P<br><br>
+        <span class="comment">// Expandido</span><br>
+        (n &times; C) + min(n &times; &Delta;, <span class="value">0.50</span> &times; P) <span class="keyword">&ge;</span> <span class="value">1.20</span> &times; P
+      </div>
+      <p>Esta f&#243;rmula garantiza que ninguna subasta se cierre con p&#233;rdidas. El umbral del 120% incluye tanto los ingresos por clics como el descuento limitado como componente del ingreso total de la plataforma. El sistema eval&#250;a esta condici&#243;n at&#243;micamente en cada evento de clic.</p>
     </div>
 
     <!-- 05 -->
@@ -852,14 +869,50 @@
     <div class="section" id="antibot">
       <div class="section-number">Secci&#243;n 06</div>
       <h2>Protecci&#243;n Anti-Bot</h2>
-      <p>El sistema emplea m&#250;ltiples capas de detecci&#243;n automatizada de abuso para garantizar una participaci&#243;n justa. Estos mecanismos operan del lado del servidor y no pueden ser eludidos por el cliente.</p>
-      <h3>Capas de Protecci&#243;n</h3>
-      <p>
-        La limitaci&#243;n de tasa por direcci&#243;n de billetera restringe la frecuencia de clics de cualquier participante individual. L&#237;mites basados en sesi&#243;n previenen la actividad automatizada sostenida. La detecci&#243;n de r&#225;fagas anormales identifica y marca patrones de clics no humanos. Toda la validaci&#243;n de clics se ejecuta del lado del servidor &#8212; las solicitudes del lado del cliente sin validaci&#243;n adecuada son rechazadas. El bloqueo autom&#225;tico temporal se aplica a las billeteras que activan l&#237;mites de abuso.
-      </p>
+      <p>El sistema emplea m&#250;ltiples capas de detecci&#243;n automatizada de abusos para garantizar una participaci&#243;n justa. Estos mecanismos operan del lado del servidor y no pueden ser eludidos desde el cliente.</p>
+
+      <h3>Mecanismos de Protecci&#243;n</h3>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">L&#237;mite de Frecuencia por Billetera</div>
+            <div class="step-desc">Cada direcci&#243;n de billetera est&#225; sujeta a una frecuencia m&#225;xima de clics. Los clics que exceden este umbral son rechazados en el servidor antes de cualquier mutaci&#243;n de estado.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">L&#237;mites Basados en Sesi&#243;n</div>
+            <div class="step-desc">Independiente de los l&#237;mites por billetera, cada sesi&#243;n autenticada tiene l&#237;mites acumulativos de clics. Esto previene el reciclaje de sesiones como vector de eluci&#243;n.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Detecci&#243;n de Patrones de R&#225;faga</div>
+            <div class="step-desc">El backend analiza distribuciones de tiempo de clics en tiempo real. Patrones no humanos (intervalo fijo, r&#225;fagas sub-segundo) activan marcaci&#243;n autom&#225;tica y suspensi&#243;n temporal.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Validaci&#243;n Exclusivamente en el Servidor</div>
+            <div class="step-desc">Toda validaci&#243;n de clics se ejecuta exclusivamente en el backend. Solicitudes del lado del cliente sin validaci&#243;n adecuada del servidor son rechazadas. Ning&#250;n clic es aceptado basado en datos reportados por el cliente.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Bloqueo Temporal Autom&#225;tico</div>
+            <div class="step-desc">Las billeteras que activan umbrales de abuso son temporalmente bloqueadas. La duraci&#243;n del bloqueo escala con violaciones repetidas. Los bloqueos se aplican en el servidor y no pueden ser eludidos cambiando de sesi&#243;n.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="info-card amber">
         <div class="card-label">Aviso de Seguridad</div>
-        <p>Por razones de seguridad, los l&#237;mites espec&#237;ficos no se divulgan p&#250;blicamente. Los par&#225;metros de detecci&#243;n est&#225;n calibrados para minimizar los falsos positivos mientras mantienen una prevenci&#243;n efectiva de bots.</p>
+        <p>Los umbrales espec&#237;ficos y par&#225;metros de detecci&#243;n no se divulgan p&#250;blicamente para prevenir ajuste adversarial. Los par&#225;metros est&#225;n calibrados para minimizar falsos positivos manteniendo una prevenci&#243;n efectiva contra bots.</p>
       </div>
     </div>
 
@@ -1012,17 +1065,49 @@
     <div class="section" id="logs">
       <div class="section-number">Secci&#243;n 10</div>
       <h2>Logs y Auditor&#237;a Interna</h2>
-      <p>La plataforma mantiene registros internos exhaustivos para las siguientes categor&#237;as de eventos:</p>
-      <p>
-        Eventos de clic &#8212; marca de tiempo, billetera, ID de subasta, resultado de la validaci&#243;n, estado del temporizador despu&#233;s del clic.
-        Transiciones de estado de la subasta &#8212; creaci&#243;n, activaci&#243;n, l&#237;mite alcanzado, temporizador expirado, cerrada.
-        Ejecuci&#243;n de pagos &#8212; iniciaci&#243;n, tx hash, confirmaci&#243;n on-chain, actualizaci&#243;n de estado.
-        Monitoreo de dep&#243;sitos &#8212; transacciones entrantes, conteo de confirmaciones, emisi&#243;n de cr&#233;ditos.
-      </p>
-      <p>Todas las acciones administrativas se registran con ID del operador y marca de tiempo. Los registros se retienen para fines de auditor&#237;a y son revisables internamente.</p>
+      <p>La plataforma mantiene registros internos completos y de solo-adici&#243;n para las siguientes categor&#237;as de eventos:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Eventos de Clic</div>
+            <div class="step-desc">Cada intento de clic se registra con: marca de tiempo, direcci&#243;n de billetera, ID de subasta, resultado de validaci&#243;n (aceptado/rechazado + motivo), y estado del temporizador despu&#233;s del procesamiento.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Transiciones de Estado de Subasta</div>
+            <div class="step-desc">Todos los eventos del ciclo de vida se registran: creaci&#243;n, activaci&#243;n, umbral de ingresos alcanzado, expiraci&#243;n del temporizador, evento de cierre. Cada transici&#243;n incluye los valores de estado anterior y nuevo.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Registro de Ejecuci&#243;n de Pagos</div>
+            <div class="step-desc">Ciclo de vida del pago: marca de tiempo de inicio, hash de transacci&#243;n, bloque de confirmaci&#243;n on-chain, actualizaci&#243;n de estado a Verificado. Cada paso se registra independientemente.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Monitoreo de Dep&#243;sitos</div>
+            <div class="step-desc">Transacciones entrantes, conteo de confirmaciones, eventos de emisi&#243;n de cr&#233;dito. Incluye hash de transacci&#243;n, n&#250;mero de bloque, monto y billetera asignada.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Acciones Administrativas</div>
+            <div class="step-desc">Todas las acciones de operadores se registran con ID del operador, marca de tiempo, tipo de acci&#243;n y recursos afectados. Ninguna acci&#243;n administrativa ocurre sin una entrada de registro correspondiente.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="info-card blue">
         <div class="card-label">Pol&#237;tica de Auditor&#237;a</div>
-        <p>La estructura interna de los registros y los mecanismos de almacenamiento no se divulgan p&#250;blicamente. Los registros se mantienen en un formato adecuado para auditor&#237;a interna y, si es necesario, revisi&#243;n por terceros.</p>
+        <p>Los registros son de solo-adici&#243;n y se retienen indefinidamente para fines de auditor&#237;a. La estructura interna de los registros y mecanismos de almacenamiento no se divulgan p&#250;blicamente. Los registros se mantienen en un formato adecuado para auditor&#237;a interna y, si es necesario, revisi&#243;n forense por terceros.</p>
       </div>
     </div>
 
@@ -1080,6 +1165,227 @@
         <div class="faq-a"><div class="faq-a-inner">
           La subasta contin&#250;a. No se cerrar&#225; hasta que el l&#237;mite de ingresos del 120% se cumpla, independientemente del estado del temporizador. Esto protege tanto la capacidad de la plataforma de cumplir con el premio como la expectativa de los participantes de una subasta v&#225;lida y financiada.
         </div></div>
+      </div>
+    </div>
+
+    <!-- 12 PROCESAMIENTO ATÓMICO -->
+    <div class="section" id="atomic">
+      <div class="section-number">Secci&#243;n 12</div>
+      <h2>Procesamiento At&#243;mico de Estado de Subasta</h2>
+      <p>Cada clic activa una transacci&#243;n at&#243;mica en el servidor. Las siguientes variables de estado se actualizan en una sola operaci&#243;n, sin estado intermedio visible para ning&#250;n cliente o proceso:</p>
+      <div class="formula-block">
+        <span class="comment">// Actualizaci&#243;n at&#243;mica de estado por clic v&#225;lido</span><br>
+        <span class="keyword">atomicUpdate</span>(auctionId) {<br>
+        &nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= n + 1<br>
+        &nbsp;&nbsp;D_raw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= n &times; &Delta;<br>
+        &nbsp;&nbsp;D_cap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= min(D_raw, <span class="value">0.50</span> &times; P)<br>
+        &nbsp;&nbsp;timer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= timer + extension<br>
+        &nbsp;&nbsp;lastWallet = msg.sender<br>
+        &nbsp;&nbsp;revenue&nbsp;&nbsp;&nbsp;= (n &times; C) + D_cap<br>
+        }
+      </div>
+      <p>Si cualquier paso en esta transacci&#243;n falla, toda la operaci&#243;n se revierte. No existe escenario de actualizaci&#243;n parcial de estado. Esto elimina condiciones de carrera, exploits de doble-clic y vectores de manipulaci&#243;n del temporizador.</p>
+      <div class="info-card green">
+        <div class="card-label">Backend Autoritativo</div>
+        <p>La aplicaci&#243;n cliente es una capa de visualizaci&#243;n de solo-lectura. No puede escribir en el estado de la subasta, modificar el temporizador, alterar conteos de clics o influenciar la condici&#243;n de cierre. Todas las mutaciones de estado son iniciadas y validadas por el servidor.</p>
+      </div>
+    </div>
+
+    <!-- 13 LO QUE EL EQUIPO NO PUEDE HACER -->
+    <div class="section" id="team-limits">
+      <div class="section-number">Secci&#243;n 13</div>
+      <h2>Lo que el Equipo No Puede Hacer</h2>
+      <p>Las siguientes acciones son estructuralmente imposibles dentro de la arquitectura actual del sistema. No son restricciones de pol&#237;tica &mdash; son imposibilidades t&#233;cnicas impuestas por el c&#243;digo:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">No puede participar en subastas</div>
+            <div class="step-desc">Las cuentas administrativas no tienen funcionalidad de clic. Las direcciones de billeteras internas est&#225;n excluidas de la participaci&#243;n mediante filtrado de direcciones en el servidor. No existe mecanismo para que el equipo act&#250;e como participante.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">No puede cerrar una subasta anticipadamente</div>
+            <div class="step-desc">No existe endpoint administrativo para forzar el cierre de una subasta. El cierre requiere tanto la expiraci&#243;n del temporizador como la satisfacci&#243;n del umbral de ingresos. Estas condiciones se eval&#250;an en el servidor sin mecanismo de anulaci&#243;n.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">No puede elegir o influenciar al ganador</div>
+            <div class="step-desc">El ganador se determina exclusivamente por el &#250;ltimo clic v&#225;lido antes de la expiraci&#243;n del temporizador. No hay selecci&#243;n, sorteo o asignaci&#243;n discrecional. El resultado es determin&#237;stico e inmutable una vez que la subasta se cierra.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">No puede alterar el descuento o f&#243;rmula de pago</div>
+            <div class="step-desc">Las f&#243;rmulas matem&#225;ticas (&Delta; = 0.10 &times; C, D_cap = min(D_raw, 0.50 &times; P), Net Payout = P &minus; D_cap) est&#225;n codificadas en la l&#243;gica del servidor. Ning&#250;n par&#225;metro en tiempo de ejecuci&#243;n puede cambiar estos valores durante una subasta activa.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">No puede modificar registros de subastas pasadas</div>
+            <div class="step-desc">Los registros de subastas completadas, incluyendo conteos de clics, direcciones de ganadores, montos de pago y hashes de transacci&#243;n, son inmutables. Las transacciones de pago est&#225;n registradas on-chain y son verificables independientemente a trav&#233;s de BscScan.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card red">
+        <div class="card-label">Garant&#237;a Estructural</div>
+        <p>Estas limitaciones no son promesas &mdash; son restricciones arquitect&#243;nicas. No pueden ser eludidas sin reescribir y redesplegar la aplicaci&#243;n servidor, lo cual ser&#237;a un evento detectable y auditable.</p>
+      </div>
+    </div>
+
+    <!-- 14 ARQUITECTURA DEL SISTEMA -->
+    <div class="section" id="architecture">
+      <div class="section-number">Secci&#243;n 14</div>
+      <h2>Visi&#243;n General de la Arquitectura del Sistema</h2>
+      <p>La plataforma opera en una arquitectura en capas con separaci&#243;n estricta de responsabilidades. Cada capa tiene una responsabilidad definida y l&#237;mite de confianza:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Capa 1 &mdash; Aplicaci&#243;n Cliente (Solo-Lectura)</div>
+            <div class="step-desc">Frontend basado en React que muestra el estado de la subasta, temporizador, descuento y valores de pago. El cliente no tiene acceso de escritura a ninguna variable de la subasta. Todos los datos mostrados se obtienen de la API del backend.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Capa 2 &mdash; Gateway de API</div>
+            <div class="step-desc">Maneja autenticaci&#243;n, limitaci&#243;n de frecuencia y validaci&#243;n de solicitudes. Rechaza solicitudes malformadas o no autorizadas antes de que lleguen a la capa de l&#243;gica de negocios.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Capa 3 &mdash; Motor de Subastas (Lado del Servidor)</div>
+            <div class="step-desc">L&#243;gica de negocios central: validaci&#243;n de clics, gesti&#243;n de temporizador, c&#225;lculo de descuento, evaluaci&#243;n de umbral de ingresos y aplicaci&#243;n de condici&#243;n de cierre. Todas las mutaciones de estado de la subasta ocurren exclusivamente en esta capa.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Capa 4 &mdash; Base de Datos (Estado Persistente)</div>
+            <div class="step-desc">Almacena registros de subastas, registros de clics, saldos de usuarios e historial de pagos. Todas las operaciones de escritura usan transacciones at&#243;micas con reversi&#243;n en caso de fallo.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Capa 5 &mdash; Monitor de Blockchain</div>
+            <div class="step-desc">Escucha eventos on-chain en BNB Chain: dep&#243;sitos entrantes a direcciones asignadas, confirmaciones de transacciones de pago. Opera independientemente de la capa de API.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Capa 6 &mdash; Verificaci&#243;n On-Chain</div>
+            <div class="step-desc">Cruza referencias de registros internos de pago con datos de BscScan: direcci&#243;n del destinatario, monto en USDT, confirmaci&#243;n de bloque. Este es el ancla final de confianza &mdash; cualquier discrepancia ser&#237;a p&#250;blicamente visible.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 CONSISTENCIA DE TOKEN -->
+    <div class="section" id="token">
+      <div class="section-number">Secci&#243;n 15</div>
+      <h2>Declaraci&#243;n de Consistencia de Token</h2>
+      <p>Todas las operaciones financieras en la plataforma utilizan un &#250;nico est&#225;ndar de token fijo:</p>
+      <div class="formula-block">
+        <span class="comment">// Especificaci&#243;n del token</span><br>
+        <span class="keyword">Token</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= USDT (Tether)<br>
+        <span class="keyword">Est&#225;ndar</span>&nbsp;&nbsp;= BEP-20<br>
+        <span class="keyword">Red</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= BNB Smart Chain<br>
+        <span class="keyword">Contrato</span>&nbsp;&nbsp;= <span class="value">0x55d398326f99059fF775485246999027B3197955</span>
+      </div>
+      <p>No hay soporte multi-token, ning&#250;n token nativo y ning&#250;n mecanismo de intercambio de tokens. Los dep&#243;sitos se aceptan solo en USDT BEP-20. Los pagos se ejecutan solo en USDT BEP-20. Esto elimina el riesgo de incompatibilidad de tokens y simplifica la verificaci&#243;n on-chain.</p>
+      <div class="info-card green">
+        <div class="card-label">Pol&#237;tica de Token &#218;nico</div>
+        <p>La plataforma no emite, acu&#241;a ni gestiona ning&#250;n token propietario. Todo el flujo de valor pasa por el contrato est&#225;ndar USDT BEP-20, que es independientemente auditable en BscScan.</p>
+      </div>
+    </div>
+
+    <!-- 16 LIMITACIONES & RIESGO -->
+    <div class="section" id="limitations">
+      <div class="section-number">Secci&#243;n 16</div>
+      <h2>Limitaciones Operacionales &amp; Divulgaci&#243;n de Riesgos</h2>
+      <p>Las siguientes limitaciones operacionales y riesgos se divulgan de forma transparente. Esta secci&#243;n existe para establecer expectativas precisas, no para eximir responsabilidad.</p>
+
+      <div class="info-card amber">
+        <div class="card-label">Ejecuci&#243;n Manual de Pagos</div>
+        <p>Los pagos de premios se ejecutan actualmente de forma manual por el administrador v&#237;a MetaMask. Aunque todos los pagos hasta la fecha han sido ejecutados correctamente y verificados on-chain, este proceso depende de la disponibilidad del operador. Una actualizaci&#243;n futura a pagos autom&#225;ticos mediante contrato inteligente est&#225; planificada.</p>
+      </div>
+
+      <div class="info-card amber">
+        <div class="card-label">Dependencia de Red</div>
+        <p>La plataforma opera en BNB Smart Chain. Las confirmaciones de dep&#243;sito y verificaciones de pago est&#225;n sujetas a las condiciones de la red, incluyendo tiempos de bloque, congesti&#243;n y tarifas de gas. La plataforma no controla la infraestructura de BNB Chain.</p>
+      </div>
+
+      <div class="info-card amber">
+        <div class="card-label">Sin Mecanismo de Reembolso</div>
+        <p>Los costos de clic no son reembolsables una vez que el clic es validado y aceptado. Los dep&#243;sitos acreditados en el saldo del usuario son consumidos por clics y no pueden ser retirados. Esto es por dise&#241;o &mdash; el modelo de subasta requiere participaci&#243;n irreversible para funcionar.</p>
+      </div>
+
+      <div class="info-card amber">
+        <div class="card-label">Incertidumbre Regulatoria</div>
+        <p>Las plataformas de subastas basadas en blockchain pueden estar sujetas a interpretaciones regulatorias variables en diferentes jurisdicciones. Los usuarios son responsables de asegurar el cumplimiento con sus regulaciones locales. La plataforma no proporciona asesor&#237;a legal, fiscal o financiera.</p>
+      </div>
+    </div>
+
+    <!-- 17 CÓMO VERIFICAR UN PAGO -->
+    <div class="section" id="verify-payout">
+      <div class="section-number">Secci&#243;n 17</div>
+      <h2>C&#243;mo Verificar un Pago</h2>
+      <p>Cualquier usuario puede verificar independientemente que un pago fue ejecutado correctamente. No se requiere confianza en la plataforma. Siga estos pasos:</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Paso 1 &mdash; Localice el Hash de la Transacci&#243;n</div>
+            <div class="step-desc">En la tabla de Subastas Anteriores o en la p&#225;gina de detalle de la subasta, encuentre el enlace del tx hash para el pago que desea verificar.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Paso 2 &mdash; Abra BscScan</div>
+            <div class="step-desc">Haga clic en el enlace del hash de la transacci&#243;n. Se abrir&#225;n los detalles de la transacci&#243;n en BscScan (bscscan.com), el explorador p&#250;blico de bloques de BNB Chain.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Paso 3 &mdash; Verifique el Destinatario</div>
+            <div class="step-desc">Confirme que la direcci&#243;n "To" en BscScan coincide con la direcci&#243;n de billetera del ganador mostrada en la plataforma. Esto prueba que la persona correcta recibi&#243; el pago.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Paso 4 &mdash; Verifique el Monto</div>
+            <div class="step-desc">Revise el campo "Value" en BscScan. El monto en USDT transferido debe coincidir con el Net Payout (P &minus; D_cap) calculado por la f&#243;rmula de la subasta.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Paso 5 &mdash; Confirme el Bloque</div>
+            <div class="step-desc">Verifique que la transacci&#243;n tiene un n&#250;mero de bloque confirmado y un estado "Success". Esto confirma que la transferencia fue finalizada on-chain y es irreversible.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card green">
+        <div class="card-label">Modelo de Confianza</div>
+        <p>La blockchain es la fuente final de verdad. Si los datos on-chain coinciden con los registros de la plataforma, el pago est&#225; verificado. Si no coinciden, la discrepancia es p&#250;blicamente visible y auditable. Esta es la base del modelo de transparencia de la plataforma.</p>
       </div>
     </div>
 
