@@ -1,7 +1,8 @@
 import { ethers } from 'ethers';
 import pino from 'pino';
 import { query } from '../db/client';
-import { USDT_CONTRACT_BSC } from '../../../../shared/src/constants';
+// BSC USDT contract (BEP-20) - same as shared/src/constants.ts
+const USDT_CONTRACT_BSC = '0x55d398326f99059fF775485246999027B3197955';
 
 const logger = pino({ name: 'consolidation' });
 
