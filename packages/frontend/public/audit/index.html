@@ -56,25 +56,53 @@
     z-index: 9999;
   }
 
-  /* ── SITE NAVBAR (Click Win) ── */
+  /* ── SITE NAVBAR (exact replica of main site) ── */
   .site-navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 64px;
-    background: rgba(15, 15, 35, 0.92);
-    border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+    background: rgba(15, 15, 35, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 200;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 0 20px rgba(108, 92, 231, 0.08);
+    transition: all 0.3s;
+  }
+
+  .site-navbar.scrolled {
+    background: rgba(15, 15, 35, 0.92);
+    border-bottom-color: rgba(108, 92, 231, 0.2);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+  }
+
+  /* Scanline overlay on navbar */
+  .navbar-scanline {
+    display: none;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(108, 92, 231, 0.03) 2px,
+      rgba(108, 92, 231, 0.03) 4px
+    );
+  }
+
+  .site-navbar.scrolled .navbar-scanline {
+    display: block;
   }
 
   .site-navbar-inner {
+    position: relative;
+    z-index: 10;
     max-width: 1280px;
     width: 100%;
     padding: 0 16px;
@@ -83,6 +111,14 @@
     justify-content: space-between;
   }
 
+  @media (min-width: 640px) {
+    .site-navbar-inner { padding: 0 24px; }
+  }
+  @media (min-width: 1024px) {
+    .site-navbar-inner { padding: 0 32px; }
+  }
+
+  /* Logo */
   .site-navbar-logo {
     display: flex;
     align-items: center;
@@ -90,9 +126,18 @@
     text-decoration: none;
   }
 
+  .site-navbar-logo:hover .logo-click { opacity: 0.8; }
+  .site-navbar-logo:hover .logo-win { color: #6C5CE7; }
+
   .site-navbar-logo img {
     width: 32px;
     height: 32px;
+    animation: iconPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes iconPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+    50% { transform: scale(1.18); filter: drop-shadow(0 0 8px rgba(108, 92, 231, 0.6)); }
   }
 
   .site-navbar-logo .logo-click {
@@ -103,6 +148,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transition: opacity 0.3s;
   }
 
   .site-navbar-logo .logo-win {
@@ -110,12 +156,18 @@
     font-size: 20px;
     font-weight: 700;
     color: #fff;
+    transition: color 0.3s;
   }
 
+  /* Desktop Nav Links */
   .site-navbar-links {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 4px;
+  }
+
+  @media (min-width: 768px) {
+    .site-navbar-links { display: flex; }
   }
 
   .site-navbar-links a {
@@ -142,69 +194,38 @@
     border-color: rgba(108, 92, 231, 0.2);
   }
 
-  /* Mobile hamburger */
-  .site-navbar-hamburger {
-    display: none;
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 6px 8px;
-    cursor: pointer;
-    color: #E0E0FF;
-  }
-
-  .site-navbar-hamburger svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .site-navbar-mobile {
-    display: none;
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    background: rgba(15, 15, 35, 0.95);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 16px;
-    z-index: 199;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .site-navbar-mobile.open {
-    display: flex;
-  }
-
-  .site-navbar-mobile a {
-    display: block;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    color: #9090B0;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-  }
-
-  .site-navbar-mobile a:hover {
-    color: #E0E0FF;
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .site-navbar-mobile a.active {
-    color: #6C5CE7;
-    background: rgba(108, 92, 231, 0.1);
-    border-color: rgba(108, 92, 231, 0.2);
-  }
-
+  /* Right side */
   .site-navbar-right {
     display: flex;
     align-items: center;
     gap: 12px;
+  }
+
+  /* Notification Bell */
+  .site-notif-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #9090B0;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .site-notif-btn:hover {
+    border-color: rgba(108, 92, 231, 0.3);
+    color: #E0E0FF;
+    background: rgba(108, 92, 231, 0.1);
+  }
+
+  .site-notif-btn svg {
+    width: 18px;
+    height: 18px;
   }
 
   /* Language Selector */
@@ -245,11 +266,13 @@
     margin-top: 6px;
     background: rgba(15, 15, 35, 0.98);
     border: 1px solid rgba(108, 92, 231, 0.2);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 6px;
-    min-width: 140px;
+    min-width: 160px;
     z-index: 300;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   .site-lang-dropdown.open {
@@ -257,14 +280,16 @@
   }
 
   .site-lang-dropdown a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 13px;
     font-family: 'Space Mono', monospace;
     color: #9090B0;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.15s;
   }
 
   .site-lang-dropdown a:hover {
@@ -274,12 +299,23 @@
 
   .site-lang-dropdown a.active-lang {
     color: #6C5CE7;
-    background: rgba(108, 92, 231, 0.1);
+    background: rgba(108, 92, 231, 0.08);
+  }
+
+  .lang-flag {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .lang-check {
+    margin-left: auto;
+    color: #6C5CE7;
+    font-size: 14px;
   }
 
   /* Connect Wallet Button */
   .site-wallet-btn {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 8px;
     padding: 8px 18px;
@@ -296,6 +332,10 @@
     letter-spacing: 0.02em;
   }
 
+  @media (min-width: 640px) {
+    .site-wallet-btn { display: flex; }
+  }
+
   .site-wallet-btn:hover {
     border-color: rgba(108, 92, 231, 0.5);
     background: linear-gradient(135deg, rgba(108, 92, 231, 0.25), rgba(0, 210, 255, 0.15));
@@ -307,15 +347,107 @@
     height: 16px;
   }
 
-  @media (max-width: 900px) {
-    .site-navbar-links { display: none; }
-    .site-navbar-hamburger { display: block; }
-    .site-wallet-btn span { display: none; }
-    .site-wallet-btn { padding: 8px 10px; }
+  /* Mobile Hamburger - tech-badge style */
+  .site-navbar-hamburger {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 9999px;
+    background: rgba(108, 92, 231, 0.1);
+    border: 1px solid rgba(108, 92, 231, 0.25);
+    color: #8B7CF0;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
   }
 
-  @media (max-width: 480px) {
-    .site-wallet-btn { display: none; }
+  @media (min-width: 768px) {
+    .site-navbar-hamburger { display: none; }
+  }
+
+  .site-navbar-hamburger:hover {
+    border-color: rgba(108, 92, 231, 0.5);
+    background: rgba(108, 92, 231, 0.15);
+  }
+
+  .site-navbar-hamburger svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  /* Mobile Menu */
+  .site-navbar-mobile {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 35, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 199;
+    flex-direction: column;
+  }
+
+  .site-navbar-mobile.open {
+    display: flex;
+  }
+
+  .mobile-scanline {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(108, 92, 231, 0.03) 2px,
+      rgba(108, 92, 231, 0.03) 4px
+    );
+  }
+
+  .site-navbar-mobile-inner {
+    position: relative;
+    z-index: 10;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-navbar-mobile-inner a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: #9090B0;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .site-navbar-mobile-inner a:hover {
+    color: #E0E0FF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .site-navbar-mobile-inner a.active {
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.2);
+  }
+
+  .mobile-wallet-divider {
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-wallet-divider .site-wallet-btn {
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }
 
   /* ── TOP BAR ── */
@@ -992,8 +1124,9 @@
 </head>
 <body>
 
-<!-- SITE NAVBAR (Click Win) -->
-<nav class="site-navbar">
+<!-- SITE NAVBAR (exact replica of main site) -->
+<nav class="site-navbar" id="siteNavbar">
+  <div class="navbar-scanline"></div>
   <div class="site-navbar-inner">
     <a href="/" class="site-navbar-logo">
       <img src="/favicon.svg" alt="Click Win">
@@ -1009,16 +1142,21 @@
       <a href="/audit/" class="active">Audit</a>
     </div>
     <div class="site-navbar-right">
+      <!-- Notification Bell -->
+      <button class="site-notif-btn" title="Notifications" onclick="window.location.href='/'">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      </button>
+
       <!-- Language Selector -->
       <div class="site-lang-selector">
-        <button class="site-lang-btn" onclick="document.getElementById('langDropdown').classList.toggle('open')">
+        <button class="site-lang-btn" onclick="event.stopPropagation(); document.getElementById('langDropdown').classList.toggle('open')">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 014 9 15 15 0 01-4 9 15 15 0 01-4-9 15 15 0 014-9z"/></svg>
           EN
         </button>
         <div id="langDropdown" class="site-lang-dropdown">
-          <a href="/audit/" class="active-lang">English</a>
-          <a href="/audit/pt-br.html">Portugues</a>
-          <a href="/audit/es.html">Espanol</a>
+          <a href="/audit/" class="active-lang"><span class="lang-flag">&#127482;&#127480;</span> English <span class="lang-check">&#10003;</span></a>
+          <a href="/audit/pt-br.html"><span class="lang-flag">&#127463;&#127479;</span> Portugu&#234;s</a>
+          <a href="/audit/es.html"><span class="lang-flag">&#127466;&#127480;</span> Espa&#241;ol</a>
         </div>
       </div>
 
@@ -1028,22 +1166,33 @@
         <span>Connect Wallet</span>
       </a>
 
-      <!-- Mobile Hamburger -->
-      <button class="site-navbar-hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <!-- Mobile Hamburger (tech-badge style) -->
+      <button class="site-navbar-hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()">
+        <svg id="hamburgerIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
     </div>
   </div>
 </nav>
+
+<!-- Mobile Menu -->
 <div id="mobileMenu" class="site-navbar-mobile">
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <a href="/help">Help</a>
-  <a href="/partner">Be a Partner</a>
-  <a href="/whitepaper">Whitepaper</a>
-  <a href="/audit/" class="active">Audit</a>
+  <div class="mobile-scanline"></div>
+  <div class="site-navbar-mobile-inner">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/help">Help</a>
+    <a href="/partner">Be a Partner</a>
+    <a href="/whitepaper">Whitepaper</a>
+    <a href="/audit/" class="active">Audit</a>
+    <div class="mobile-wallet-divider">
+      <a href="/" class="site-wallet-btn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2v-5zm-5 0a1 1 0 100 2 1 1 0 000-2z"/></svg>
+        <span>Connect Wallet</span>
+      </a>
+    </div>
+  </div>
 </div>
 
 <!-- TOP BAR -->
@@ -1579,6 +1728,39 @@
 </div><!-- /main -->
 
 <script>
+  // ── Navbar scroll effects (exact replica of main site) ──
+  const navbar = document.getElementById('siteNavbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // ── Mobile menu toggle with icon swap ──
+  let mobileOpen = false;
+  function toggleMobileMenu() {
+    mobileOpen = !mobileOpen;
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('hamburgerIcon');
+    menu.classList.toggle('open', mobileOpen);
+    if (mobileOpen) {
+      icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+    } else {
+      icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+    }
+  }
+
+  // ── Close dropdowns on outside click ──
+  document.addEventListener('click', (e) => {
+    const langDropdown = document.getElementById('langDropdown');
+    const langSelector = document.querySelector('.site-lang-selector');
+    if (langDropdown && langSelector && !langSelector.contains(e.target)) {
+      langDropdown.classList.remove('open');
+    }
+  });
+
   // Smooth scroll for sidebar links
   document.querySelectorAll('.sidebar a').forEach(link => {
     link.addEventListener('click', (e) => {
