@@ -56,6 +56,6 @@ jobs:
             set net:max-retries 5
             set net:reconnect-interval-base 10
             set mirror:parallel-transfer-count 3
-            mirror --reverse --delete --verbose packages/frontend/out/ ./
+            mirror --reverse --delete --verbose packages/frontend/out/ ./public_html/
             bye
           "
