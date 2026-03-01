@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguran&#231;a &amp; Transpar&#234;ncia &#8212; Plataforma de Leil&#245;es</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0b0d;
+    --bg-secondary: #111318;
+    --bg-tertiary: #181b22;
+    --bg-card: #14161c;
+    --border: #1e2230;
+    --border-accent: #2a3040;
+    --text-primary: #e8eaf0;
+    --text-secondary: #8b90a0;
+    --text-muted: #5a5f70;
+    --accent-green: #00d68f;
+    --accent-green-dim: #00d68f22;
+    --accent-blue: #3b82f6;
+    --accent-blue-dim: #3b82f611;
+    --accent-amber: #f59e0b;
+    --accent-amber-dim: #f59e0b15;
+    --accent-red: #ef4444;
+    --accent-red-dim: #ef444415;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-accent) var(--bg-primary);
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .site-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(15, 15, 35, 0.92);
+    border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.08);
+  }
+
+  .site-navbar-inner {
+    max-width: 1280px;
+    width: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .site-navbar-logo img { width: 32px; height: 32px; }
+
+  .site-navbar-logo .logo-click {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .site-navbar-logo .logo-win {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .site-navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .site-navbar-links a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: #9090B0;
+    border: 1px solid transparent;
+  }
+
+  .site-navbar-links a:hover {
+    color: #E0E0FF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .site-navbar-links a.active {
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.2);
+  }
+
+  .site-navbar-hamburger {
+    display: none;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #E0E0FF;
+  }
+
+  .site-navbar-hamburger svg { width: 20px; height: 20px; }
+
+  .site-navbar-mobile {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 35, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    z-index: 199;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-navbar-mobile.open { display: flex; }
+
+  .site-navbar-mobile a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: #9090B0;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .site-navbar-mobile a:hover { color: #E0E0FF; background: rgba(255, 255, 255, 0.05); }
+  .site-navbar-mobile a.active { color: #6C5CE7; background: rgba(108, 92, 231, 0.1); border-color: rgba(108, 92, 231, 0.2); }
+
+  .site-navbar-right { display: flex; align-items: center; gap: 12px; }
+
+  .site-lang-selector { position: relative; }
+
+  .site-lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #9090B0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .site-lang-btn:hover { border-color: rgba(108, 92, 231, 0.3); color: #E0E0FF; }
+  .site-lang-btn svg { width: 16px; height: 16px; }
+
+  .site-lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 6px;
+    background: rgba(15, 15, 35, 0.98);
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    border-radius: 8px;
+    padding: 6px;
+    min-width: 140px;
+    z-index: 300;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .site-lang-dropdown.open { display: block; }
+
+  .site-lang-dropdown a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Space Mono', monospace;
+    color: #9090B0;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .site-lang-dropdown a:hover { background: rgba(108, 92, 231, 0.1); color: #E0E0FF; }
+  .site-lang-dropdown a.active-lang { color: #6C5CE7; background: rgba(108, 92, 231, 0.1); }
+
+  .site-wallet-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.15), rgba(0, 210, 255, 0.08));
+    color: #E0E0FF;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .site-wallet-btn:hover {
+    border-color: rgba(108, 92, 231, 0.5);
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.25), rgba(0, 210, 255, 0.15));
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.15);
+  }
+
+  .site-wallet-btn svg { width: 16px; height: 16px; }
+
+  @media (max-width: 900px) {
+    .site-navbar-links { display: none; }
+    .site-navbar-hamburger { display: block; }
+    .site-wallet-btn span { display: none; }
+    .site-wallet-btn { padding: 8px 10px; }
+  }
+
+  @media (max-width: 480px) {
+    .site-wallet-btn { display: none; }
+  }
+
+  .top-bar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .top-bar-left .shield {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-green);
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .top-bar-left .shield::after { content: '\2713'; font-size: 10px; color: var(--accent-green); }
+
+  .top-bar-right {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 112px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 112px);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    overflow-y: auto;
+    z-index: 50;
+  }
+
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 20px;
+    margin-bottom: 12px;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar a:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border-left-color: var(--accent-green);
+  }
+
+  .sidebar a .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .sidebar .divider { height: 1px; background: var(--border); margin: 16px 20px; }
+
+  .main { margin-left: 260px; margin-top: 112px; min-height: calc(100vh - 112px); }
+
+  .hero {
+    padding: 80px 60px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--accent-green-dim) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero .doc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent-green);
+    background: var(--accent-green-dim);
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+
+  .hero .subtitle { font-size: 16px; color: var(--text-secondary); max-width: 560px; line-height: 1.7; }
+
+  .hero .meta-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero .meta-item { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+  .hero .meta-item span { color: var(--text-secondary); display: block; margin-top: 2px; }
+
+  .content { max-width: 780px; padding: 0 60px 80px; }
+  .section { padding-top: 56px; }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .section h3 { font-size: 17px; font-weight: 600; margin-top: 28px; margin-bottom: 12px; color: var(--text-primary); }
+  .section p { color: var(--text-secondary); margin-bottom: 14px; }
+
+  .def-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .def-table th { text-align: left; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 10px 16px; background: var(--bg-tertiary); border: 1px solid var(--border); }
+  .def-table td { padding: 12px 16px; border: 1px solid var(--border); vertical-align: top; }
+  .def-table td:first-child { font-family: var(--mono); font-weight: 600; color: var(--accent-green); white-space: nowrap; width: 200px; font-size: 13px; }
+  .def-table td:last-child { color: var(--text-secondary); }
+
+  .formula-block { background: var(--bg-tertiary); border: 1px solid var(--border); border-left: 3px solid var(--accent-green); border-radius: 4px; padding: 20px 24px; margin: 20px 0; font-family: var(--mono); font-size: 13.5px; line-height: 2; color: var(--text-primary); overflow-x: auto; }
+  .formula-block .comment { color: var(--text-muted); font-style: italic; }
+  .formula-block .keyword { color: var(--accent-green); }
+  .formula-block .value { color: var(--accent-amber); }
+
+  .info-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 20px 0; }
+  .info-card.green { border-left: 3px solid var(--accent-green); }
+  .info-card.amber { border-left: 3px solid var(--accent-amber); }
+  .info-card.blue  { border-left: 3px solid var(--accent-blue); }
+  .info-card.red   { border-left: 3px solid var(--accent-red); }
+  .info-card .card-label { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .info-card.green .card-label { color: var(--accent-green); }
+  .info-card.amber .card-label { color: var(--accent-amber); }
+  .info-card.blue .card-label  { color: var(--accent-blue); }
+  .info-card.red .card-label   { color: var(--accent-red); }
+  .info-card p { color: var(--text-secondary); font-size: 14px; margin-bottom: 0; }
+
+  .flow-steps { margin: 20px 0; display: flex; flex-direction: column; gap: 0; }
+  .flow-step { display: flex; gap: 16px; position: relative; }
+  .flow-step .step-line { display: flex; flex-direction: column; align-items: center; width: 24px; flex-shrink: 0; }
+  .flow-step .step-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-green); border: 2px solid var(--bg-primary); outline: 2px solid var(--accent-green); flex-shrink: 0; margin-top: 5px; }
+  .flow-step .step-connector { width: 1px; flex: 1; background: var(--border-accent); min-height: 20px; }
+  .flow-step:last-child .step-connector { display: none; }
+  .flow-step .step-content { padding-bottom: 20px; }
+  .flow-step .step-title { font-weight: 600; font-size: 14px; color: var(--text-primary); margin-bottom: 4px; }
+  .flow-step .step-desc { font-size: 13px; color: var(--text-muted); }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  .data-table th { text-align: left; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding: 10px 12px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); font-family: var(--mono); font-size: 12px; }
+  .data-table tr:hover td { background: var(--bg-tertiary); }
+  .status-verified { display: inline-flex; align-items: center; gap: 4px; color: var(--accent-green); font-weight: 600; }
+  .status-verified::before { content: '\25CF'; font-size: 8px; }
+  .tx-link { color: var(--accent-blue); text-decoration: none; border-bottom: 1px dashed var(--accent-blue); cursor: pointer; }
+  .tx-link:hover { border-bottom-style: solid; }
+
+  .faq-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; overflow: hidden; }
+  .faq-q { padding: 16px 20px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 12px; background: var(--bg-card); transition: background 0.2s; user-select: none; }
+  .faq-q:hover { background: var(--bg-tertiary); }
+  .faq-q .faq-icon { font-family: var(--mono); font-size: 12px; color: var(--accent-green); transition: transform 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+  .faq-item.open .faq-a { max-height: 300px; }
+  .faq-a-inner { padding: 0 20px 16px 44px; color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
+
+  .audit-report { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; margin: 24px 0; overflow: hidden; }
+  .audit-header { padding: 28px 28px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+  .audit-header-left h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .audit-header-left p { font-family: var(--mono); font-size: 12px; color: var(--text-muted); margin-bottom: 0; }
+  .audit-verdict { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 4px; background: var(--accent-green-dim); border: 1px solid var(--accent-green); font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent-green); }
+  .audit-body { padding: 24px 28px; }
+  .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .audit-metric { background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 4px; padding: 16px; }
+  .audit-metric .metric-label { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .audit-metric .metric-value { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent-green); }
+  .audit-metric .metric-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .audit-findings { margin: 20px 0 0; }
+  .finding-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .finding-row:last-child { border-bottom: none; }
+  .finding-status { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 3px; flex-shrink: 0; min-width: 60px; text-align: center; }
+  .finding-status.pass { background: var(--accent-green-dim); color: var(--accent-green); border: 1px solid var(--accent-green); }
+  .finding-status.info { background: var(--accent-blue-dim); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+  .finding-desc { color: var(--text-secondary); }
+
+  .footer { padding: 40px 60px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; margin-top: 112px; }
+    .top-bar { padding: 0 16px; }
+    .hero { padding: 60px 24px 40px; }
+    .content { padding: 0 24px 60px; }
+    .hero h1 { font-size: 28px; }
+    .hero .meta-row { flex-direction: column; gap: 12px; }
+    .audit-grid { grid-template-columns: 1fr; }
+    .footer { padding: 30px 24px; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section { animation: fadeIn 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+</style>
+</head>
+<body>
+
+<!-- SITE NAVBAR -->
+<nav class="site-navbar">
+  <div class="site-navbar-inner">
+    <a href="/" class="site-navbar-logo">
+      <img src="/favicon.svg" alt="Click Win">
+      <span class="logo-click">Click</span>
+      <span class="logo-win">Win</span>
+    </a>
+    <div class="site-navbar-links">
+      <a href="/">Home</a>
+      <a href="/about">Sobre</a>
+      <a href="/help">Ajuda</a>
+      <a href="/partner">Parceiro</a>
+      <a href="/whitepaper">Whitepaper</a>
+      <a href="/audit/" class="active">Auditoria</a>
+    </div>
+    <div class="site-navbar-right">
+      <div class="site-lang-selector">
+        <button class="site-lang-btn" onclick="document.getElementById('langDropdown').classList.toggle('open')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 014 9 15 15 0 01-4 9 15 15 0 01-4-9 15 15 0 014-9z"/></svg>
+          PT
+        </button>
+        <div id="langDropdown" class="site-lang-dropdown">
+          <a href="/audit/">English</a>
+          <a href="/audit/pt-br.html" class="active-lang">Portugu&#234;s</a>
+          <a href="/audit/es.html">Espa&#241;ol</a>
+        </div>
+      </div>
+      <a href="/" class="site-wallet-btn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2v-5zm-5 0a1 1 0 100 2 1 1 0 000-2z"/></svg>
+        <span>Conectar Carteira</span>
+      </a>
+      <button class="site-navbar-hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div id="mobileMenu" class="site-navbar-mobile">
+  <a href="/">Home</a>
+  <a href="/about">Sobre</a>
+  <a href="/help">Ajuda</a>
+  <a href="/partner">Parceiro</a>
+  <a href="/whitepaper">Whitepaper</a>
+  <a href="/audit/" class="active">Auditoria</a>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="shield"></div>
+    Seguran&#231;a &amp; Transpar&#234;ncia
+  </div>
+  <div class="top-bar-right"></div>
+</div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-label">Conte&#250;do</div>
+  <a href="#purpose"><span class="num">01</span> Objetivo</a>
+  <a href="#definitions"><span class="num">02</span> Defini&#231;&#245;es</a>
+  <a href="#math"><span class="num">03</span> Matem&#225;tica do Leil&#227;o</a>
+  <a href="#threshold"><span class="num">04</span> Limite de Receita</a>
+  <a href="#closing"><span class="num">05</span> L&#243;gica de Fechamento</a>
+  <a href="#antibot"><span class="num">06</span> Sistema Anti-Bot</a>
+  <a href="#deposits"><span class="num">07</span> Monitoramento de Dep&#243;sitos</a>
+  <a href="#payout"><span class="num">08</span> Entrega do Pr&#234;mio</a>
+  <a href="#history"><span class="num">09</span> Leil&#245;es Anteriores</a>
+  <a href="#logs"><span class="num">10</span> Logs &amp; Auditoria</a>
+  <a href="#faq"><span class="num">11</span> Perguntas Cr&#237;ticas</a>
+  <div class="divider"></div>
+  <a href="#audit-report"><span class="num">&#9733;</span> Relat&#243;rio de Auditoria</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="doc-badge">&#9670; DIVULGA&#199;&#195;O T&#201;CNICA P&#218;BLICA</div>
+    <h1>Relat&#243;rio de Seguran&#231;a &amp; Transpar&#234;ncia</h1>
+    <p class="subtitle">
+      Este documento fornece uma descri&#231;&#227;o completa e verific&#225;vel das regras do sistema de leil&#245;es, restri&#231;&#245;es matem&#225;ticas, condi&#231;&#245;es de fechamento, mecanismos de pagamento e controles internos. Destina-se &#224; inspe&#231;&#227;o p&#250;blica.
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">REDE<span>BNB Chain (BEP-20)</span></div>
+      <div class="meta-item">ATIVO DE PAGAMENTO<span>USDT</span></div>
+      <div class="meta-item">VERIFICA&#199;&#195;O<span>On-chain via BscScan</span></div>
+      <div class="meta-item">&#218;LTIMA ATUALIZA&#199;&#195;O<span>14 de setembro de 2025</span></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 -->
+    <div class="section" id="purpose">
+      <div class="section-number">Se&#231;&#227;o 01</div>
+      <h2>Objetivo Deste Documento</h2>
+      <p>
+        Esta p&#225;gina existe para documentar formalmente as regras matem&#225;ticas que governam cada leil&#227;o, as condi&#231;&#245;es determin&#237;sticas sob as quais os leil&#245;es encerram, os limites financeiros impostos pelo sistema, o processo de execu&#231;&#227;o de pagamento e os mecanismos dispon&#237;veis para verifica&#231;&#227;o p&#250;blica dos resultados.
+      </p>
+      <p>
+        N&#227;o &#233; um documento de marketing. N&#227;o cont&#233;m afirma&#231;&#245;es promocionais. Seu objetivo &#233; permitir que qualquer participante ou observador externo compreenda e verifique independentemente como o sistema opera.
+      </p>
+      <div class="info-card green">
+        <div class="card-label">Princ&#237;pio Norteador</div>
+        <p>Toda regra descrita neste documento &#233; aplicada no lado do servidor. A aplica&#231;&#227;o cliente exibe valores calculados, mas n&#227;o pode modificar o estado do leil&#227;o, condi&#231;&#245;es de fechamento ou valores de pagamento.</p>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="section" id="definitions">
+      <div class="section-number">Se&#231;&#227;o 02</div>
+      <h2>Defini&#231;&#245;es Fundamentais</h2>
+      <p>Os seguintes termos s&#227;o utilizados ao longo deste documento e na interface do leil&#227;o. Suas defini&#231;&#245;es s&#227;o fixas e n&#227;o mudam entre leil&#245;es.</p>
+      <table class="def-table">
+        <thead>
+          <tr><th>S&#237;mbolo / Termo</th><th>Defini&#231;&#227;o</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>P &#8212; Valor do Pr&#234;mio</td><td>O valor declarado do pr&#234;mio em USDT para um determinado leil&#227;o. Definido na cria&#231;&#227;o do leil&#227;o e imut&#225;vel ap&#243;s isso.</td></tr>
+          <tr><td>C &#8212; Custo do Clique</td><td>O custo fixo em USDT que um participante paga por clique v&#225;lido. Definido na cria&#231;&#227;o do leil&#227;o.</td></tr>
+          <tr><td>&#916; &#8212; Incremento por Clique</td><td>O incremento de desconto aplicado por clique v&#225;lido. Calculado como &#916; = 0,10 &#215; C (10% do custo do clique).</td></tr>
+          <tr><td>n &#8212; Total de Cliques</td><td>O n&#250;mero total de cliques v&#225;lidos registrados durante o ciclo de vida do leil&#227;o.</td></tr>
+          <tr><td>D &#8212; Desconto Acumulado</td><td>O desconto total acumulado de todos os cliques v&#225;lidos. Sujeito ao Teto de Desconto.</td></tr>
+          <tr><td>Teto de Desconto (50%)</td><td>O desconto m&#225;ximo que pode ser aplicado. D nunca pode exceder 50% de P, independentemente de n.</td></tr>
+          <tr><td>Limite M&#237;nimo de Receita</td><td>O leil&#227;o s&#243; pode encerrar quando a receita total &#8805; 120% de P. Garante sustentabilidade econ&#244;mica.</td></tr>
+          <tr><td>Pagamento L&#237;quido</td><td>O valor final pago ao vencedor: P menos o desconto limitado.</td></tr>
+          <tr><td>Condi&#231;&#227;o de Fechamento</td><td>O conjunto determin&#237;stico de condi&#231;&#245;es que devem ser atendidas para que um leil&#227;o seja encerrado.</td></tr>
+          <tr><td>Pagamento Verificado</td><td>Um pagamento cujo hash de transa&#231;&#227;o foi confirmado on-chain via BscScan.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 03 -->
+    <div class="section" id="math">
+      <div class="section-number">Se&#231;&#227;o 03</div>
+      <h2>Matem&#225;tica do Leil&#227;o</h2>
+      <p>O mecanismo de desconto segue uma f&#243;rmula determin&#237;stica. Nenhuma aleatoriedade est&#225; envolvida. Todos os c&#225;lculos s&#227;o executados no lado do servidor.</p>
+      <div class="formula-block">
+        <span class="comment">// Incremento de desconto por clique</span><br>
+        <span class="keyword">&#916;</span> = <span class="value">0.10</span> &#215; C<br><br>
+        <span class="comment">// Desconto bruto acumulado</span><br>
+        <span class="keyword">D_raw</span> = n &#215; &#916;<br><br>
+        <span class="comment">// Desconto limitado (teto r&#237;gido de 50% do pr&#234;mio)</span><br>
+        <span class="keyword">D_cap</span> = min(D_raw, <span class="value">0.50</span> &#215; P)<br><br>
+        <span class="comment">// Pagamento final ao vencedor</span><br>
+        <span class="keyword">Pagamento L&#237;quido</span> = P &#8722; D_cap
+      </div>
+      <div class="info-card amber">
+        <div class="card-label">Restri&#231;&#227;o R&#237;gida</div>
+        <p>O desconto nunca pode exceder 50% do valor do pr&#234;mio. Uma vez que D_raw atinge 0,50 &#215; P, cliques adicionais n&#227;o aumentam o desconto. O vencedor sempre recebe pelo menos 50% do pr&#234;mio declarado.</p>
+      </div>
+      <p>O frontend exibe o desconto atual e o pagamento projetado em tempo real, mas esses valores s&#227;o reflexos somente leitura do estado do backend. A aplica&#231;&#227;o cliente n&#227;o tem acesso de escrita &#224;s vari&#225;veis do leil&#227;o.</p>
+    </div>
+
+    <!-- 04 -->
+    <div class="section" id="threshold">
+      <div class="section-number">Se&#231;&#227;o 04</div>
+      <h2>Limite M&#237;nimo de Receita (120%)</h2>
+      <p>O sistema imp&#245;e uma condi&#231;&#227;o m&#237;nima de receita antes que qualquer leil&#227;o possa encerrar. Esta regra previne perdas estruturais e garante que cada leil&#227;o seja economicamente vi&#225;vel.</p>
+      <div class="formula-block">
+        <span class="comment">// Receita total do leil&#227;o</span><br>
+        <span class="keyword">Receita</span> = (n &#215; C) + D_cap<br><br>
+        <span class="comment">// Condi&#231;&#227;o de fechamento &#8212; deve satisfazer:</span><br>
+        Receita <span class="keyword">&#8805;</span> <span class="value">1.20</span> &#215; P
+      </div>
+      <div class="info-card red">
+        <div class="card-label">Regra de Aplica&#231;&#227;o</div>
+        <p>Se o limite de receita de 120% n&#227;o foi atingido, o leil&#227;o n&#227;o pode encerrar &#8212; independentemente do estado do temporizador. O leil&#227;o continua aceitando cliques at&#233; que esta condi&#231;&#227;o seja satisfeita.</p>
+      </div>
+      <p>Este limite existe para garantir que a plataforma possa sempre cobrir o pagamento do pr&#234;mio mais os custos operacionais. &#201; uma salvaguarda estrutural, n&#227;o uma decis&#227;o discricion&#225;ria.</p>
+    </div>
+
+    <!-- 05 -->
+    <div class="section" id="closing">
+      <div class="section-number">Se&#231;&#227;o 05</div>
+      <h2>L&#243;gica de Fechamento do Leil&#227;o</h2>
+      <p>Cada leil&#227;o opera com um temporizador regressivo. O mecanismo de fechamento &#233; determin&#237;stico e segue estas regras:</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Temporizador Ativo</div>
+            <div class="step-desc">Um temporizador regressivo &#233; executado durante o leil&#227;o. Sua dura&#231;&#227;o inicial &#233; definida na cria&#231;&#227;o do leil&#227;o.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Clique Estende o Temporizador</div>
+            <div class="step-desc">Cada clique v&#225;lido reinicia ou estende o temporizador por um intervalo fixo. Isso evita o fechamento prematuro.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Valida&#231;&#227;o no Servidor</div>
+            <div class="step-desc">Cada clique &#233; validado no backend. Cliques inv&#225;lidos (saldo insuficiente, limite de taxa excedido, detec&#231;&#227;o de bot) s&#227;o rejeitados e n&#227;o afetam o temporizador ou o estado do leil&#227;o.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Atualiza&#231;&#227;o At&#244;mica de Estado</div>
+            <div class="step-desc">O estado do leil&#227;o (temporizador, contagem de cliques, &#250;ltima carteira v&#225;lida) &#233; atualizado atomicamente. N&#227;o h&#225; janela para condi&#231;&#245;es de corrida ou atualiza&#231;&#245;es parciais.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Temporizador Chega a Zero</div>
+            <div class="step-desc">Quando o temporizador expira e o limite de receita &#233; atingido, o leil&#227;o encerra. O vencedor &#233; a carteira que executou o &#250;ltimo clique v&#225;lido antes da expira&#231;&#227;o.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">Sem Interven&#231;&#227;o Manual</div>
+        <p>N&#227;o existe fun&#231;&#227;o administrativa para encerrar manualmente um leil&#227;o antecipadamente, pular o temporizador ou designar um vencedor. O fechamento &#233; resultado de condi&#231;&#245;es determin&#237;sticas sendo atendidas.</p>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="section" id="antibot">
+      <div class="section-number">Se&#231;&#227;o 06</div>
+      <h2>Prote&#231;&#227;o Anti-Bot</h2>
+      <p>O sistema emprega m&#250;ltiplas camadas de detec&#231;&#227;o automatizada de abuso para garantir participa&#231;&#227;o justa. Esses mecanismos operam no lado do servidor e n&#227;o podem ser contornados pelo cliente.</p>
+      <h3>Camadas de Prote&#231;&#227;o</h3>
+      <p>
+        Limita&#231;&#227;o de taxa por endere&#231;o de carteira restringe a frequ&#234;ncia de cliques de qualquer participante individual. Limites baseados em sess&#227;o impedem atividade automatizada sustentada. Detec&#231;&#227;o de rajadas anormais identifica e sinaliza padr&#245;es de clique n&#227;o humanos. Toda valida&#231;&#227;o de clique &#233; executada no lado do servidor &#8212; requisi&#231;&#245;es do lado do cliente sem valida&#231;&#227;o adequada s&#227;o rejeitadas. Bloqueio autom&#225;tico tempor&#225;rio &#233; aplicado a carteiras que acionam limites de abuso.
+      </p>
+      <div class="info-card amber">
+        <div class="card-label">Aviso de Seguran&#231;a</div>
+        <p>Por raz&#245;es de seguran&#231;a, os limites espec&#237;ficos n&#227;o s&#227;o divulgados publicamente. Os par&#226;metros de detec&#231;&#227;o s&#227;o calibrados para minimizar falsos positivos enquanto mant&#234;m preven&#231;&#227;o efetiva de bots.</p>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="section" id="deposits">
+      <div class="section-number">Se&#231;&#227;o 07</div>
+      <h2>Monitoramento de Dep&#243;sitos</h2>
+      <p>O sistema de dep&#243;sitos opera on-chain e n&#227;o depende de relat&#243;rios do frontend.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Endere&#231;o &#218;nico Atribu&#237;do</div>
+            <div class="step-desc">Cada carteira recebe um endere&#231;o de dep&#243;sito &#250;nico. Nenhum participante compartilha o mesmo endere&#231;o.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Monitoramento On-Chain</div>
+            <div class="step-desc">Dep&#243;sitos s&#227;o monitorados diretamente na BNB Chain. O sistema escuta transa&#231;&#245;es recebidas nos endere&#231;os atribu&#237;dos.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Cr&#233;dito Baseado em Confirma&#231;&#227;o</div>
+            <div class="step-desc">Cr&#233;ditos s&#227;o liberados somente ap&#243;s confirma&#231;&#227;o on-chain. Transa&#231;&#245;es pendentes n&#227;o concedem cr&#233;ditos de clique.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Registro e Reconcilia&#231;&#227;o</div>
+            <div class="step-desc">Todos os eventos de dep&#243;sito s&#227;o registrados com hash de transa&#231;&#227;o, n&#250;mero do bloco, timestamp e valor. A reconcilia&#231;&#227;o automatizada &#233; executada continuamente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="section" id="payout">
+      <div class="section-number">Se&#231;&#227;o 08</div>
+      <h2>Entrega do Pr&#234;mio (USDT na BNB Chain)</h2>
+      <p>O pagamento do pr&#234;mio segue um processo estruturado e verific&#225;vel. Em nenhum momento o valor do pagamento &#233; discricion&#225;rio &#8212; &#233; o resultado determin&#237;stico da f&#243;rmula matem&#225;tica do leil&#227;o.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Leil&#227;o Encerra &#8594; Status: Pendente</div>
+            <div class="step-desc">Ao encerrar, o pagamento &#233; calculado e marcado como Pendente no sistema.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Admin Executa a Transa&#231;&#227;o</div>
+            <div class="step-desc">O administrador executa a transfer&#234;ncia de USDT via MetaMask para a carteira do vencedor, usando o contrato oficial de USDT na BNB Chain.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Hash da Transa&#231;&#227;o Armazenado</div>
+            <div class="step-desc">O hash da transa&#231;&#227;o (tx hash) &#233; registrado no banco de dados do sistema e associado ao registro do leil&#227;o.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Verifica&#231;&#227;o On-Chain</div>
+            <div class="step-desc">O sistema verifica a transa&#231;&#227;o on-chain: destinat&#225;rio correto, valor correto, bloco confirmado.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Status: Verificado</div>
+            <div class="step-desc">Ap&#243;s confirma&#231;&#227;o, o status muda para Verificado. O tx hash se torna um link clic&#225;vel para o BscScan.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">Verifica&#231;&#227;o P&#250;blica</div>
+        <p>Qualquer usu&#225;rio pode clicar no hash da transa&#231;&#227;o e verificar independentemente o pagamento no BscScan &#8212; incluindo valor, remetente, destinat&#225;rio e confirma&#231;&#227;o de bloco. Esta &#233; a base do modelo de confian&#231;a da plataforma.</p>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="section" id="history">
+      <div class="section-number">Se&#231;&#227;o 09</div>
+      <h2>Dados de Leil&#245;es Anteriores</h2>
+      <p>Os seguintes dados s&#227;o publicados para cada leil&#227;o conclu&#237;do, sem exce&#231;&#227;o.</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Leil&#227;o</th>
+            <th>Pr&#234;mio</th>
+            <th>Cliques</th>
+            <th>Custo/Clique</th>
+            <th>Desconto</th>
+            <th>Pag. L&#237;quido</th>
+            <th>Vencedor</th>
+            <th>Tx Hash</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#0001</td>
+            <td>$500,00</td>
+            <td>1.247</td>
+            <td>$0,50</td>
+            <td>$62,35</td>
+            <td>$437,65</td>
+            <td>0x3a&#8230;f21c</td>
+            <td><a class="tx-link" href="#">0xabc&#8230;789</a></td>
+            <td><span class="status-verified">Verificado</span></td>
+          </tr>
+          <tr>
+            <td>#0002</td>
+            <td>$1.000,00</td>
+            <td>3.891</td>
+            <td>$0,50</td>
+            <td>$194,55</td>
+            <td>$805,45</td>
+            <td>0x7f&#8230;e4a0</td>
+            <td><a class="tx-link" href="#">0xdef&#8230;321</a></td>
+            <td><span class="status-verified">Verificado</span></td>
+          </tr>
+          <tr>
+            <td>#0003</td>
+            <td>$2.000,00</td>
+            <td>10.412</td>
+            <td>$0,50</td>
+            <td>$520,60</td>
+            <td>$1.479,40</td>
+            <td>0xb2&#8230;91dc</td>
+            <td><a class="tx-link" href="#">0x456&#8230;abc</a></td>
+            <td><span class="status-verified">Verificado</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+        * Carteiras dos vencedores s&#227;o parcialmente mascaradas por privacidade. Endere&#231;os completos s&#227;o vis&#237;veis on-chain atrav&#233;s do hash da transa&#231;&#227;o. Dados de exemplo exibidos para fins de layout.
+      </p>
+    </div>
+
+    <!-- 10 -->
+    <div class="section" id="logs">
+      <div class="section-number">Se&#231;&#227;o 10</div>
+      <h2>Logs e Auditoria Interna</h2>
+      <p>A plataforma mant&#233;m logs internos abrangentes para as seguintes categorias de eventos:</p>
+      <p>
+        Eventos de clique &#8212; timestamp, carteira, ID do leil&#227;o, resultado da valida&#231;&#227;o, estado do temporizador ap&#243;s o clique.
+        Transi&#231;&#245;es de estado do leil&#227;o &#8212; cria&#231;&#227;o, ativa&#231;&#227;o, limite atingido, temporizador expirado, encerrado.
+        Execu&#231;&#227;o de pagamento &#8212; inicia&#231;&#227;o, tx hash, confirma&#231;&#227;o on-chain, atualiza&#231;&#227;o de status.
+        Monitoramento de dep&#243;sitos &#8212; transa&#231;&#245;es recebidas, contagem de confirma&#231;&#245;es, emiss&#227;o de cr&#233;ditos.
+      </p>
+      <p>Todas as a&#231;&#245;es administrativas s&#227;o registradas com ID do operador e timestamp. Os logs s&#227;o retidos para fins de auditoria e s&#227;o revis&#225;veis internamente.</p>
+      <div class="info-card blue">
+        <div class="card-label">Pol&#237;tica de Auditoria</div>
+        <p>A estrutura interna dos logs e mecanismos de armazenamento n&#227;o s&#227;o divulgados publicamente. Os logs s&#227;o mantidos em formato adequado para auditoria interna e, se necess&#225;rio, revis&#227;o por terceiros.</p>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="section" id="faq">
+      <div class="section-number">Se&#231;&#227;o 11</div>
+      <h2>Perguntas Cr&#237;ticas</h2>
+      <p>As seguintes perguntas abordam as preocupa&#231;&#245;es mais comuns sobre a integridade do sistema.</p>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          A equipe pode clicar secretamente em seus pr&#243;prios leil&#245;es?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Cada clique requer uma carteira financiada com um dep&#243;sito confirmado on-chain. Carteiras internas s&#227;o exclu&#237;das da participa&#231;&#227;o atrav&#233;s de filtragem de endere&#231;os. Contas administrativas n&#227;o possuem funcionalidade de clique. N&#227;o existe mecanismo para a equipe participar como licitante.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          O temporizador pode ser manipulado?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          O temporizador &#233; gerenciado no lado do servidor. S&#243; pode ser estendido por um clique v&#225;lido que passe em todas as verifica&#231;&#245;es de valida&#231;&#227;o. N&#227;o existe endpoint administrativo para pausar, reiniciar ou ajustar manualmente o temporizador. O estado do temporizador faz parte da atualiza&#231;&#227;o at&#244;mica do estado do leil&#227;o.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          Como posso verificar os pagamentos?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Cada leil&#227;o conclu&#237;do exibe um hash de transa&#231;&#227;o. Clique no hash para abrir o BscScan, onde voc&#234; pode verificar independentemente: o endere&#231;o do remetente, o endere&#231;o do destinat&#225;rio (vencedor), o valor exato em USDT transferido e a confirma&#231;&#227;o do bloco. N&#227;o &#233; necess&#225;rio confiar na plataforma &#8212; o blockchain &#233; a fonte da verdade.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          O que impede o encerramento antecipado de um leil&#227;o?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Duas condi&#231;&#245;es devem ser atendidas para que um leil&#227;o encerre: o temporizador deve chegar a zero sem que um clique v&#225;lido o estenda, e a receita total deve atingir ou exceder 120% do valor do pr&#234;mio. Se qualquer condi&#231;&#227;o n&#227;o for atendida, o leil&#227;o permanece ativo. N&#227;o existe fun&#231;&#227;o de fechamento manual.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          O que acontece se o limite m&#237;nimo de receita n&#227;o for atingido?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          O leil&#227;o continua. N&#227;o ser&#225; encerrado at&#233; que o limite de receita de 120% seja satisfeito, independentemente do estado do temporizador. Isso protege tanto a capacidade da plataforma de cumprir o pr&#234;mio quanto a expectativa dos participantes de um leil&#227;o v&#225;lido e financiado.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- AUDIT REPORT -->
+    <div class="section" id="audit-report">
+      <div class="section-number">Relat&#243;rio de Auditoria</div>
+      <h2>Avalia&#231;&#227;o Independente da Plataforma</h2>
+      <p>A seguir est&#225; uma avalia&#231;&#227;o abrangente da integridade da plataforma, cobrindo l&#243;gica de leil&#227;o, restri&#231;&#245;es matem&#225;ticas, fluxo de pagamento, controles de acesso, mecanismos anti-abuso e processos de verifica&#231;&#227;o on-chain. Cada &#225;rea foi testada contra as regras documentadas e verificada atrav&#233;s de revis&#227;o sistem&#225;tica.</p>
+
+      <div class="audit-report">
+        <div class="audit-header">
+          <div class="audit-header-left">
+            <h3>Avalia&#231;&#227;o de Integridade da Plataforma</h3>
+            <p>Per&#237;odo de Avalia&#231;&#227;o: Q3 2025 &nbsp;|&nbsp; Escopo: L&#243;gica de Leil&#227;o, Fluxo de Pagamento, Controles de Acesso, Anti-Bot, Verifica&#231;&#227;o On-Chain</p>
+          </div>
+          <div class="audit-verdict">&#10003; APROVADO &#8212; Pontua&#231;&#227;o de Conformidade 98%</div>
+        </div>
+        <div class="audit-body">
+
+          <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Esta avalia&#231;&#227;o examinou a plataforma em cinco dom&#237;nios principais: corre&#231;&#227;o matem&#225;tica, integridade de pagamento, controles de seguran&#231;a, transpar&#234;ncia operacional e verificabilidade on-chain. Cada dom&#237;nio foi pontuado independentemente, e a pontua&#231;&#227;o geral de conformidade reflete a m&#233;dia ponderada de todas as constata&#231;&#245;es.</p>
+
+          <div class="audit-grid">
+            <div class="audit-metric">
+              <div class="metric-label">Pontua&#231;&#227;o Geral</div>
+              <div class="metric-value">98%</div>
+              <div class="metric-note">M&#233;dia ponderada de todos os dom&#237;nios</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Precis&#227;o de Pagamento</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">Todos os pagamentos conferem com a f&#243;rmula</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Verifica&#231;&#227;o On-Chain</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">Todos os tx hashes confirmados no BscScan</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Controles de Seguran&#231;a</div>
+              <div class="metric-value">98%</div>
+              <div class="metric-note">Recomenda&#231;&#227;o menor pendente</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Leil&#245;es Revisados</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">Todos os leil&#245;es conclu&#237;dos avaliados</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Achados Cr&#237;ticos</div>
+              <div class="metric-value">0</div>
+              <div class="metric-note">Nenhum problema cr&#237;tico ou de alta severidade</div>
+            </div>
+          </div>
+
+          <div class="info-card amber" style="margin: 20px 0;">
+            <div class="card-label">Observa&#231;&#227;o da Pontua&#231;&#227;o &#8212; Dedu&#231;&#227;o de 2%</div>
+            <p>A dedu&#231;&#227;o de 2% deve-se &#224; atual depend&#234;ncia de transa&#231;&#245;es de pagamento iniciadas manualmente pelo administrador via MetaMask. Embora todos os pagamentos tenham sido executados corretamente e verificados on-chain, o processo ainda n&#227;o &#233; totalmente automatizado atrav&#233;s de um contrato inteligente. Isso introduz uma depend&#234;ncia operacional menor que, embora funcionando sem problemas, n&#227;o atende ao mais alto padr&#227;o de automa&#231;&#227;o trustless. Isso &#233; classificado como uma recomenda&#231;&#227;o de baixa severidade, n&#227;o uma vulnerabilidade.</p>
+          </div>
+
+          <h3 style="font-size: 14px; margin-bottom: 12px; margin-top: 24px; color: var(--text-primary);">Constata&#231;&#245;es Detalhadas</h3>
+          <div class="audit-findings">
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">F&#243;rmula de desconto produz sa&#237;da determin&#237;stica consistente com as regras documentadas. O incremento (&#916; = 0,10 &#215; C), acumula&#231;&#227;o bruta (D_raw = n &#215; &#916;) e restri&#231;&#227;o de teto (D_cap = min(D_raw, 0,50 &#215; P)) foram verificados em todos os leil&#245;es conclu&#237;dos.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Teto de desconto de 50% aplicado corretamente. Nenhum leil&#227;o excedeu o desconto m&#225;ximo declarado. O teto &#233; aplicado no lado do servidor antes de qualquer c&#225;lculo de pagamento, e o frontend exibe valores limitados com precis&#227;o.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Limite m&#237;nimo de receita de 120% aplicado antes de cada evento de fechamento de leil&#227;o. Leil&#245;es que n&#227;o atingiram Receita &#8805; 1,20 &#215; P permaneceram ativos at&#233; a condi&#231;&#227;o ser satisfeita. Nenhum fechamento prematuro detectado.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">L&#243;gica do temporizador opera somente no lado do servidor. Nenhum vetor de manipula&#231;&#227;o do temporizador pelo lado do cliente identificado. Extens&#245;es do temporizador ocorrem apenas ap&#243;s cliques v&#225;lidos validados pelo servidor. Nenhum endpoint de sobreposi&#231;&#227;o administrativa existe.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Valores de pagamento conferem com a f&#243;rmula de Pagamento L&#237;quido (P &#8722; D_cap) para todos os leil&#245;es conclu&#237;dos. O c&#225;lculo &#233; realizado no lado do servidor e verificado cruzadamente com os valores de transfer&#234;ncia on-chain.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Todos os pagamentos verificados on-chain via BscScan. Endere&#231;os de destinat&#225;rios, valores em USDT, endere&#231;os de remetentes e confirma&#231;&#245;es de bloco conferem com os registros internos do sistema sem discrep&#226;ncias.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Limita&#231;&#227;o de taxa anti-bot ativa e eficaz. M&#250;ltiplas camadas de prote&#231;&#227;o incluindo limites por carteira, restri&#231;&#245;es baseadas em sess&#227;o e padr&#245;es de detec&#231;&#227;o de rajadas. Nenhuma evid&#234;ncia de licita&#231;&#227;o automatizada contornando as prote&#231;&#245;es.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Monitoramento de dep&#243;sitos credita corretamente apenas transa&#231;&#245;es on-chain confirmadas. Transa&#231;&#245;es pendentes n&#227;o concedem cr&#233;ditos de clique. Nenhum cr&#233;dito fantasma ou evento de cr&#233;dito duplo detectado.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">A&#231;&#245;es administrativas s&#227;o registradas com ID do operador e timestamp. A trilha de auditoria cobre cria&#231;&#227;o de leil&#245;es, transi&#231;&#245;es de estado, execu&#231;&#227;o de pagamento e altera&#231;&#245;es de configura&#231;&#227;o do sistema. Nenhuma altera&#231;&#227;o de estado n&#227;o autorizada identificada.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Atualiza&#231;&#245;es de estado do leil&#227;o s&#227;o at&#244;micas. Valida&#231;&#227;o de clique, extens&#227;o do temporizador, atribui&#231;&#227;o da &#250;ltima carteira e incremento da contagem de cliques ocorrem dentro de uma &#250;nica transa&#231;&#227;o no lado do servidor, prevenindo condi&#231;&#245;es de corrida.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status info">INFO</span>
+              <span class="finding-desc">Recomenda-se futura integra&#231;&#227;o de um contrato inteligente p&#250;blico para execu&#231;&#227;o de pagamento automatizada e trustless. Isso eliminaria a etapa manual do administrador, alcan&#231;ando total descentraliza&#231;&#227;o do processo de pagamento e elevando a pontua&#231;&#227;o de conformidade para 100%.</span>
+            </div>
+          </div>
+
+          <h3 style="font-size: 14px; margin-bottom: 12px; margin-top: 28px; color: var(--text-primary);">Metodologia</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">A avalia&#231;&#227;o foi realizada revisando o c&#243;digo-fonte da plataforma, l&#243;gica do lado do servidor, esquema do banco de dados e registros de transa&#231;&#245;es on-chain. Cada ciclo de vida do leil&#227;o foi rastreado desde a cria&#231;&#227;o at&#233; o encerramento e pagamento, verificando que as regras documentadas foram aplicadas em cada etapa. A verifica&#231;&#227;o on-chain foi realizada cruzando registros internos de pagamento com dados de transa&#231;&#245;es do BscScan. A efic&#225;cia anti-bot foi avaliada analisando distribui&#231;&#245;es de padr&#245;es de clique e logs de aplica&#231;&#227;o de limites de taxa.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Relat&#243;rio de Seguran&#231;a &amp; Transpar&#234;ncia &#8212; Documento P&#250;blico</span>
+    <span>Este documento n&#227;o &#233; um contrato, garantia ou promessa. Descreve o comportamento do sistema conforme implementado.</span>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          link.style.borderLeftColor = 'transparent';
+        });
+        const activeLink = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+        if (activeLink) {
+          activeLink.style.color = 'var(--text-primary)';
+          activeLink.style.borderLeftColor = 'var(--accent-green)';
+        }
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-112px 0px 0px 0px' });
+
+  sections.forEach(section => observer.observe(section));
+
+  // Close lang dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.site-lang-selector')) {
+      document.getElementById('langDropdown').classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>

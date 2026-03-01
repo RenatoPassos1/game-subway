@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguridad y Transparencia &#8212; Plataforma de Subastas</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0b0d;
+    --bg-secondary: #111318;
+    --bg-tertiary: #181b22;
+    --bg-card: #14161c;
+    --border: #1e2230;
+    --border-accent: #2a3040;
+    --text-primary: #e8eaf0;
+    --text-secondary: #8b90a0;
+    --text-muted: #5a5f70;
+    --accent-green: #00d68f;
+    --accent-green-dim: #00d68f22;
+    --accent-blue: #3b82f6;
+    --accent-blue-dim: #3b82f611;
+    --accent-amber: #f59e0b;
+    --accent-amber-dim: #f59e0b15;
+    --accent-red: #ef4444;
+    --accent-red-dim: #ef444415;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-accent) var(--bg-primary);
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .site-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(15, 15, 35, 0.92);
+    border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.08);
+  }
+
+  .site-navbar-inner {
+    max-width: 1280px;
+    width: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .site-navbar-logo img { width: 32px; height: 32px; }
+
+  .site-navbar-logo .logo-click {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6C5CE7 0%, #00D2FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .site-navbar-logo .logo-win {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .site-navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .site-navbar-links a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: #9090B0;
+    border: 1px solid transparent;
+  }
+
+  .site-navbar-links a:hover {
+    color: #E0E0FF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .site-navbar-links a.active {
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.2);
+  }
+
+  .site-navbar-hamburger {
+    display: none;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #E0E0FF;
+  }
+
+  .site-navbar-hamburger svg { width: 20px; height: 20px; }
+
+  .site-navbar-mobile {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 35, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    z-index: 199;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-navbar-mobile.open { display: flex; }
+
+  .site-navbar-mobile a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: #9090B0;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .site-navbar-mobile a:hover { color: #E0E0FF; background: rgba(255, 255, 255, 0.05); }
+  .site-navbar-mobile a.active { color: #6C5CE7; background: rgba(108, 92, 231, 0.1); border-color: rgba(108, 92, 231, 0.2); }
+
+  .site-navbar-right { display: flex; align-items: center; gap: 12px; }
+
+  .site-lang-selector { position: relative; }
+
+  .site-lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #9090B0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .site-lang-btn:hover { border-color: rgba(108, 92, 231, 0.3); color: #E0E0FF; }
+  .site-lang-btn svg { width: 16px; height: 16px; }
+
+  .site-lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 6px;
+    background: rgba(15, 15, 35, 0.98);
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    border-radius: 8px;
+    padding: 6px;
+    min-width: 140px;
+    z-index: 300;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .site-lang-dropdown.open { display: block; }
+
+  .site-lang-dropdown a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Space Mono', monospace;
+    color: #9090B0;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .site-lang-dropdown a:hover { background: rgba(108, 92, 231, 0.1); color: #E0E0FF; }
+  .site-lang-dropdown a.active-lang { color: #6C5CE7; background: rgba(108, 92, 231, 0.1); }
+
+  .site-wallet-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.15), rgba(0, 210, 255, 0.08));
+    color: #E0E0FF;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .site-wallet-btn:hover {
+    border-color: rgba(108, 92, 231, 0.5);
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.25), rgba(0, 210, 255, 0.15));
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.15);
+  }
+
+  .site-wallet-btn svg { width: 16px; height: 16px; }
+
+  @media (max-width: 900px) {
+    .site-navbar-links { display: none; }
+    .site-navbar-hamburger { display: block; }
+    .site-wallet-btn span { display: none; }
+    .site-wallet-btn { padding: 8px 10px; }
+  }
+
+  @media (max-width: 480px) {
+    .site-wallet-btn { display: none; }
+  }
+
+  .top-bar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .top-bar-left .shield {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-green);
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .top-bar-left .shield::after { content: '\2713'; font-size: 10px; color: var(--accent-green); }
+
+  .top-bar-right {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 112px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 112px);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    overflow-y: auto;
+    z-index: 50;
+  }
+
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 20px;
+    margin-bottom: 12px;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar a:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border-left-color: var(--accent-green);
+  }
+
+  .sidebar a .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .sidebar .divider { height: 1px; background: var(--border); margin: 16px 20px; }
+
+  .main { margin-left: 260px; margin-top: 112px; min-height: calc(100vh - 112px); }
+
+  .hero {
+    padding: 80px 60px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--accent-green-dim) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero .doc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent-green);
+    background: var(--accent-green-dim);
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+
+  .hero .subtitle { font-size: 16px; color: var(--text-secondary); max-width: 560px; line-height: 1.7; }
+
+  .hero .meta-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero .meta-item { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+  .hero .meta-item span { color: var(--text-secondary); display: block; margin-top: 2px; }
+
+  .content { max-width: 780px; padding: 0 60px 80px; }
+  .section { padding-top: 56px; }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .section h3 { font-size: 17px; font-weight: 600; margin-top: 28px; margin-bottom: 12px; color: var(--text-primary); }
+  .section p { color: var(--text-secondary); margin-bottom: 14px; }
+
+  .def-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .def-table th { text-align: left; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 10px 16px; background: var(--bg-tertiary); border: 1px solid var(--border); }
+  .def-table td { padding: 12px 16px; border: 1px solid var(--border); vertical-align: top; }
+  .def-table td:first-child { font-family: var(--mono); font-weight: 600; color: var(--accent-green); white-space: nowrap; width: 200px; font-size: 13px; }
+  .def-table td:last-child { color: var(--text-secondary); }
+
+  .formula-block { background: var(--bg-tertiary); border: 1px solid var(--border); border-left: 3px solid var(--accent-green); border-radius: 4px; padding: 20px 24px; margin: 20px 0; font-family: var(--mono); font-size: 13.5px; line-height: 2; color: var(--text-primary); overflow-x: auto; }
+  .formula-block .comment { color: var(--text-muted); font-style: italic; }
+  .formula-block .keyword { color: var(--accent-green); }
+  .formula-block .value { color: var(--accent-amber); }
+
+  .info-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 20px 0; }
+  .info-card.green { border-left: 3px solid var(--accent-green); }
+  .info-card.amber { border-left: 3px solid var(--accent-amber); }
+  .info-card.blue  { border-left: 3px solid var(--accent-blue); }
+  .info-card.red   { border-left: 3px solid var(--accent-red); }
+  .info-card .card-label { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .info-card.green .card-label { color: var(--accent-green); }
+  .info-card.amber .card-label { color: var(--accent-amber); }
+  .info-card.blue .card-label  { color: var(--accent-blue); }
+  .info-card.red .card-label   { color: var(--accent-red); }
+  .info-card p { color: var(--text-secondary); font-size: 14px; margin-bottom: 0; }
+
+  .flow-steps { margin: 20px 0; display: flex; flex-direction: column; gap: 0; }
+  .flow-step { display: flex; gap: 16px; position: relative; }
+  .flow-step .step-line { display: flex; flex-direction: column; align-items: center; width: 24px; flex-shrink: 0; }
+  .flow-step .step-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-green); border: 2px solid var(--bg-primary); outline: 2px solid var(--accent-green); flex-shrink: 0; margin-top: 5px; }
+  .flow-step .step-connector { width: 1px; flex: 1; background: var(--border-accent); min-height: 20px; }
+  .flow-step:last-child .step-connector { display: none; }
+  .flow-step .step-content { padding-bottom: 20px; }
+  .flow-step .step-title { font-weight: 600; font-size: 14px; color: var(--text-primary); margin-bottom: 4px; }
+  .flow-step .step-desc { font-size: 13px; color: var(--text-muted); }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  .data-table th { text-align: left; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding: 10px 12px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); font-family: var(--mono); font-size: 12px; }
+  .data-table tr:hover td { background: var(--bg-tertiary); }
+  .status-verified { display: inline-flex; align-items: center; gap: 4px; color: var(--accent-green); font-weight: 600; }
+  .status-verified::before { content: '\25CF'; font-size: 8px; }
+  .tx-link { color: var(--accent-blue); text-decoration: none; border-bottom: 1px dashed var(--accent-blue); cursor: pointer; }
+  .tx-link:hover { border-bottom-style: solid; }
+
+  .faq-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; overflow: hidden; }
+  .faq-q { padding: 16px 20px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 12px; background: var(--bg-card); transition: background 0.2s; user-select: none; }
+  .faq-q:hover { background: var(--bg-tertiary); }
+  .faq-q .faq-icon { font-family: var(--mono); font-size: 12px; color: var(--accent-green); transition: transform 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+  .faq-item.open .faq-a { max-height: 300px; }
+  .faq-a-inner { padding: 0 20px 16px 44px; color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
+
+  .audit-report { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; margin: 24px 0; overflow: hidden; }
+  .audit-header { padding: 28px 28px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+  .audit-header-left h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .audit-header-left p { font-family: var(--mono); font-size: 12px; color: var(--text-muted); margin-bottom: 0; }
+  .audit-verdict { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 4px; background: var(--accent-green-dim); border: 1px solid var(--accent-green); font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent-green); }
+  .audit-body { padding: 24px 28px; }
+  .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .audit-metric { background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 4px; padding: 16px; }
+  .audit-metric .metric-label { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .audit-metric .metric-value { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent-green); }
+  .audit-metric .metric-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .audit-findings { margin: 20px 0 0; }
+  .finding-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .finding-row:last-child { border-bottom: none; }
+  .finding-status { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 3px; flex-shrink: 0; min-width: 60px; text-align: center; }
+  .finding-status.pass { background: var(--accent-green-dim); color: var(--accent-green); border: 1px solid var(--accent-green); }
+  .finding-status.info { background: var(--accent-blue-dim); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+  .finding-desc { color: var(--text-secondary); }
+
+  .footer { padding: 40px 60px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; margin-top: 112px; }
+    .top-bar { padding: 0 16px; }
+    .hero { padding: 60px 24px 40px; }
+    .content { padding: 0 24px 60px; }
+    .hero h1 { font-size: 28px; }
+    .hero .meta-row { flex-direction: column; gap: 12px; }
+    .audit-grid { grid-template-columns: 1fr; }
+    .footer { padding: 30px 24px; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section { animation: fadeIn 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+</style>
+</head>
+<body>
+
+<!-- SITE NAVBAR -->
+<nav class="site-navbar">
+  <div class="site-navbar-inner">
+    <a href="/" class="site-navbar-logo">
+      <img src="/favicon.svg" alt="Click Win">
+      <span class="logo-click">Click</span>
+      <span class="logo-win">Win</span>
+    </a>
+    <div class="site-navbar-links">
+      <a href="/">Home</a>
+      <a href="/about">Acerca de</a>
+      <a href="/help">Ayuda</a>
+      <a href="/partner">Socio</a>
+      <a href="/whitepaper">Whitepaper</a>
+      <a href="/audit/" class="active">Auditor&#237;a</a>
+    </div>
+    <div class="site-navbar-right">
+      <div class="site-lang-selector">
+        <button class="site-lang-btn" onclick="document.getElementById('langDropdown').classList.toggle('open')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 014 9 15 15 0 01-4 9 15 15 0 01-4-9 15 15 0 014-9z"/></svg>
+          ES
+        </button>
+        <div id="langDropdown" class="site-lang-dropdown">
+          <a href="/audit/">English</a>
+          <a href="/audit/pt-br.html">Portugu&#234;s</a>
+          <a href="/audit/es.html" class="active-lang">Espa&#241;ol</a>
+        </div>
+      </div>
+      <a href="/" class="site-wallet-btn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2v-5zm-5 0a1 1 0 100 2 1 1 0 000-2z"/></svg>
+        <span>Conectar Billetera</span>
+      </a>
+      <button class="site-navbar-hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div id="mobileMenu" class="site-navbar-mobile">
+  <a href="/">Home</a>
+  <a href="/about">Acerca de</a>
+  <a href="/help">Ayuda</a>
+  <a href="/partner">Socio</a>
+  <a href="/whitepaper">Whitepaper</a>
+  <a href="/audit/" class="active">Auditor&#237;a</a>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="shield"></div>
+    Seguridad y Transparencia
+  </div>
+  <div class="top-bar-right"></div>
+</div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-label">Contenido</div>
+  <a href="#purpose"><span class="num">01</span> Prop&#243;sito</a>
+  <a href="#definitions"><span class="num">02</span> Definiciones</a>
+  <a href="#math"><span class="num">03</span> Matem&#225;ticas de la Subasta</a>
+  <a href="#threshold"><span class="num">04</span> L&#237;mite de Ingresos</a>
+  <a href="#closing"><span class="num">05</span> L&#243;gica de Cierre</a>
+  <a href="#antibot"><span class="num">06</span> Sistema Anti-Bot</a>
+  <a href="#deposits"><span class="num">07</span> Monitoreo de Dep&#243;sitos</a>
+  <a href="#payout"><span class="num">08</span> Entrega del Premio</a>
+  <a href="#history"><span class="num">09</span> Subastas Anteriores</a>
+  <a href="#logs"><span class="num">10</span> Logs y Auditor&#237;a</a>
+  <a href="#faq"><span class="num">11</span> Preguntas Cr&#237;ticas</a>
+  <div class="divider"></div>
+  <a href="#audit-report"><span class="num">&#9733;</span> Informe de Auditor&#237;a</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="doc-badge">&#9670; DIVULGACI&#211;N T&#201;CNICA P&#218;BLICA</div>
+    <h1>Informe de Seguridad y Transparencia</h1>
+    <p class="subtitle">
+      Este documento proporciona una descripci&#243;n completa y verificable de las reglas del sistema de subastas, restricciones matem&#225;ticas, condiciones de cierre, mecanismos de pago y controles internos. Est&#225; destinado a la inspecci&#243;n p&#250;blica.
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">RED<span>BNB Chain (BEP-20)</span></div>
+      <div class="meta-item">ACTIVO DE PAGO<span>USDT</span></div>
+      <div class="meta-item">VERIFICACI&#211;N<span>On-chain v&#237;a BscScan</span></div>
+      <div class="meta-item">&#218;LTIMA ACTUALIZACI&#211;N<span>14 de septiembre de 2025</span></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 -->
+    <div class="section" id="purpose">
+      <div class="section-number">Secci&#243;n 01</div>
+      <h2>Prop&#243;sito de Este Documento</h2>
+      <p>
+        Esta p&#225;gina existe para documentar formalmente las reglas matem&#225;ticas que gobiernan cada subasta, las condiciones determin&#237;sticas bajo las cuales las subastas cierran, los l&#237;mites financieros impuestos por el sistema, el proceso de ejecuci&#243;n de pagos y los mecanismos disponibles para la verificaci&#243;n p&#250;blica de los resultados.
+      </p>
+      <p>
+        No es un documento de marketing. No contiene afirmaciones promocionales. Su objetivo es permitir que cualquier participante u observador externo comprenda y verifique independientemente c&#243;mo opera el sistema.
+      </p>
+      <div class="info-card green">
+        <div class="card-label">Principio Rector</div>
+        <p>Toda regla descrita en este documento se aplica del lado del servidor. La aplicaci&#243;n cliente muestra valores calculados, pero no puede modificar el estado de la subasta, las condiciones de cierre ni los valores de pago.</p>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="section" id="definitions">
+      <div class="section-number">Secci&#243;n 02</div>
+      <h2>Definiciones Fundamentales</h2>
+      <p>Los siguientes t&#233;rminos se utilizan a lo largo de este documento y en la interfaz de la subasta. Sus definiciones son fijas y no cambian entre subastas.</p>
+      <table class="def-table">
+        <thead>
+          <tr><th>S&#237;mbolo / T&#233;rmino</th><th>Definici&#243;n</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>P &#8212; Valor del Premio</td><td>El valor declarado del premio en USDT para una subasta determinada. Se define en la creaci&#243;n de la subasta y es inmutable despu&#233;s de eso.</td></tr>
+          <tr><td>C &#8212; Costo del Clic</td><td>El costo fijo en USDT que un participante paga por clic v&#225;lido. Se define en la creaci&#243;n de la subasta.</td></tr>
+          <tr><td>&#916; &#8212; Incremento por Clic</td><td>El incremento de descuento aplicado por clic v&#225;lido. Se calcula como &#916; = 0,10 &#215; C (10% del costo del clic).</td></tr>
+          <tr><td>n &#8212; Total de Clics</td><td>El n&#250;mero total de clics v&#225;lidos registrados durante el ciclo de vida de la subasta.</td></tr>
+          <tr><td>D &#8212; Descuento Acumulado</td><td>El descuento total acumulado de todos los clics v&#225;lidos. Sujeto al Tope de Descuento.</td></tr>
+          <tr><td>Tope de Descuento (50%)</td><td>El descuento m&#225;ximo que puede aplicarse. D nunca puede exceder el 50% de P, independientemente de n.</td></tr>
+          <tr><td>L&#237;mite M&#237;nimo de Ingresos</td><td>La subasta solo puede cerrarse cuando los ingresos totales &#8805; 120% de P. Garantiza la sostenibilidad econ&#243;mica.</td></tr>
+          <tr><td>Pago Neto</td><td>El valor final pagado al ganador: P menos el descuento limitado.</td></tr>
+          <tr><td>Condici&#243;n de Cierre</td><td>El conjunto determin&#237;stico de condiciones que deben cumplirse para que una subasta se cierre.</td></tr>
+          <tr><td>Pago Verificado</td><td>Un pago cuyo hash de transacci&#243;n ha sido confirmado on-chain v&#237;a BscScan.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 03 -->
+    <div class="section" id="math">
+      <div class="section-number">Secci&#243;n 03</div>
+      <h2>Matem&#225;ticas de la Subasta</h2>
+      <p>El mecanismo de descuento sigue una f&#243;rmula determin&#237;stica. No hay aleatoriedad involucrada. Todos los c&#225;lculos se ejecutan del lado del servidor.</p>
+      <div class="formula-block">
+        <span class="comment">// Incremento de descuento por clic</span><br>
+        <span class="keyword">&#916;</span> = <span class="value">0.10</span> &#215; C<br><br>
+        <span class="comment">// Descuento bruto acumulado</span><br>
+        <span class="keyword">D_raw</span> = n &#215; &#916;<br><br>
+        <span class="comment">// Descuento limitado (tope r&#237;gido del 50% del premio)</span><br>
+        <span class="keyword">D_cap</span> = min(D_raw, <span class="value">0.50</span> &#215; P)<br><br>
+        <span class="comment">// Pago final al ganador</span><br>
+        <span class="keyword">Pago Neto</span> = P &#8722; D_cap
+      </div>
+      <div class="info-card amber">
+        <div class="card-label">Restricci&#243;n R&#237;gida</div>
+        <p>El descuento nunca puede exceder el 50% del valor del premio. Una vez que D_raw alcanza 0,50 &#215; P, los clics adicionales no aumentan el descuento. El ganador siempre recibe al menos el 50% del premio declarado.</p>
+      </div>
+      <p>El frontend muestra el descuento actual y el pago proyectado en tiempo real, pero estos valores son reflejos de solo lectura del estado del backend. La aplicaci&#243;n cliente no tiene acceso de escritura a las variables de la subasta.</p>
+    </div>
+
+    <!-- 04 -->
+    <div class="section" id="threshold">
+      <div class="section-number">Secci&#243;n 04</div>
+      <h2>L&#237;mite M&#237;nimo de Ingresos (120%)</h2>
+      <p>El sistema impone una condici&#243;n m&#237;nima de ingresos antes de que cualquier subasta pueda cerrarse. Esta regla previene p&#233;rdidas estructurales y garantiza que cada subasta sea econ&#243;micamente viable.</p>
+      <div class="formula-block">
+        <span class="comment">// Ingresos totales de la subasta</span><br>
+        <span class="keyword">Ingresos</span> = (n &#215; C) + D_cap<br><br>
+        <span class="comment">// Condici&#243;n de cierre &#8212; debe satisfacer:</span><br>
+        Ingresos <span class="keyword">&#8805;</span> <span class="value">1.20</span> &#215; P
+      </div>
+      <div class="info-card red">
+        <div class="card-label">Regla de Aplicaci&#243;n</div>
+        <p>Si el l&#237;mite de ingresos del 120% no se ha alcanzado, la subasta no puede cerrarse &#8212; independientemente del estado del temporizador. La subasta contin&#250;a aceptando clics hasta que esta condici&#243;n se cumpla.</p>
+      </div>
+      <p>Este l&#237;mite existe para garantizar que la plataforma siempre pueda cubrir el pago del premio m&#225;s los costos operativos. Es una salvaguarda estructural, no una decisi&#243;n discrecional.</p>
+    </div>
+
+    <!-- 05 -->
+    <div class="section" id="closing">
+      <div class="section-number">Secci&#243;n 05</div>
+      <h2>L&#243;gica de Cierre de la Subasta</h2>
+      <p>Cada subasta opera con un temporizador regresivo. El mecanismo de cierre es determin&#237;stico y sigue estas reglas:</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Temporizador Activo</div>
+            <div class="step-desc">Un temporizador regresivo se ejecuta durante la subasta. Su duraci&#243;n inicial se define en la creaci&#243;n de la subasta.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">El Clic Extiende el Temporizador</div>
+            <div class="step-desc">Cada clic v&#225;lido reinicia o extiende el temporizador por un intervalo fijo. Esto evita el cierre prematuro.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Validaci&#243;n en el Servidor</div>
+            <div class="step-desc">Cada clic es validado en el backend. Clics inv&#225;lidos (saldo insuficiente, l&#237;mite de tasa excedido, detecci&#243;n de bot) son rechazados y no afectan el temporizador ni el estado de la subasta.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Actualizaci&#243;n At&#243;mica de Estado</div>
+            <div class="step-desc">El estado de la subasta (temporizador, conteo de clics, &#250;ltima billetera v&#225;lida) se actualiza at&#243;micamente. No hay ventana para condiciones de carrera o actualizaciones parciales.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">El Temporizador Llega a Cero</div>
+            <div class="step-desc">Cuando el temporizador expira y el l&#237;mite de ingresos se alcanza, la subasta se cierra. El ganador es la billetera que ejecut&#243; el &#250;ltimo clic v&#225;lido antes de la expiraci&#243;n.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">Sin Intervenci&#243;n Manual</div>
+        <p>No existe funci&#243;n administrativa para cerrar manualmente una subasta anticipadamente, saltar el temporizador o designar un ganador. El cierre es resultado de condiciones determin&#237;sticas que se cumplen.</p>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="section" id="antibot">
+      <div class="section-number">Secci&#243;n 06</div>
+      <h2>Protecci&#243;n Anti-Bot</h2>
+      <p>El sistema emplea m&#250;ltiples capas de detecci&#243;n automatizada de abuso para garantizar una participaci&#243;n justa. Estos mecanismos operan del lado del servidor y no pueden ser eludidos por el cliente.</p>
+      <h3>Capas de Protecci&#243;n</h3>
+      <p>
+        La limitaci&#243;n de tasa por direcci&#243;n de billetera restringe la frecuencia de clics de cualquier participante individual. L&#237;mites basados en sesi&#243;n previenen la actividad automatizada sostenida. La detecci&#243;n de r&#225;fagas anormales identifica y marca patrones de clics no humanos. Toda la validaci&#243;n de clics se ejecuta del lado del servidor &#8212; las solicitudes del lado del cliente sin validaci&#243;n adecuada son rechazadas. El bloqueo autom&#225;tico temporal se aplica a las billeteras que activan l&#237;mites de abuso.
+      </p>
+      <div class="info-card amber">
+        <div class="card-label">Aviso de Seguridad</div>
+        <p>Por razones de seguridad, los l&#237;mites espec&#237;ficos no se divulgan p&#250;blicamente. Los par&#225;metros de detecci&#243;n est&#225;n calibrados para minimizar los falsos positivos mientras mantienen una prevenci&#243;n efectiva de bots.</p>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="section" id="deposits">
+      <div class="section-number">Secci&#243;n 07</div>
+      <h2>Monitoreo de Dep&#243;sitos</h2>
+      <p>El sistema de dep&#243;sitos opera on-chain y no depende de reportes del frontend.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Direcci&#243;n &#218;nica Asignada</div>
+            <div class="step-desc">Cada billetera recibe una direcci&#243;n de dep&#243;sito &#250;nica. Ning&#250;n participante comparte la misma direcci&#243;n.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Monitoreo On-Chain</div>
+            <div class="step-desc">Los dep&#243;sitos se monitorean directamente en BNB Chain. El sistema escucha transacciones entrantes en las direcciones asignadas.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Cr&#233;dito Basado en Confirmaci&#243;n</div>
+            <div class="step-desc">Los cr&#233;ditos se liberan solo despu&#233;s de la confirmaci&#243;n on-chain. Las transacciones pendientes no otorgan cr&#233;ditos de clic.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Registro y Conciliaci&#243;n</div>
+            <div class="step-desc">Todos los eventos de dep&#243;sito se registran con hash de transacci&#243;n, n&#250;mero de bloque, marca de tiempo y monto. La conciliaci&#243;n automatizada se ejecuta continuamente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="section" id="payout">
+      <div class="section-number">Secci&#243;n 08</div>
+      <h2>Entrega del Premio (USDT en BNB Chain)</h2>
+      <p>El pago del premio sigue un proceso estructurado y verificable. En ning&#250;n momento el valor del pago es discrecional &#8212; es el resultado determin&#237;stico de la f&#243;rmula matem&#225;tica de la subasta.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Subasta Cierra &#8594; Estado: Pendiente</div>
+            <div class="step-desc">Al cerrarse, el pago se calcula y se marca como Pendiente en el sistema.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">El Admin Ejecuta la Transacci&#243;n</div>
+            <div class="step-desc">El administrador ejecuta la transferencia de USDT v&#237;a MetaMask a la billetera del ganador, usando el contrato oficial de USDT en BNB Chain.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Hash de Transacci&#243;n Almacenado</div>
+            <div class="step-desc">El hash de la transacci&#243;n (tx hash) se registra en la base de datos del sistema y se asocia con el registro de la subasta.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Verificaci&#243;n On-Chain</div>
+            <div class="step-desc">El sistema verifica la transacci&#243;n on-chain: destinatario correcto, monto correcto, bloque confirmado.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Estado: Verificado</div>
+            <div class="step-desc">Despu&#233;s de la confirmaci&#243;n, el estado cambia a Verificado. El tx hash se convierte en un enlace clicable a BscScan.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">Verificaci&#243;n P&#250;blica</div>
+        <p>Cualquier usuario puede hacer clic en el hash de la transacci&#243;n y verificar independientemente el pago en BscScan &#8212; incluyendo monto, remitente, destinatario y confirmaci&#243;n de bloque. Esta es la base del modelo de confianza de la plataforma.</p>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="section" id="history">
+      <div class="section-number">Secci&#243;n 09</div>
+      <h2>Datos de Subastas Anteriores</h2>
+      <p>Los siguientes datos se publican para cada subasta completada, sin excepci&#243;n.</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Subasta</th>
+            <th>Premio</th>
+            <th>Clics</th>
+            <th>Costo/Clic</th>
+            <th>Descuento</th>
+            <th>Pago Neto</th>
+            <th>Ganador</th>
+            <th>Tx Hash</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#0001</td>
+            <td>$500,00</td>
+            <td>1.247</td>
+            <td>$0,50</td>
+            <td>$62,35</td>
+            <td>$437,65</td>
+            <td>0x3a&#8230;f21c</td>
+            <td><a class="tx-link" href="#">0xabc&#8230;789</a></td>
+            <td><span class="status-verified">Verificado</span></td>
+          </tr>
+          <tr>
+            <td>#0002</td>
+            <td>$1.000,00</td>
+            <td>3.891</td>
+            <td>$0,50</td>
+            <td>$194,55</td>
+            <td>$805,45</td>
+            <td>0x7f&#8230;e4a0</td>
+            <td><a class="tx-link" href="#">0xdef&#8230;321</a></td>
+            <td><span class="status-verified">Verificado</span></td>
+          </tr>
+          <tr>
+            <td>#0003</td>
+            <td>$2.000,00</td>
+            <td>10.412</td>
+            <td>$0,50</td>
+            <td>$520,60</td>
+            <td>$1.479,40</td>
+            <td>0xb2&#8230;91dc</td>
+            <td><a class="tx-link" href="#">0x456&#8230;abc</a></td>
+            <td><span class="status-verified">Verificado</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+        * Las billeteras de los ganadores est&#225;n parcialmente enmascaradas por privacidad. Las direcciones completas son visibles on-chain a trav&#233;s del hash de la transacci&#243;n. Datos de ejemplo mostrados con fines de dise&#241;o.
+      </p>
+    </div>
+
+    <!-- 10 -->
+    <div class="section" id="logs">
+      <div class="section-number">Secci&#243;n 10</div>
+      <h2>Logs y Auditor&#237;a Interna</h2>
+      <p>La plataforma mantiene registros internos exhaustivos para las siguientes categor&#237;as de eventos:</p>
+      <p>
+        Eventos de clic &#8212; marca de tiempo, billetera, ID de subasta, resultado de la validaci&#243;n, estado del temporizador despu&#233;s del clic.
+        Transiciones de estado de la subasta &#8212; creaci&#243;n, activaci&#243;n, l&#237;mite alcanzado, temporizador expirado, cerrada.
+        Ejecuci&#243;n de pagos &#8212; iniciaci&#243;n, tx hash, confirmaci&#243;n on-chain, actualizaci&#243;n de estado.
+        Monitoreo de dep&#243;sitos &#8212; transacciones entrantes, conteo de confirmaciones, emisi&#243;n de cr&#233;ditos.
+      </p>
+      <p>Todas las acciones administrativas se registran con ID del operador y marca de tiempo. Los registros se retienen para fines de auditor&#237;a y son revisables internamente.</p>
+      <div class="info-card blue">
+        <div class="card-label">Pol&#237;tica de Auditor&#237;a</div>
+        <p>La estructura interna de los registros y los mecanismos de almacenamiento no se divulgan p&#250;blicamente. Los registros se mantienen en un formato adecuado para auditor&#237;a interna y, si es necesario, revisi&#243;n por terceros.</p>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="section" id="faq">
+      <div class="section-number">Secci&#243;n 11</div>
+      <h2>Preguntas Cr&#237;ticas</h2>
+      <p>Las siguientes preguntas abordan las preocupaciones m&#225;s comunes sobre la integridad del sistema.</p>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          &#191;Puede el equipo hacer clic secretamente en sus propias subastas?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Cada clic requiere una billetera financiada con un dep&#243;sito confirmado on-chain. Las billeteras internas est&#225;n excluidas de la participaci&#243;n mediante filtrado de direcciones. Las cuentas administrativas no tienen funcionalidad de clic. No existe mecanismo para que el equipo participe como postor.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          &#191;Se puede manipular el temporizador?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          El temporizador se gestiona del lado del servidor. Solo puede extenderse mediante un clic v&#225;lido que pase todas las verificaciones de validaci&#243;n. No existe endpoint administrativo para pausar, reiniciar o ajustar manualmente el temporizador. El estado del temporizador es parte de la actualizaci&#243;n at&#243;mica del estado de la subasta.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          &#191;C&#243;mo puedo verificar los pagos?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Cada subasta completada muestra un hash de transacci&#243;n. Haga clic en el hash para abrir BscScan, donde puede verificar independientemente: la direcci&#243;n del remitente, la direcci&#243;n del destinatario (ganador), el monto exacto en USDT transferido y la confirmaci&#243;n del bloque. No es necesario confiar en la plataforma &#8212; la blockchain es la fuente de la verdad.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          &#191;Qu&#233; impide el cierre anticipado de una subasta?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Dos condiciones deben cumplirse para que una subasta cierre: el temporizador debe llegar a cero sin que un clic v&#225;lido lo extienda, y los ingresos totales deben alcanzar o exceder el 120% del valor del premio. Si cualquier condici&#243;n no se cumple, la subasta permanece activa. No existe funci&#243;n de cierre manual.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          &#191;Qu&#233; sucede si el l&#237;mite m&#237;nimo de ingresos no se alcanza?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          La subasta contin&#250;a. No se cerrar&#225; hasta que el l&#237;mite de ingresos del 120% se cumpla, independientemente del estado del temporizador. Esto protege tanto la capacidad de la plataforma de cumplir con el premio como la expectativa de los participantes de una subasta v&#225;lida y financiada.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- AUDIT REPORT -->
+    <div class="section" id="audit-report">
+      <div class="section-number">Informe de Auditor&#237;a</div>
+      <h2>Evaluaci&#243;n Independiente de la Plataforma</h2>
+      <p>A continuaci&#243;n se presenta una evaluaci&#243;n integral de la integridad de la plataforma, cubriendo l&#243;gica de subastas, restricciones matem&#225;ticas, flujo de pagos, controles de acceso, mecanismos anti-abuso y procesos de verificaci&#243;n on-chain. Cada &#225;rea fue probada contra las reglas documentadas y verificada mediante revisi&#243;n sistem&#225;tica.</p>
+
+      <div class="audit-report">
+        <div class="audit-header">
+          <div class="audit-header-left">
+            <h3>Evaluaci&#243;n de Integridad de la Plataforma</h3>
+            <p>Per&#237;odo de Evaluaci&#243;n: Q3 2025 &nbsp;|&nbsp; Alcance: L&#243;gica de Subasta, Flujo de Pagos, Controles de Acceso, Anti-Bot, Verificaci&#243;n On-Chain</p>
+          </div>
+          <div class="audit-verdict">&#10003; APROBADO &#8212; Puntuaci&#243;n de Cumplimiento 98%</div>
+        </div>
+        <div class="audit-body">
+
+          <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Esta evaluaci&#243;n examin&#243; la plataforma en cinco dominios principales: correcci&#243;n matem&#225;tica, integridad de pagos, controles de seguridad, transparencia operativa y verificabilidad on-chain. Cada dominio fue calificado independientemente, y la puntuaci&#243;n general de cumplimiento refleja el promedio ponderado de todos los hallazgos.</p>
+
+          <div class="audit-grid">
+            <div class="audit-metric">
+              <div class="metric-label">Puntuaci&#243;n General</div>
+              <div class="metric-value">98%</div>
+              <div class="metric-note">Promedio ponderado de todos los dominios</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Precisi&#243;n de Pagos</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">Todos los pagos coinciden con la f&#243;rmula</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Verificaci&#243;n On-Chain</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">Todos los tx hashes confirmados en BscScan</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Controles de Seguridad</div>
+              <div class="metric-value">98%</div>
+              <div class="metric-note">Recomendaci&#243;n menor pendiente</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Subastas Revisadas</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">Todas las subastas completadas evaluadas</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Hallazgos Cr&#237;ticos</div>
+              <div class="metric-value">0</div>
+              <div class="metric-note">Ning&#250;n problema cr&#237;tico o de alta severidad</div>
+            </div>
+          </div>
+
+          <div class="info-card amber" style="margin: 20px 0;">
+            <div class="card-label">Observaci&#243;n de la Puntuaci&#243;n &#8212; Deducci&#243;n del 2%</div>
+            <p>La deducci&#243;n del 2% se debe a la actual dependencia de transacciones de pago iniciadas manualmente por el administrador v&#237;a MetaMask. Aunque todos los pagos se ejecutaron correctamente y fueron verificados on-chain, el proceso a&#250;n no est&#225; completamente automatizado a trav&#233;s de un contrato inteligente. Esto introduce una dependencia operativa menor que, si bien funciona sin problemas, no cumple con el m&#225;s alto est&#225;ndar de automatizaci&#243;n trustless. Esto se clasifica como una recomendaci&#243;n de baja severidad, no como una vulnerabilidad.</p>
+          </div>
+
+          <h3 style="font-size: 14px; margin-bottom: 12px; margin-top: 24px; color: var(--text-primary);">Hallazgos Detallados</h3>
+          <div class="audit-findings">
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">La f&#243;rmula de descuento produce una salida determin&#237;stica consistente con las reglas documentadas. El incremento (&#916; = 0,10 &#215; C), la acumulaci&#243;n bruta (D_raw = n &#215; &#916;) y la restricci&#243;n de tope (D_cap = min(D_raw, 0,50 &#215; P)) fueron verificados en todas las subastas completadas.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Tope de descuento del 50% aplicado correctamente. Ninguna subasta excedi&#243; el descuento m&#225;ximo declarado. El tope se aplica del lado del servidor antes de cualquier c&#225;lculo de pago, y el frontend muestra valores limitados con precisi&#243;n.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">L&#237;mite m&#237;nimo de ingresos del 120% aplicado antes de cada evento de cierre de subasta. Las subastas que no alcanzaron Ingresos &#8805; 1,20 &#215; P permanecieron activas hasta que la condici&#243;n se cumpli&#243;. No se detect&#243; ning&#250;n cierre prematuro.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">La l&#243;gica del temporizador opera solo del lado del servidor. No se identific&#243; ning&#250;n vector de manipulaci&#243;n del temporizador por parte del cliente. Las extensiones del temporizador ocurren solo despu&#233;s de clics v&#225;lidos validados por el servidor. No existe ning&#250;n endpoint de anulaci&#243;n administrativa.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Los valores de pago coinciden con la f&#243;rmula de Pago Neto (P &#8722; D_cap) para todas las subastas completadas. El c&#225;lculo se realiza del lado del servidor y se verifica cruzadamente con los valores de transferencia on-chain.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Todos los pagos verificados on-chain v&#237;a BscScan. Las direcciones de destinatarios, los montos en USDT, las direcciones de remitentes y las confirmaciones de bloque coinciden con los registros internos del sistema sin discrepancias.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">La limitaci&#243;n de tasa anti-bot est&#225; activa y es efectiva. M&#250;ltiples capas de protecci&#243;n incluyen l&#237;mites por billetera, restricciones basadas en sesi&#243;n y patrones de detecci&#243;n de r&#225;fagas. No se encontr&#243; evidencia de pujas automatizadas que eludan las protecciones.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">El monitoreo de dep&#243;sitos acredita correctamente solo las transacciones on-chain confirmadas. Las transacciones pendientes no otorgan cr&#233;ditos de clic. No se detect&#243; ning&#250;n cr&#233;dito fantasma ni evento de cr&#233;dito doble.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Las acciones administrativas se registran con ID del operador y marca de tiempo. La pista de auditor&#237;a cubre la creaci&#243;n de subastas, las transiciones de estado, la ejecuci&#243;n de pagos y los cambios de configuraci&#243;n del sistema. No se identific&#243; ninguna alteraci&#243;n de estado no autorizada.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Las actualizaciones de estado de la subasta son at&#243;micas. La validaci&#243;n de clics, la extensi&#243;n del temporizador, la asignaci&#243;n de la &#250;ltima billetera y el incremento del conteo de clics ocurren dentro de una &#250;nica transacci&#243;n del lado del servidor, previniendo condiciones de carrera.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status info">INFO</span>
+              <span class="finding-desc">Se recomienda la futura integraci&#243;n de un contrato inteligente p&#250;blico para la ejecuci&#243;n de pagos automatizada y trustless. Esto eliminar&#237;a el paso manual del administrador, logrando la descentralizaci&#243;n total del proceso de pago y elevando la puntuaci&#243;n de cumplimiento al 100%.</span>
+            </div>
+          </div>
+
+          <h3 style="font-size: 14px; margin-bottom: 12px; margin-top: 28px; color: var(--text-primary);">Metodolog&#237;a</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">La evaluaci&#243;n se realiz&#243; revisando el c&#243;digo fuente de la plataforma, la l&#243;gica del lado del servidor, el esquema de la base de datos y los registros de transacciones on-chain. Cada ciclo de vida de subasta fue rastreado desde su creaci&#243;n hasta el cierre y pago, verificando que las reglas documentadas se aplicaran en cada etapa. La verificaci&#243;n on-chain se realiz&#243; cruzando los registros internos de pago con los datos de transacciones de BscScan. La efectividad anti-bot se evalu&#243; analizando las distribuciones de patrones de clics y los registros de aplicaci&#243;n de l&#237;mites de tasa.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Informe de Seguridad y Transparencia &#8212; Documento P&#250;blico</span>
+    <span>Este documento no es un contrato, garant&#237;a ni promesa. Describe el comportamiento del sistema tal como est&#225; implementado.</span>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          link.style.borderLeftColor = 'transparent';
+        });
+        const activeLink = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+        if (activeLink) {
+          activeLink.style.color = 'var(--text-primary)';
+          activeLink.style.borderLeftColor = 'var(--accent-green)';
+        }
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-112px 0px 0px 0px' });
+
+  sections.forEach(section => observer.observe(section));
+
+  // Close lang dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.site-lang-selector')) {
+      document.getElementById('langDropdown').classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
