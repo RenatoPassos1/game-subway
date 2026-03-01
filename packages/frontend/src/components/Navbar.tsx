@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { href: '/help', labelKey: 'nav.help' },
   { href: '/partner', labelKey: 'nav.partner' },
   { href: '/whitepaper', labelKey: 'nav.whitepaper' },
+  { href: '/audit/', labelKey: 'nav.audit', external: true },
 ];
 
 export default function Navbar() {
@@ -76,19 +77,22 @@ export default function Navbar() {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium font-mono tracking-wide transition-all duration-200 ${
-                  isActive(link.href)
-                    ? 'text-primary bg-primary/10 border border-primary/20'
-                    : 'text-text-muted hover:text-text hover:bg-white/5'
-                }`}
-              >
-                {t(link.labelKey)}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const cls = `px-4 py-2 rounded-lg text-sm font-medium font-mono tracking-wide transition-all duration-200 ${
+                isActive(link.href)
+                  ? 'text-primary bg-primary/10 border border-primary/20'
+                  : 'text-text-muted hover:text-text hover:bg-white/5'
+              }`;
+              return (link as any).external ? (
+                <a key={link.href} href={link.href} className={cls}>
+                  {t(link.labelKey)}
+                </a>
+              ) : (
+                <Link key={link.href} href={link.href} className={cls}>
+                  {t(link.labelKey)}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right Side */}
@@ -127,19 +131,22 @@ export default function Navbar() {
         <div className="md:hidden border-t border-white/10 relative" style={{ background: 'rgba(15, 15, 35, 0.95)' }}>
           <div className="scanline-overlay rounded-none" />
           <div className="relative z-10 px-4 py-4 space-y-2">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block px-4 py-3 rounded-lg text-sm font-medium font-mono tracking-wide transition-all ${
-                  isActive(link.href)
-                    ? 'text-primary bg-primary/10 border border-primary/20'
-                    : 'text-text-muted hover:text-text hover:bg-white/5'
-                }`}
-              >
-                {t(link.labelKey)}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const cls = `block px-4 py-3 rounded-lg text-sm font-medium font-mono tracking-wide transition-all ${
+                isActive(link.href)
+                  ? 'text-primary bg-primary/10 border border-primary/20'
+                  : 'text-text-muted hover:text-text hover:bg-white/5'
+              }`;
+              return (link as any).external ? (
+                <a key={link.href} href={link.href} className={cls}>
+                  {t(link.labelKey)}
+                </a>
+              ) : (
+                <Link key={link.href} href={link.href} className={cls}>
+                  {t(link.labelKey)}
+                </Link>
+              );
+            })}
 
             {/* Mobile Wallet */}
             <div className="pt-3 border-t border-white/10">

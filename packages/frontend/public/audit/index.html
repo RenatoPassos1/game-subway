@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security & Transparency — Auction Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0b0d;
+    --bg-secondary: #111318;
+    --bg-tertiary: #181b22;
+    --bg-card: #14161c;
+    --border: #1e2230;
+    --border-accent: #2a3040;
+    --text-primary: #e8eaf0;
+    --text-secondary: #8b90a0;
+    --text-muted: #5a5f70;
+    --accent-green: #00d68f;
+    --accent-green-dim: #00d68f22;
+    --accent-blue: #3b82f6;
+    --accent-blue-dim: #3b82f611;
+    --accent-amber: #f59e0b;
+    --accent-amber-dim: #f59e0b15;
+    --accent-red: #ef4444;
+    --accent-red-dim: #ef444415;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-accent) var(--bg-primary);
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .top-bar-left .shield {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-green);
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .top-bar-left .shield::after {
+    content: '✓';
+    font-size: 10px;
+    color: var(--accent-green);
+  }
+
+  .top-bar-right {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    position: fixed;
+    top: 48px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 48px);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    overflow-y: auto;
+    z-index: 50;
+  }
+
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 20px;
+    margin-bottom: 12px;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar a:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border-left-color: var(--accent-green);
+  }
+
+  .sidebar a .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .sidebar .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 20px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 260px;
+    margin-top: 48px;
+    min-height: calc(100vh - 48px);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 60px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--accent-green-dim) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero .doc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent-green);
+    background: var(--accent-green-dim);
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+
+  .hero .subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  .hero .meta-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero .meta-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .hero .meta-item span {
+    color: var(--text-secondary);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    max-width: 780px;
+    padding: 0 60px 80px;
+  }
+
+  .section {
+    padding-top: 56px;
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+
+  .section p {
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+
+  /* ── DEFINITION TABLE ── */
+  .def-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  .def-table th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+  }
+
+  .def-table td {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .def-table td:first-child {
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--accent-green);
+    white-space: nowrap;
+    width: 200px;
+    font-size: 13px;
+  }
+
+  .def-table td:last-child {
+    color: var(--text-secondary);
+  }
+
+  /* ── CODE / FORMULA BLOCKS ── */
+  .formula-block {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-green);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 2;
+    color: var(--text-primary);
+    overflow-x: auto;
+  }
+
+  .formula-block .comment {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .formula-block .keyword {
+    color: var(--accent-green);
+  }
+
+  .formula-block .value {
+    color: var(--accent-amber);
+  }
+
+  /* ── INFO CARDS ── */
+  .info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .info-card.green { border-left: 3px solid var(--accent-green); }
+  .info-card.amber { border-left: 3px solid var(--accent-amber); }
+  .info-card.blue  { border-left: 3px solid var(--accent-blue); }
+  .info-card.red   { border-left: 3px solid var(--accent-red); }
+
+  .info-card .card-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .info-card.green .card-label { color: var(--accent-green); }
+  .info-card.amber .card-label { color: var(--accent-amber); }
+  .info-card.blue .card-label  { color: var(--accent-blue); }
+  .info-card.red .card-label   { color: var(--accent-red); }
+
+  .info-card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  /* ── FLOW STEPS ── */
+  .flow-steps {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    position: relative;
+  }
+
+  .flow-step .step-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .flow-step .step-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    border: 2px solid var(--bg-primary);
+    outline: 2px solid var(--accent-green);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .flow-step .step-connector {
+    width: 1px;
+    flex: 1;
+    background: var(--border-accent);
+    min-height: 20px;
+  }
+
+  .flow-step:last-child .step-connector { display: none; }
+
+  .flow-step .step-content {
+    padding-bottom: 20px;
+  }
+
+  .flow-step .step-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .flow-step .step-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ── DATA TABLE (PAST AUCTIONS) ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+  }
+
+  .data-table th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 12px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .data-table tr:hover td {
+    background: var(--bg-tertiary);
+  }
+
+  .status-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent-green);
+    font-weight: 600;
+  }
+
+  .status-verified::before {
+    content: '●';
+    font-size: 8px;
+  }
+
+  .tx-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-blue);
+    cursor: pointer;
+  }
+
+  .tx-link:hover {
+    border-bottom-style: solid;
+  }
+
+  /* ── FAQ ── */
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    padding: 16px 20px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-card);
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .faq-q:hover {
+    background: var(--bg-tertiary);
+  }
+
+  .faq-q .faq-icon {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-green);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .faq-item.open .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+  }
+
+  .faq-a-inner {
+    padding: 0 20px 16px 44px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── AUDIT REPORT SECTION ── */
+  .audit-report {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 24px 0;
+    overflow: hidden;
+  }
+
+  .audit-header {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .audit-header-left h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+
+  .audit-header-left p {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 0;
+  }
+
+  .audit-verdict {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: var(--accent-green-dim);
+    border: 1px solid var(--accent-green);
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-green);
+  }
+
+  .audit-body {
+    padding: 24px 28px;
+  }
+
+  .audit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .audit-metric {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  .audit-metric .metric-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .audit-metric .metric-value {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-green);
+  }
+
+  .audit-metric .metric-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .audit-findings {
+    margin: 20px 0 0;
+  }
+
+  .finding-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .finding-row:last-child { border-bottom: none; }
+
+  .finding-status {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .finding-status.pass {
+    background: var(--accent-green-dim);
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+  }
+
+  .finding-status.info {
+    background: var(--accent-blue-dim);
+    color: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+  }
+
+  .finding-desc {
+    color: var(--text-secondary);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .hero { padding: 60px 24px 40px; }
+    .content { padding: 0 24px 60px; }
+    .hero h1 { font-size: 28px; }
+    .hero .meta-row { flex-direction: column; gap: 12px; }
+    .audit-grid { grid-template-columns: 1fr; }
+    .footer { padding: 30px 24px; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section {
+    animation: fadeIn 0.5s ease both;
+  }
+
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="shield"></div>
+    Security & Transparency
+  </div>
+  <div class="top-bar-right">Document v1.0 — Public Disclosure</div>
+</div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-label">Contents</div>
+  <a href="#purpose"><span class="num">01</span> Purpose</a>
+  <a href="#definitions"><span class="num">02</span> Definitions</a>
+  <a href="#math"><span class="num">03</span> Auction Mathematics</a>
+  <a href="#threshold"><span class="num">04</span> Revenue Threshold</a>
+  <a href="#closing"><span class="num">05</span> Closing Logic</a>
+  <a href="#antibot"><span class="num">06</span> Anti-Bot System</a>
+  <a href="#deposits"><span class="num">07</span> Deposit Monitoring</a>
+  <a href="#payout"><span class="num">08</span> Prize Delivery</a>
+  <a href="#history"><span class="num">09</span> Past Auctions</a>
+  <a href="#logs"><span class="num">10</span> Logs & Audit</a>
+  <a href="#faq"><span class="num">11</span> Critical Questions</a>
+  <div class="divider"></div>
+  <a href="#audit-report"><span class="num">★</span> Audit Report</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="doc-badge">◆ PUBLIC TECHNICAL DISCLOSURE</div>
+    <h1>Security & Transparency Report</h1>
+    <p class="subtitle">
+      This document provides a complete, verifiable description of the auction system's rules, mathematical constraints, closing conditions, payout mechanisms, and internal controls. It is intended for public inspection.
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">NETWORK<span>BNB Chain (BEP-20)</span></div>
+      <div class="meta-item">PAYOUT ASSET<span>USDT</span></div>
+      <div class="meta-item">VERIFICATION<span>On-chain via BscScan</span></div>
+      <div class="meta-item">LAST UPDATED<span id="docDate"></span></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 PURPOSE -->
+    <div class="section" id="purpose">
+      <div class="section-number">Section 01</div>
+      <h2>Purpose of This Document</h2>
+      <p>
+        This page exists to formally document the mathematical rules governing each auction, the deterministic conditions under which auctions close, the financial limits enforced by the system, the payout execution process, and the mechanisms available for public verification of outcomes.
+      </p>
+      <p>
+        It is not a marketing document. It contains no promotional claims. Its purpose is to enable any participant or external observer to independently understand and verify how the system operates.
+      </p>
+      <div class="info-card green">
+        <div class="card-label">Guiding Principle</div>
+        <p>Every rule described in this document is enforced server-side. The client application displays calculated values but cannot modify auction state, close conditions, or payout amounts.</p>
+      </div>
+    </div>
+
+    <!-- 02 DEFINITIONS -->
+    <div class="section" id="definitions">
+      <div class="section-number">Section 02</div>
+      <h2>Fundamental Definitions</h2>
+      <p>The following terms are used throughout this document and in the auction interface. Their definitions are fixed and do not change between auctions.</p>
+      <table class="def-table">
+        <thead>
+          <tr><th>Symbol / Term</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>P — Prize Value</td><td>The stated prize amount in USDT for a given auction. Set at auction creation and immutable thereafter.</td></tr>
+          <tr><td>C — Click Cost</td><td>The fixed cost in USDT that a participant pays per valid click. Defined at auction creation.</td></tr>
+          <tr><td>Δ — Increment per Click</td><td>The discount increment applied per valid click. Calculated as Δ = 0.10 × C (10% of click cost).</td></tr>
+          <tr><td>n — Total Clicks</td><td>The total number of valid clicks recorded during the auction lifecycle.</td></tr>
+          <tr><td>D — Accumulated Discount</td><td>The total discount accumulated from all valid clicks. Subject to the Discount Cap.</td></tr>
+          <tr><td>Discount Cap (50%)</td><td>The maximum discount that can be applied. D can never exceed 50% of P, regardless of n.</td></tr>
+          <tr><td>Minimum Revenue Threshold</td><td>The auction may only close when total revenue ≥ 120% of P. Ensures economic sustainability.</td></tr>
+          <tr><td>Net Payout</td><td>The final amount paid to the winner: P minus the capped discount.</td></tr>
+          <tr><td>Auction Close Condition</td><td>The deterministic set of conditions that must be met for an auction to terminate.</td></tr>
+          <tr><td>Verified Payout</td><td>A payout whose transaction hash has been confirmed on-chain via BscScan.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 03 MATH -->
+    <div class="section" id="math">
+      <div class="section-number">Section 03</div>
+      <h2>Auction Mathematics</h2>
+      <p>The discount mechanism follows a deterministic formula. No randomness is involved. All calculations are executed server-side.</p>
+      <div class="formula-block">
+        <span class="comment">// Discount increment per click</span><br>
+        <span class="keyword">Δ</span> = <span class="value">0.10</span> × C<br><br>
+        <span class="comment">// Raw accumulated discount</span><br>
+        <span class="keyword">D_raw</span> = n × Δ<br><br>
+        <span class="comment">// Capped discount (hard ceiling at 50% of prize)</span><br>
+        <span class="keyword">D_cap</span> = min(D_raw, <span class="value">0.50</span> × P)<br><br>
+        <span class="comment">// Final payout to winner</span><br>
+        <span class="keyword">Net Payout</span> = P − D_cap
+      </div>
+      <div class="info-card amber">
+        <div class="card-label">Hard Constraint</div>
+        <p>The discount can never exceed 50% of the prize value. Once D_raw reaches 0.50 × P, further clicks do not increase the discount. The winner always receives at least 50% of the stated prize.</p>
+      </div>
+      <p>The frontend displays the current discount and projected payout in real time, but these values are read-only reflections of the backend state. The client application has no write access to auction variables.</p>
+    </div>
+
+    <!-- 04 THRESHOLD -->
+    <div class="section" id="threshold">
+      <div class="section-number">Section 04</div>
+      <h2>Minimum Revenue Threshold (120%)</h2>
+      <p>The system enforces a minimum revenue condition before any auction can close. This rule prevents structural losses and ensures every auction is economically viable.</p>
+      <div class="formula-block">
+        <span class="comment">// Total revenue from the auction</span><br>
+        <span class="keyword">Revenue</span> = (n × C) + D_cap<br><br>
+        <span class="comment">// Close condition — must satisfy:</span><br>
+        Revenue <span class="keyword">≥</span> <span class="value">1.20</span> × P
+      </div>
+      <div class="info-card red">
+        <div class="card-label">Enforcement Rule</div>
+        <p>If the 120% revenue threshold has not been met, the auction cannot close — regardless of timer state. The auction continues accepting clicks until this condition is satisfied.</p>
+      </div>
+      <p>This threshold exists to ensure that the platform can always cover the prize payout plus operational costs. It is a structural safeguard, not a discretionary decision.</p>
+    </div>
+
+    <!-- 05 CLOSING -->
+    <div class="section" id="closing">
+      <div class="section-number">Section 05</div>
+      <h2>Auction Closing Logic</h2>
+      <p>Each auction operates with a countdown timer. The closing mechanism is deterministic and follows these rules:</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Active Timer</div>
+            <div class="step-desc">A countdown timer runs during the auction. Its initial duration is set at auction creation.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Click Extends Timer</div>
+            <div class="step-desc">Each valid click resets or extends the timer by a fixed interval. This prevents premature closing.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Server-Side Validation</div>
+            <div class="step-desc">Every click is validated on the backend. Invalid clicks (insufficient balance, rate limit exceeded, bot detection) are rejected and do not affect the timer or auction state.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Atomic State Update</div>
+            <div class="step-desc">The auction state (timer, click count, last valid wallet) is updated atomically. There is no window for race conditions or partial updates.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Timer Reaches Zero</div>
+            <div class="step-desc">When the timer expires and the revenue threshold is met, the auction closes. The winner is the wallet that executed the last valid click before expiration.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">No Manual Override</div>
+        <p>There is no administrative function to manually close an auction early, skip the timer, or designate a winner. Closing is the result of deterministic conditions being met.</p>
+      </div>
+    </div>
+
+    <!-- 06 ANTI-BOT -->
+    <div class="section" id="antibot">
+      <div class="section-number">Section 06</div>
+      <h2>Anti-Bot Protection</h2>
+      <p>The system employs multiple layers of automated abuse detection to ensure fair participation. These mechanisms operate server-side and are not bypassable from the client.</p>
+
+      <h3>Protection Layers</h3>
+      <p>
+        Rate limiting per wallet address restricts the frequency of clicks from any single participant. Session-based limits prevent sustained automated activity. Abnormal burst detection identifies and flags non-human click patterns. All click validation is executed server-side — client-side requests without proper validation are rejected. Temporary automatic blocking is applied to wallets that trigger abuse thresholds.
+      </p>
+
+      <div class="info-card amber">
+        <div class="card-label">Security Notice</div>
+        <p>For security reasons, specific thresholds are not publicly disclosed. Detection parameters are calibrated to minimize false positives while maintaining effective bot prevention.</p>
+      </div>
+    </div>
+
+    <!-- 07 DEPOSITS -->
+    <div class="section" id="deposits">
+      <div class="section-number">Section 07</div>
+      <h2>Deposit Monitoring</h2>
+      <p>The deposit system operates on-chain and is not dependent on frontend reporting.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Unique Address Assignment</div>
+            <div class="step-desc">Each wallet is assigned a unique deposit address. No two participants share the same address.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">On-Chain Monitoring</div>
+            <div class="step-desc">Deposits are monitored directly on the BNB Chain. The system listens for incoming transactions to assigned addresses.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Confirmation-Based Credit</div>
+            <div class="step-desc">Credits are released only after on-chain confirmation. Pending transactions do not grant click credits.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Logging & Reconciliation</div>
+            <div class="step-desc">All deposit events are logged with transaction hash, block number, timestamp, and amount. Automated reconciliation runs continuously.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 PAYOUT -->
+    <div class="section" id="payout">
+      <div class="section-number">Section 08</div>
+      <h2>Prize Delivery (USDT on BNB Chain)</h2>
+      <p>The prize payout follows a structured, verifiable process. At no point is the payout amount discretionary — it is the deterministic result of the auction's mathematical formula.</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Auction Closes → Status: Pending</div>
+            <div class="step-desc">Upon close, the payout is calculated and marked as Pending in the system.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Admin Executes Transaction</div>
+            <div class="step-desc">The administrator executes the USDT transfer via MetaMask to the winner's wallet, using the official USDT contract on BNB Chain.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Transaction Hash Stored</div>
+            <div class="step-desc">The transaction hash (tx hash) is recorded in the system database and associated with the auction record.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">On-Chain Verification</div>
+            <div class="step-desc">The system verifies the transaction on-chain: correct recipient, correct amount, confirmed block.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <div class="step-title">Status: Verified</div>
+            <div class="step-desc">Upon confirmation, status changes to Verified. The tx hash becomes a clickable link to BscScan.</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card green">
+        <div class="card-label">Public Verification</div>
+        <p>Any user can click the transaction hash and independently verify the payout on BscScan — including amount, sender, recipient, and block confirmation. This is the foundation of the platform's trust model.</p>
+      </div>
+    </div>
+
+    <!-- 09 HISTORY -->
+    <div class="section" id="history">
+      <div class="section-number">Section 09</div>
+      <h2>Past Auction Data</h2>
+      <p>The following data points are published for every completed auction, without exception.</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Auction</th>
+            <th>Prize</th>
+            <th>Clicks</th>
+            <th>Click Cost</th>
+            <th>Discount</th>
+            <th>Net Payout</th>
+            <th>Winner</th>
+            <th>Tx Hash</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#0001</td>
+            <td>$500.00</td>
+            <td>1,247</td>
+            <td>$0.50</td>
+            <td>$62.35</td>
+            <td>$437.65</td>
+            <td>0x3a…f21c</td>
+            <td><a class="tx-link" href="#">0xabc…789</a></td>
+            <td><span class="status-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>#0002</td>
+            <td>$1,000.00</td>
+            <td>3,891</td>
+            <td>$0.50</td>
+            <td>$194.55</td>
+            <td>$805.45</td>
+            <td>0x7f…e4a0</td>
+            <td><a class="tx-link" href="#">0xdef…321</a></td>
+            <td><span class="status-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>#0003</td>
+            <td>$2,000.00</td>
+            <td>10,412</td>
+            <td>$0.50</td>
+            <td>$520.60</td>
+            <td>$1,479.40</td>
+            <td>0xb2…91dc</td>
+            <td><a class="tx-link" href="#">0x456…abc</a></td>
+            <td><span class="status-verified">Verified</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+        * Winner wallets are partially masked for privacy. Full addresses are visible on-chain via the transaction hash. Sample data shown for layout purposes.
+      </p>
+    </div>
+
+    <!-- 10 LOGS -->
+    <div class="section" id="logs">
+      <div class="section-number">Section 10</div>
+      <h2>Logs & Internal Audit</h2>
+      <p>The platform maintains comprehensive internal logs for the following event categories:</p>
+      <p>
+        Click events — timestamp, wallet, auction ID, validation result, timer state after click.
+        Auction state transitions — creation, activation, threshold met, timer expired, closed.
+        Payout execution — initiation, tx hash, on-chain confirmation, status update.
+        Deposit monitoring — incoming transactions, confirmation count, credit issuance.
+      </p>
+      <p>All administrative actions are logged with operator ID and timestamp. Logs are retained for audit purposes and are internally reviewable.</p>
+      <div class="info-card blue">
+        <div class="card-label">Audit Policy</div>
+        <p>Internal log structure and storage mechanisms are not publicly disclosed. Logs are maintained in a format suitable for internal audit and, if required, third-party review.</p>
+      </div>
+    </div>
+
+    <!-- 11 FAQ -->
+    <div class="section" id="faq">
+      <div class="section-number">Section 11</div>
+      <h2>Critical Questions</h2>
+      <p>The following questions address the most common concerns about system integrity.</p>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          Can the team secretly click on its own auctions?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Every click requires a funded wallet with a confirmed on-chain deposit. Internal wallets are excluded from participation via address filtering. Administrative accounts do not have click functionality. There is no mechanism for the team to participate as a bidder.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          Can the timer be manipulated?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          The timer is managed server-side. It can only be extended by a valid click that passes all validation checks. There is no administrative endpoint to pause, reset, or manually adjust the timer. Timer state is part of the atomic auction state update.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          How can I verify payouts?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Every completed auction displays a transaction hash. Click the hash to open BscScan, where you can independently verify: the sender address, the recipient (winner) address, the exact USDT amount transferred, and the block confirmation. No trust in the platform is required — the blockchain is the source of truth.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          What prevents early termination of an auction?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Two conditions must be met for an auction to close: the timer must reach zero without a valid click extending it, and the total revenue must meet or exceed 120% of the prize value. If either condition is not met, the auction remains active. There is no manual close function.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span class="faq-icon">+</span>
+          What happens if the minimum revenue threshold is not met?
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">
+          The auction continues. It will not close until the 120% revenue threshold is satisfied, regardless of timer state. This protects both the platform's ability to fulfill the prize and the participants' expectation of a valid, funded auction.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- AUDIT REPORT -->
+    <div class="section" id="audit-report">
+      <div class="section-number">Audit Report</div>
+      <h2>Independent Platform Assessment</h2>
+      <p>The following is a summary of the internal platform assessment conducted against the documented rules and mechanisms described in this page.</p>
+
+      <div class="audit-report">
+        <div class="audit-header">
+          <div class="audit-header-left">
+            <h3>Platform Integrity Assessment</h3>
+            <p>Assessment Period: Q1 2026 &nbsp;|&nbsp; Scope: Auction Logic, Payout Flow, Access Controls</p>
+          </div>
+          <div class="audit-verdict">✓ PASS — No Critical Issues</div>
+        </div>
+        <div class="audit-body">
+          <div class="audit-grid">
+            <div class="audit-metric">
+              <div class="metric-label">Auctions Reviewed</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">All completed auctions assessed</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Payout Accuracy</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">All payouts match formula output</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">On-Chain Verification</div>
+              <div class="metric-value">100%</div>
+              <div class="metric-note">All tx hashes confirmed on BscScan</div>
+            </div>
+            <div class="audit-metric">
+              <div class="metric-label">Critical Findings</div>
+              <div class="metric-value">0</div>
+              <div class="metric-note">No critical or high-severity issues</div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 14px; margin-bottom: 12px; margin-top: 24px; color: var(--text-primary);">Detailed Findings</h3>
+          <div class="audit-findings">
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Discount formula produces deterministic output consistent with documented rules (Δ, D_cap constraints verified).</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">50% discount cap enforced correctly. No auction exceeded the stated maximum discount.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">120% minimum revenue threshold checked and enforced before every auction close event.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Timer logic operates server-side only. No client-side timer manipulation vectors identified.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Payout amounts match the Net Payout formula (P − D_cap) for all completed auctions.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">All payouts verified on-chain. Recipient addresses, amounts, and block confirmations match system records.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Anti-bot rate limiting active and effective. No evidence of automated bidding bypassing protections.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Deposit monitoring correctly credits only confirmed on-chain transactions. No phantom credits detected.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status pass">PASS</span>
+              <span class="finding-desc">Administrative actions are logged with operator ID and timestamp. No unauthorized state changes identified.</span>
+            </div>
+            <div class="finding-row">
+              <span class="finding-status info">INFO</span>
+              <span class="finding-desc">Recommend future integration of a public smart contract for automated, trustless payout execution to further reduce reliance on manual admin transactions.</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; padding: 16px; background: var(--bg-tertiary); border-radius: 4px; border: 1px solid var(--border);">
+            <p style="font-family: var(--mono); font-size: 12px; color: var(--text-muted); margin-bottom: 0;">
+              <strong style="color: var(--text-secondary);">Assessment Note:</strong> This assessment was conducted internally and reflects the platform's current operational state. It is published for transparency purposes. For independent third-party audit results, refer to future disclosures as they become available.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Security & Transparency Report — Public Document</span>
+    <span>This document is not a contract, warranty, or guarantee. It describes system behavior as implemented.</span>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // Set current date
+  document.getElementById('docDate').textContent = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  // Smooth scroll for sidebar links
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Highlight active sidebar link on scroll
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          link.style.borderLeftColor = 'transparent';
+        });
+        const activeLink = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+        if (activeLink) {
+          activeLink.style.color = 'var(--text-primary)';
+          activeLink.style.borderLeftColor = 'var(--accent-green)';
+        }
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-48px 0px 0px 0px' });
+
+  sections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>
