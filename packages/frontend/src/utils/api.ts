@@ -15,7 +15,8 @@ import type {
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api';
 
-let authToken: string | null = null;
+let authToken: string | null =
+  typeof window !== 'undefined' ? localStorage.getItem('clickwin_token') : null;
 
 export function setAuthToken(token: string | null): void {
   authToken = token;
