@@ -143,7 +143,6 @@ export default function HelpPage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// HELP_CENTER</span>
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
             <span className="gradient-text">{t('help.hero.title')}</span>
           </h1>

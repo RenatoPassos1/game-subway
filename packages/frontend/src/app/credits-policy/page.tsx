@@ -73,7 +73,6 @@ export default function CreditsPolicyPage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// CREDITS_POLICY</span>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 font-heading">
             <span className="gradient-text">{t('credits.title')}</span>
           </h1>
@@ -105,7 +104,6 @@ export default function CreditsPolicyPage() {
         <div className="max-w-4xl mx-auto">
           <RevealOnScroll>
             <div className="text-center mb-12">
-              <span className="mono-label">// POLICIES</span>
             </div>
           </RevealOnScroll>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

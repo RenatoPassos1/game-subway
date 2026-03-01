@@ -321,7 +321,6 @@ export default function WhitepaperPage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// WHITEPAPER_V1</span>
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
             <span className="gradient-text">{t('whitepaper.hero.title')}</span>
           </h1>
@@ -392,7 +391,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="about" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.about.label')}</span>
           <h2 className="section-title font-heading mb-6">{t('whitepaper.about.title')}</h2>
         </RevealOnScroll>
         <RevealOnScroll delay={100}>
@@ -435,7 +433,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="how-it-works" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.howItWorks.label')}</span>
           <h2 className="section-title font-heading mb-8">{t('whitepaper.howItWorks.title')}</h2>
         </RevealOnScroll>
 
@@ -497,7 +494,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="tech" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.tech.label')}</span>
           <h2 className="section-title font-heading mb-8">{t('whitepaper.tech.title')}</h2>
         </RevealOnScroll>
 
@@ -592,7 +588,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="economics" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.economics.label')}</span>
           <h2 className="section-title font-heading mb-8">{t('whitepaper.economics.title')}</h2>
         </RevealOnScroll>
 
@@ -684,7 +679,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="faq" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.faq.label')}</span>
           <h2 className="section-title font-heading mb-8">{t('whitepaper.faq.title')}</h2>
         </RevealOnScroll>
         <div className="max-w-3xl mx-auto space-y-3">
@@ -752,7 +746,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="partner" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.partner.label')}</span>
           <h2 className="section-title font-heading mb-4">{t('whitepaper.partner.title')}</h2>
           <p className="text-text-muted max-w-3xl mb-8">{t('whitepaper.partner.desc')}</p>
         </RevealOnScroll>
@@ -819,7 +812,6 @@ export default function WhitepaperPage() {
       {/* ================================================================ */}
       <section id="roadmap" className="section-container scroll-mt-20">
         <RevealOnScroll>
-          <span className="mono-label block mb-4">{t('whitepaper.roadmap.label')}</span>
           <h2 className="section-title font-heading mb-8">{t('whitepaper.roadmap.title')}</h2>
         </RevealOnScroll>
 

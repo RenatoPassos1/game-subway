@@ -114,7 +114,6 @@ export default function TermsPage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// TERMS_OF_SERVICE</span>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 font-heading">
             <span className="gradient-text">{t('terms.title')}</span>
           </h1>

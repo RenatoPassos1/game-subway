@@ -191,11 +191,6 @@ export default function HomePage() {
 
         <div className="relative z-10 section-container text-center">
           <div className="max-w-4xl mx-auto">
-            <div className="tech-badge mb-8">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span>{t('home.hero.badge')}</span>
-            </div>
-
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight font-heading">
               <span className="text-text">{t('home.hero.titleLine1')}</span>
               <br />

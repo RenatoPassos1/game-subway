@@ -72,7 +72,6 @@ export default function CompliancePage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// COMPLIANCE</span>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 font-heading">
             <span className="gradient-text">{t('compliance.title')}</span>
           </h1>
@@ -111,7 +110,6 @@ export default function CompliancePage() {
         <div className="max-w-4xl mx-auto">
           <RevealOnScroll>
             <div className="text-center mb-8">
-              <span className="mono-label">// RESTRICTIONS</span>
               <h2 className="font-heading section-title">{t('compliance.doNot.title')}</h2>
             </div>
           </RevealOnScroll>
@@ -156,7 +154,6 @@ export default function CompliancePage() {
         <div className="max-w-4xl mx-auto">
           <RevealOnScroll>
             <div className="text-center mb-8">
-              <span className="mono-label">// PLATFORM_RIGHTS</span>
               <h2 className="font-heading section-title">{t('compliance.rights.title')}</h2>
             </div>
           </RevealOnScroll>

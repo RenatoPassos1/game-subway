@@ -79,7 +79,6 @@ export default function PrivacyPage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// PRIVACY_POLICY</span>
           <h1 className="text-3xl md:text-5xl font-bold mb-4 font-heading">
             <span className="gradient-text">{t('privacy.title')}</span>
           </h1>

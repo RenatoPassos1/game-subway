@@ -161,7 +161,6 @@ export default function AboutPage() {
         </div>
         <div className="scanline-overlay" />
         <div className="relative z-10 section-container text-center">
-          <span className="mono-label">// ABOUT</span>
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
             <span className="gradient-text">{t('about.hero.title')}</span>
           </h1>
