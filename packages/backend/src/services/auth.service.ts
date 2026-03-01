@@ -49,7 +49,7 @@ export function verifySignature(
   nonce: string,
 ): boolean {
   try {
-    const message = `Click Win Authentication\n\nNonce: ${nonce}`;
+    const message = `Click Win Authentication\n\nNonce: ${nonce}\nAddress: ${address}`;
     const recoveredAddress = ethers.verifyMessage(message, signature);
     return recoveredAddress.toLowerCase() === address.toLowerCase();
   } catch (err) {
