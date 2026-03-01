@@ -6,6 +6,7 @@ on:
     paths:
       - 'packages/frontend/**'
       - 'shared/**'
+      - '.github/workflows/deploy-frontend.yml'
 
   workflow_dispatch:
 
@@ -47,6 +48,7 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           lftp -u "$FTP_USER","$FTP_PASSWORD" "ftp://$FTP_HOST" -e "
+            set ssl:verify-certificate no
             set ftp:ssl-allow yes
             set ftp:ssl-force no
             set ftp:passive-mode yes
