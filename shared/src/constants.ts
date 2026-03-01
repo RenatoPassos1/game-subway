@@ -22,7 +22,7 @@ export const USDT_CONTRACT_BSC = '0x55d398326f99059fF775485246999027B3197955';
 export const BNB_DERIVATION_PATH = "m/44'/60'/0'/0";
 
 // JWT
-export const JWT_EXPIRY = '1h';
+export const JWT_EXPIRY = '7d';
 export const NONCE_TTL = 300; // 5 minutes in seconds
 
 // Rate Limits

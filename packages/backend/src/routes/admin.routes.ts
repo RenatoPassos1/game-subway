@@ -51,6 +51,7 @@ async function verifyAdminAccess(
   try {
     await request.jwtVerify();
     const user = request.user as AuthUser;
+    logger.debug({ userId: user?.userId, wallet: user?.walletAddress }, 'Admin JWT verified, checking admins table');
     if (user?.walletAddress) {
       const result = await query(IS_ADMIN, [user.walletAddress]);
       if (result.rows.length > 0) {
@@ -60,9 +61,16 @@ async function verifyAdminAccess(
           wallet: user.walletAddress,
         };
       }
+      logger.warn({ wallet: user.walletAddress }, 'Wallet not found in admins table');
+    } else {
+      logger.warn({ user }, 'JWT payload missing walletAddress');
     }
-  } catch {
-    // JWT verification failed, not an admin via wallet
+  } catch (err) {
+    const authHeader = request.headers.authorization;
+    logger.warn(
+      { error: (err as Error).message, hasAuth: !!authHeader, authPrefix: authHeader?.substring(0, 15) },
+      'Admin JWT verification failed',
+    );
   }
 
   return { authorized: false, role: null, wallet: null };
@@ -74,13 +82,15 @@ export async function adminRoutes(fastify: FastifyInstance): Promise<void> {
     // Only apply to /admin/ routes
     if (!request.url.startsWith('/admin/')) return;
 
-    const { authorized } = await verifyAdminAccess(request);
+    const { authorized, role } = await verifyAdminAccess(request);
     if (!authorized) {
+      logger.warn({ url: request.url, ip: request.ip }, 'Admin access denied');
       return reply.status(403).send({
         error: 'FORBIDDEN',
-        message: 'Admin access required.',
+        message: 'Admin access required. If you recently changed your session, please disconnect and reconnect your wallet.',
       });
     }
+    logger.debug({ url: request.url, role }, 'Admin access granted');
   });
 
   // ============================================================

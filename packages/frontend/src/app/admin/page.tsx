@@ -250,7 +250,11 @@ function DashboardTab() {
       setData(res);
       setError(null);
     } catch (e: any) {
-      setError(e.message ?? 'Failed to load dashboard');
+      if (e.status === 403 || e.status === 401) {
+        setError('Session expired or invalid. Please disconnect your wallet and reconnect to refresh your session.');
+      } else {
+        setError(e.message ?? 'Failed to load dashboard');
+      }
     }
   }, []);
 
@@ -969,17 +973,32 @@ function Pagination({
 }
 
 function ErrorCard({ message, onRetry }: { message: string; onRetry?: () => void }) {
+  const isSessionError = message.toLowerCase().includes('session') || message.toLowerCase().includes('disconnect');
   return (
     <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-6 text-center space-y-3">
       <p className="text-red-400 font-mono text-sm">{message}</p>
-      {onRetry && (
-        <button
-          onClick={onRetry}
-          className="px-4 py-1.5 text-xs font-mono rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 transition-colors"
-        >
-          Retry
-        </button>
-      )}
+      <div className="flex items-center justify-center gap-3">
+        {onRetry && (
+          <button
+            onClick={onRetry}
+            className="px-4 py-1.5 text-xs font-mono rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 transition-colors"
+          >
+            Retry
+          </button>
+        )}
+        {isSessionError && (
+          <button
+            onClick={() => {
+              localStorage.removeItem('clickwin_token');
+              localStorage.removeItem('clickwin_user');
+              window.location.href = '/';
+            }}
+            className="px-4 py-1.5 text-xs font-mono rounded bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-colors"
+          >
+            Reconnect Wallet
+          </button>
+        )}
+      </div>
     </div>
   );
 }
