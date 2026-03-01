@@ -339,7 +339,6 @@ export default function PartnerPage() {
                   <span className={THEMES[1].iconColor}>{Icons.handshake}</span>
                 </div>
               </div>
-              <span className="mono-label">// CONTACT</span>
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-text mb-4">{t('partner.cta.title')}</h2>
               <p className="text-text-muted max-w-xl mx-auto mb-6">{t('partner.cta.desc')}</p>
               <a href="#" className="btn-primary text-lg px-8 py-3">
